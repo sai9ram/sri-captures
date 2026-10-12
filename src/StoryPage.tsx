@@ -30,10 +30,6 @@ const storyImages = {
   approachListen: img("photo-1726068449701-4e11c5d64b11", 1400),
   approachObserve: img("photo-1748925702797-12d3a7a9f5fd", 1400),
   approachPreserve: img("photo-1732130652719-06c976d8153e", 1400),
-  approachDetail1: img("photo-1735052712464-9d24b69be5f5", 700),
-  approachDetail2: img("photo-1630526720753-aa4e71acf67d", 700),
-  approachDetail3: img("photo-1728348937755-eec5ca52c095", 700),
-  approachDetail4: img("photo-1574017121722-2c8ead5a7e90", 700),
 
   beginningInline1: img("photo-1754782915842-aa4fca6c203a", 1100),
   beginningInline2: img("photo-1748925702797-12d3a7a9f5fd", 1100),
@@ -637,23 +633,6 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                   </p>
                 </div>
               </div>
-            </div>
-
-            <div
-              className="story-approach-details story-reveal"
-              style={{ transitionDelay: "180ms" }}
-              aria-label="Detail moments from wedding days"
-            >
-              {[
-                { src: storyImages.approachDetail1, alt: "Pre-wedding portrait in open landscape" },
-                { src: storyImages.approachDetail2, alt: "Destination wedding celebration at sunset" },
-                { src: storyImages.approachDetail3, alt: "Candid laughter among wedding guests" },
-                { src: storyImages.approachDetail4, alt: "Bride during quiet morning preparation" },
-              ].map((photo) => (
-                <div key={photo.alt} className="story-approach-detail-frame">
-                  <img src={photo.src} alt={photo.alt} loading="lazy" />
-                </div>
-              ))}
             </div>
 
             {/* Handwritten Connecting Annotation */}
