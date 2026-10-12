@@ -197,7 +197,7 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
       {/* ====================================================================
           MAIN EDITORIAL STORY (EXACTLY 6 SECTIONS)
           ==================================================================== */}
-      <main id="story-main">
+      <main id="story-main" className="story-page-flow">
         {/* ==================================================================
             SECTION 01 — THE INTRODUCTION
             Concept: A story begins behind every photograph.
