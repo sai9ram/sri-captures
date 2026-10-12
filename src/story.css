@@ -484,32 +484,38 @@
   width: min(1360px, 92vw);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.08fr 0.92fr;
-  gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: stretch;
 }
 
 /* Split BTS Photographic Journal Composition */
 .story-bts-visual {
   position: relative;
   width: 100%;
-  padding-bottom: clamp(3.5rem, 8vw, 5rem);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .story-bts-main-frame {
   position: relative;
   width: 100%;
   max-width: none;
-  aspect-ratio: 4 / 5.2;
+  flex: 1 1 auto;
+  min-height: clamp(480px, 58vh, 760px);
   padding: 12px;
   background: #ffffff;
   border: 1px solid rgba(179, 139, 77, 0.35);
   box-shadow: 0 20px 50px rgba(34, 25, 21, 0.1);
+  overflow: hidden;
+  display: grid;
 }
 
 .story-bts-main-frame img {
   width: 100%;
   height: 100%;
+  min-height: clamp(456px, 54vh, 736px);
   object-fit: cover;
   object-position: center 35%;
   display: block;
@@ -531,8 +537,9 @@
 /* Journal Handwritten Note */
 .story-handwritten-note {
   position: absolute;
-  bottom: -32px;
-  left: 20px;
+  bottom: clamp(0.75rem, 2vw, 1.5rem);
+  left: clamp(0.5rem, 2vw, 1.25rem);
+  max-width: min(240px, 55%);
   font-family: var(--font-hand);
   font-size: 1.35rem;
   color: var(--story-maroon);
@@ -545,9 +552,9 @@
 
 .story-bts-sub-frame {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: min(280px, 48%);
+  bottom: clamp(1.25rem, 4vw, 2.5rem);
+  right: clamp(-0.5rem, 2vw, 1rem);
+  width: min(320px, 52%);
   aspect-ratio: 1;
   padding: 8px;
   background: #ffffff;
@@ -1665,9 +1672,16 @@
 
   .story-bts-visual {
     margin-bottom: 2rem;
-    max-width: min(560px, 100%);
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    max-width: none;
+  }
+
+  .story-bts-main-frame {
+    min-height: clamp(420px, 52vh, 620px);
+  }
+
+  .story-bts-main-frame img {
+    min-height: clamp(396px, 48vh, 596px);
   }
 
   .story-principles-grid {

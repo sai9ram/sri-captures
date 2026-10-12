@@ -137,21 +137,31 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
 
   // Intersection observer for lightweight, graceful editorial animations
   useEffect(() => {
+    const reveal = (el: Element) => {
+      el.classList.add("revealed")
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("revealed")
+            reveal(entry.target)
           }
         })
       },
-      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.08, rootMargin: "0px 0px -8% 0px" },
     )
 
     const elementsToReveal = document.querySelectorAll(
       ".story-reveal, .story-clip-reveal",
     )
-    elementsToReveal.forEach((el) => observer.observe(el))
+    elementsToReveal.forEach((el) => {
+      observer.observe(el)
+      const rect = el.getBoundingClientRect()
+      if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+        reveal(el)
+      }
+    })
 
     return () => {
       observer.disconnect()
@@ -321,7 +331,7 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
           <div className="story-beginning-container">
             {/* Left Column: Behind-the-scenes photograph & Journal details */}
             <div className="story-bts-visual story-reveal">
-              <div className="story-bts-main-frame story-clip-reveal">
+              <div className="story-bts-main-frame story-reveal">
                 <div className="story-photo-tape" aria-hidden="true" />
                 <img
                   src={storyImages.btsMain}
