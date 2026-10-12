@@ -481,22 +481,25 @@
 }
 
 .story-beginning-container {
-  width: min(1280px, 90vw);
+  width: min(1360px, 92vw);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: clamp(3rem, 7vw, 7.5rem);
-  align-items: center;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
 }
 
 /* Split BTS Photographic Journal Composition */
 .story-bts-visual {
   position: relative;
+  width: 100%;
+  padding-bottom: clamp(3.5rem, 8vw, 5rem);
 }
 
 .story-bts-main-frame {
   position: relative;
-  width: min(480px, 92%);
+  width: 100%;
+  max-width: none;
   aspect-ratio: 4 / 5.2;
   padding: 12px;
   background: #ffffff;
@@ -542,9 +545,9 @@
 
 .story-bts-sub-frame {
   position: absolute;
-  bottom: -50px;
-  right: -20px;
-  width: min(220px, 50%);
+  bottom: 0;
+  right: 0;
+  width: min(280px, 48%);
   aspect-ratio: 1;
   padding: 8px;
   background: #ffffff;
@@ -1662,6 +1665,9 @@
 
   .story-bts-visual {
     margin-bottom: 2rem;
+    max-width: min(560px, 100%);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .story-principles-grid {
