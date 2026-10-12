@@ -1,0 +1,10 @@
+{
+  "description": "Experience a captivating storytelling journey through wedding photography with a unique full-screen, sticky scroll design that immerses users in layered narratives.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
