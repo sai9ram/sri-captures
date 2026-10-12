@@ -1,46 +1,57 @@
 import { useEffect, useState } from "react"
 
 // Curated high-fidelity photographs fitting authentic Indian wedding narratives
+const img = (id: string, width = 1400) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=86`
+
 const storyImages = {
   // Section 01: Introduction
-  introMain:
-    "https://images.unsplash.com/photo-1707311381855-28f2acd90b50?auto=format&fit=crop&w=1600&q=88", // Couple in royal heirloom silk
-  introInset:
-    "https://images.unsplash.com/photo-1574017105512-523ba6fc1697?auto=format&fit=crop&w=1200&q=88", // Intimate silk & jewelry detail
+  introMain: img("photo-1707311381855-28f2acd90b50", 1600),
+  introInset: img("photo-1574017105512-523ba6fc1697", 1200),
+  introAccentTop: img("photo-1741201864879-c5e7f81c98b0", 900),
+  introFilm1: img("photo-1610173827002-62c0f1f05d04", 800),
+  introFilm2: img("photo-1581256163941-900dae854787", 800),
+  introFilm3: img("photo-1698419193331-5b2fb90a6304", 800),
+  introPolaroid: img("photo-1760080903831-3cfeac3200dc", 700),
 
   // Section 02: The Story Behind SRI CAPTURES
-  btsMain:
-    "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1600&q=85", // Photographer at work framing ceremony
-  btsSub:
-    "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1200&q=85", // Documentary camera lens detail
+  btsMain: img("photo-1537633552985-df8429e8048b", 1600),
+  btsSub: img("photo-1607604276583-eef5d076aa5f", 1200),
 
   // Section 03: Our Philosophy
-  philosophyMoment:
-    "https://images.unsplash.com/photo-1573890697396-eed65fd271cf?auto=format&fit=crop&w=1400&q=88", // Tender holy ritual & hands
+  philosophyMoment: img("photo-1573890697396-eed65fd271cf", 1400),
+  philosophyObserve: img("photo-1726068449701-4e11c5d64b11", 900),
+  philosophyFeel: img("photo-1732130652719-06c976d8153e", 900),
+  philosophyPreserve: img("photo-1754782915524-714d8534a5df", 900),
+  philosophyWide: img("photo-1573951648026-fa38ff3f6770", 1600),
+  philosophyDetail: img("photo-1679937698873-6065742c8d32", 1000),
 
   // Section 04: Our Approach
-  approachListen:
-    "https://images.unsplash.com/photo-1726068449701-4e11c5d64b11?auto=format&fit=crop&w=1400&q=88", // Quiet conversation with couple
-  approachObserve:
-    "https://images.unsplash.com/photo-1748925702797-12d3a7a9f5fd?auto=format&fit=crop&w=1400&q=88", // Photographer observing mandap ceremony
-  approachPreserve:
-    "https://images.unsplash.com/photo-1732130652719-06c976d8153e?auto=format&fit=crop&w=1400&q=88", // Genuine emotional family embrace
+  approachListen: img("photo-1726068449701-4e11c5d64b11", 1400),
+  approachObserve: img("photo-1748925702797-12d3a7a9f5fd", 1400),
+  approachPreserve: img("photo-1732130652719-06c976d8153e", 1400),
+  approachDetail1: img("photo-1735052712464-9d24b69be5f5", 700),
+  approachDetail2: img("photo-1630526720753-aa4e71acf67d", 700),
+  approachDetail3: img("photo-1728348937755-eec5ca52c095", 700),
+  approachDetail4: img("photo-1574017121722-2c8ead5a7e90", 700),
+
+  beginningInline1: img("photo-1754782915842-aa4fca6c203a", 1100),
+  beginningInline2: img("photo-1748925702797-12d3a7a9f5fd", 1100),
 
   // Section 05: The Stories We Carry
-  archive1:
-    "https://images.unsplash.com/photo-1679937698873-6065742c8d32?auto=format&fit=crop&w=1600&q=90", // Emotional couple portrait
-  archive2:
-    "https://images.unsplash.com/photo-1574017121722-2c8ead5a7e90?auto=format&fit=crop&w=1200&q=88", // Intimate bride preparation
-  archive3:
-    "https://images.unsplash.com/photo-1754782915842-aa4fca6c203a?auto=format&fit=crop&w=1400&q=88", // Celebration flower shower
-  archive4:
-    "https://images.unsplash.com/photo-1728348937755-eec5ca52c095?auto=format&fit=crop&w=1400&q=88", // Unscripted candid laughter
-  archive5:
-    "https://images.unsplash.com/photo-1754782915524-714d8534a5df?auto=format&fit=crop&w=1400&q=90", // Sacred union moment
+  archive1: img("photo-1679937698873-6065742c8d32", 1600),
+  archive2: img("photo-1574017121722-2c8ead5a7e90", 1200),
+  archive3: img("photo-1754782915842-aa4fca6c203a", 1400),
+  archive4: img("photo-1728348937755-eec5ca52c095", 1400),
+  archive5: img("photo-1754782915524-714d8534a5df", 1400),
+  archive6: img("photo-1537633552985-df8429e8048b", 1200),
+  archive7: img("photo-1607604276583-eef5d076aa5f", 1200),
+  archive8: img("photo-1696233410608-d4d9fd7cf3aa", 1200),
 
   // Section 06: Final CTA
-  ctaWide:
-    "https://images.unsplash.com/photo-1696233410608-d4d9fd7cf3aa?auto=format&fit=crop&w=2200&q=90", // Intimate twilight wedding couple
+  ctaWide: img("photo-1696233410608-d4d9fd7cf3aa", 2200),
+  ctaStack1: img("photo-1707311381855-28f2acd90b50", 900),
+  ctaStack2: img("photo-1573890697396-eed65fd271cf", 900),
 }
 
 /* Traditional Indian Invitation Ornamental Divider SVG */
@@ -186,6 +197,8 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
           className="story-sec-intro"
           aria-labelledby="intro-heading"
         >
+          <KolamMotif className="story-intro-watermark" />
+
           <div className="story-intro-container">
             {/* Left Column: Expressive Serif Headline & Introduction Copy */}
             <div className="story-intro-content story-reveal">
@@ -202,10 +215,56 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                 relationships, and little moments that make every wedding
                 unforgettable.
               </p>
+
+              <div
+                className="story-intro-filmstrip story-reveal"
+                style={{ transitionDelay: "200ms" }}
+                aria-label="Moments from Sri Captures weddings"
+              >
+                {[
+                  {
+                    src: storyImages.introFilm1,
+                    alt: "Couple portrait in golden wedding light",
+                    cap: "Portraits",
+                  },
+                  {
+                    src: storyImages.introFilm2,
+                    alt: "Family gathered during intimate wedding rituals",
+                    cap: "Rituals",
+                  },
+                  {
+                    src: storyImages.introFilm3,
+                    alt: "Celebration at a destination wedding venue",
+                    cap: "Celebration",
+                  },
+                ].map((item, index) => (
+                  <figure
+                    key={item.cap}
+                    className="story-intro-film-item"
+                    style={{ transitionDelay: `${240 + index * 90}ms` }}
+                  >
+                    <div className="story-intro-film-frame">
+                      <img src={item.src} alt={item.alt} loading="eager" />
+                    </div>
+                    <figcaption>{item.cap}</figcaption>
+                  </figure>
+                ))}
+              </div>
             </div>
 
             {/* Right Column: Asymmetrical Editorial Photographic Spread */}
             <div className="story-intro-visual">
+              <div
+                className="story-intro-accent-frame story-reveal"
+                style={{ transitionDelay: "180ms" }}
+              >
+                <img
+                  src={storyImages.introAccentTop}
+                  alt="Bride and groom in an editorial wedding portrait"
+                  loading="eager"
+                />
+              </div>
+
               {/* Main Vertical Photograph with Editorial Mat Crop */}
               <div className="story-intro-main-frame story-clip-reveal">
                 <img
@@ -225,6 +284,18 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                   alt="Intimate detail of traditional gold wedding jewelry and silk touch"
                   loading="eager"
                 />
+              </div>
+
+              <div
+                className="story-intro-polaroid story-reveal"
+                style={{ transitionDelay: "400ms" }}
+              >
+                <img
+                  src={storyImages.introPolaroid}
+                  alt="Candid laughter during a coastal wedding celebration"
+                  loading="lazy"
+                />
+                <span>Behind the frame</span>
               </div>
 
               {/* Delicate Editorial Caption */}
@@ -308,6 +379,32 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                 curiosity, patience, and an eye for the moments that cannot be
                 recreated.
               </p>
+
+              <div
+                className="story-beginning-inline-gallery story-reveal"
+                style={{ transitionDelay: "320ms" }}
+              >
+                <figure className="story-beginning-inline-item">
+                  <div className="story-beginning-inline-frame">
+                    <img
+                      src={storyImages.beginningInline1}
+                      alt="Joyful rose petal moment during the wedding procession"
+                      loading="lazy"
+                    />
+                  </div>
+                  <figcaption>Celebration in motion</figcaption>
+                </figure>
+                <figure className="story-beginning-inline-item">
+                  <div className="story-beginning-inline-frame">
+                    <img
+                      src={storyImages.beginningInline2}
+                      alt="Documentary view of sacred wedding ceremony details"
+                      loading="lazy"
+                    />
+                  </div>
+                  <figcaption>Sacred details</figcaption>
+                </figure>
+              </div>
             </div>
           </div>
         </section>
@@ -343,6 +440,13 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                 className="story-principle-card story-reveal"
                 style={{ transitionDelay: "150ms" }}
               >
+                <div className="story-principle-photo">
+                  <img
+                    src={storyImages.philosophyObserve}
+                    alt="Quiet conversation between the couple before the ceremony"
+                    loading="lazy"
+                  />
+                </div>
                 <span className="story-principle-number">01</span>
                 <h3 className="story-principle-title">OBSERVE</h3>
                 <p className="story-principle-desc">
@@ -356,6 +460,13 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                 className="story-principle-card story-reveal"
                 style={{ transitionDelay: "300ms" }}
               >
+                <div className="story-principle-photo">
+                  <img
+                    src={storyImages.philosophyFeel}
+                    alt="Emotional embrace shared between family members"
+                    loading="lazy"
+                  />
+                </div>
                 <span className="story-principle-number">02</span>
                 <h3 className="story-principle-title">FEEL</h3>
                 <p className="story-principle-desc">
@@ -369,12 +480,45 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                 className="story-principle-card story-reveal"
                 style={{ transitionDelay: "450ms" }}
               >
+                <div className="story-principle-photo">
+                  <img
+                    src={storyImages.philosophyPreserve}
+                    alt="Couple sharing a sacred vow during the wedding ceremony"
+                    loading="lazy"
+                  />
+                </div>
                 <span className="story-principle-number">03</span>
                 <h3 className="story-principle-title">PRESERVE</h3>
                 <p className="story-principle-desc">
                   We create photographs that bring you back to the people, the
                   atmosphere, and the feelings of your wedding day.
                 </p>
+              </div>
+            </div>
+
+            <div
+              className="story-philosophy-mosaic story-reveal"
+              style={{ transitionDelay: "220ms" }}
+            >
+              <div className="story-philosophy-mosaic-wide story-clip-reveal">
+                <img
+                  src={storyImages.philosophyWide}
+                  alt="Wedding guests celebrating during an evening reception"
+                  loading="lazy"
+                />
+              </div>
+              <div className="story-philosophy-mosaic-stack">
+                <div className="story-philosophy-mosaic-tall">
+                  <img
+                    src={storyImages.philosophyDetail}
+                    alt="Editorial couple portrait in soft morning light"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="story-philosophy-mosaic-note">
+                  “Light, colour, and the people you love — preserved as you felt
+                  them.”
+                </div>
               </div>
             </div>
 
@@ -483,6 +627,23 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                   </p>
                 </div>
               </div>
+            </div>
+
+            <div
+              className="story-approach-details story-reveal"
+              style={{ transitionDelay: "180ms" }}
+              aria-label="Detail moments from wedding days"
+            >
+              {[
+                { src: storyImages.approachDetail1, alt: "Pre-wedding portrait in open landscape" },
+                { src: storyImages.approachDetail2, alt: "Destination wedding celebration at sunset" },
+                { src: storyImages.approachDetail3, alt: "Candid laughter among wedding guests" },
+                { src: storyImages.approachDetail4, alt: "Bride during quiet morning preparation" },
+              ].map((photo) => (
+                <div key={photo.alt} className="story-approach-detail-frame">
+                  <img src={photo.src} alt={photo.alt} loading="lazy" />
+                </div>
+              ))}
             </div>
 
             {/* Handwritten Connecting Annotation */}
@@ -610,6 +771,56 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                   The sacred vow · Held for a lifetime
                 </div>
               </div>
+
+              <div
+                className="story-archive-item story-archive-item-6 story-reveal"
+                style={{ transitionDelay: "640ms" }}
+              >
+                <div className="story-archive-frame">
+                  <img
+                    src={storyImages.archive6}
+                    alt="Photographer documenting authentic wedding moments"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="story-archive-caption">
+                  On assignment · Always watching the light
+                </div>
+              </div>
+
+              <div
+                className="story-archive-item story-archive-item-7 story-reveal"
+                style={{ transitionDelay: "700ms" }}
+              >
+                <div className="story-archive-frame">
+                  <img
+                    src={storyImages.archive7}
+                    alt="Close detail of camera and ceremony framing"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="story-archive-caption">
+                  Through the lens · Documentary craft
+                </div>
+              </div>
+
+              <div
+                className="story-archive-item story-archive-item-8 story-reveal"
+                style={{ transitionDelay: "760ms" }}
+              >
+                <div className="story-archive-frame">
+                  <div className="story-album-corner tl" />
+                  <div className="story-album-corner br" />
+                  <img
+                    src={storyImages.archive8}
+                    alt="Twilight portrait of newlyweds walking together"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="story-archive-caption">
+                  Twilight walk · Where the day softens
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -632,7 +843,7 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
           />
           <div className="story-cta-overlay" aria-hidden="true" />
 
-          <div className="story-cta-container">
+          <div className="story-cta-container story-cta-layout">
             <div className="story-cta-content story-reveal">
               <div className="story-cta-label">YOUR STORY STARTS HERE</div>
 
@@ -653,6 +864,30 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
               >
                 GET A QUOTE <span>→</span>
               </button>
+            </div>
+
+            <div
+              className="story-cta-visual story-reveal"
+              style={{ transitionDelay: "240ms" }}
+              aria-hidden="true"
+            >
+              <div className="story-cta-stack-main">
+                <img
+                  src={storyImages.ctaStack1}
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <div className="story-cta-stack-overlap">
+                <img
+                  src={storyImages.ctaStack2}
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <p className="story-cta-stack-caption">
+                Your chapter · Our honour to capture
+              </p>
             </div>
 
             {/* Final Heritage-inspired Ornamental Divider Leading into Footer */}
