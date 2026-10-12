@@ -101,12 +101,6 @@ export default function SiteHeader({
             </button>
             <button
               className="universal-nav__item"
-              onClick={() => handleNavClick(() => onNavigateSection("about"))}
-            >
-              About
-            </button>
-            <button
-              className="universal-nav__item"
               onClick={() => handleNavClick(() => onNavigateSection("services"))}
             >
               Services
@@ -116,12 +110,6 @@ export default function SiteHeader({
               onClick={() => handleNavClick(() => onNavigateSection("gallery"))}
             >
               Gallery
-            </button>
-            <button
-              className="universal-nav__item"
-              onClick={() => handleNavClick(() => onNavigateSection("films"))}
-            >
-              Films
             </button>
             <button
               className="universal-nav__item"
@@ -188,10 +176,8 @@ export default function SiteHeader({
               {[
                 { label: "Home", action: onNavigateHome, active: currentPage === "home" },
                 { label: "Our Story", action: onNavigateStory, active: currentPage === "story" },
-                { label: "About", action: () => onNavigateSection("about") },
                 { label: "Services", action: () => onNavigateSection("services") },
                 { label: "Gallery", action: () => onNavigateSection("gallery") },
-                { label: "Films", action: () => onNavigateSection("films") },
                 { label: "Contact", action: () => onNavigateSection("contact") },
               ].map((item, idx) => (
                 <button

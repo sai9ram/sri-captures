@@ -53,10 +53,8 @@ export default function SiteFooter({
         >
           Our Story
         </button>
-        <button onClick={() => onNavigateSection("about")}>About</button>
         <button onClick={() => onNavigateSection("services")}>Services</button>
         <button onClick={() => onNavigateSection("gallery")}>Gallery</button>
-        <button onClick={() => onNavigateSection("films")}>Films</button>
         <button onClick={() => onNavigateSection("contact")}>Contact</button>
       </nav>
 
