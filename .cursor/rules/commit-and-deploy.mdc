@@ -1,0 +1,16 @@
+---
+description: After completing code changes, commit and deploy to production
+alwaysApply: true
+---
+
+# Commit and deploy
+
+When you finish implementing requested changes in this project:
+
+1. Commit with a clear message (do not commit secrets or `.env` files).
+2. Push to `origin` on `main` (`https://github.com/sai9ram/sri-captures.git`).
+3. Deploy with `npx vercel deploy --prod --yes` from the project root.
+
+Tell the user the commit hash and production URL: **https://sri-captures-delta.vercel.app**.
+
+Only skip commit/deploy when the user explicitly says not to, or when there are no file changes.
