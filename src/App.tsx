@@ -26,38 +26,38 @@ const imageUrl = (id: string, width = 1800) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=86`;
 
 const galleryImages: GalleryImage[] = [
-  { src: "/images/IMG_8274.JPG", couple: "Vedic Union", place: "Mandap Ceremonies · 2026" },
-  { src: "/images/IMG_8241.JPG", couple: "Srikanth × Nikitha", place: "Tirupati · 2026" },
-  { src: "/images/IMG_8246.JPG", couple: "Archana", place: "Bridal Portrait · 2026" },
-  { src: "/images/IMG_8258.JPG", couple: "Quiet Reverie", place: "Hyderabad · 2025" },
-  { src: "/images/IMG_8253.JPG", couple: "Haldi Celebrations", place: "Bengaluru · 2025" },
-  { src: "/images/IMG_8234.JPG", couple: "Crimson Twilight", place: "Vijayawada · 2025" },
-  { src: "/images/IMG_8249.JPG", couple: "Unfiltered Bliss", place: "Vizag · 2026" },
+  { src: "/images/725006129_18003973493930397_482581032589192039_n.jpg", couple: "Ananya × Karthik", place: "Tirupati · 2026" },
+  { src: "/images/726231339_18003973520930397_5044683501249128658_n.jpg", couple: "Vedic Traditions", place: "Hyderabad · 2026" },
+  { src: "/images/773866782_18012659870930397_1053337824181013945_n.jpg", couple: "Mira × Dev", place: "Bengaluru · 2025" },
+  { src: "/images/enquiry_shoot.jpg", couple: "The Royal Bride", place: "Heritage Palace · 2026" },
+  { src: "/images/774099434_18012847730930397_7780476466062797139_n.jpg", couple: "Pheras & Blessings", place: "Chennai · 2025" },
+  { src: "/images/two_hearts.jpg", couple: "Two Hearts One Soul", place: "Pre-Wedding · 2026" },
+  { src: "/images/IMG_8249.JPG", couple: "Unfiltered Bliss", place: "Vijayawada · 2026" },
 ];
 
 const services = [
-  { name: "Wedding photography", meta: "Candid · Traditional · Editorial", image: "/images/IMG_8274.JPG" },
-  { name: "Pre-wedding stories", meta: "Portraits · Places · People", image: "/images/IMG_8241.JPG" },
-  { name: "Wedding films", meta: "Highlights · Feature films · Reels", image: "/images/IMG_8234.JPG" },
-  { name: "Destination weddings", meta: "India · Worldwide", image: "/images/IMG_8235.JPG" },
-  { name: "Intimate celebrations", meta: "Families · Rituals · Togetherness", image: "/images/IMG_8258.JPG" },
+  { name: "Wedding photography", meta: "Candid · Traditional · Editorial", image: "/images/IMG_8235.JPG" },
+  { name: "Pre-wedding stories", meta: "Portraits · Places · People", image: "/images/IMG_8239.JPG" },
+  { name: "Wedding films", meta: "Highlights · Feature films · Reels", image: "/images/IMG_8238.JPG" },
+  { name: "Destination weddings", meta: "India · Worldwide", image: "/images/IMG_8236.JPG" },
+  { name: "Intimate celebrations", meta: "Families · Rituals · Togetherness", image: "/images/IMG_8244.JPG" },
 ];
 
 const testimonials = [
   {
     quote: "You captured moments we didn't even know were happening.",
     names: "Ananya & Karthik",
-    image: "/images/IMG_8246.JPG",
+    image: "/images/779084741_18013551242930397_5876533121056492846_n.jpg",
   },
   {
     quote: "Every photograph feels exactly like the day did—full, warm and alive.",
     names: "Priya & Arjun",
-    image: "/images/IMG_8274.JPG",
+    image: "/images/780087469_18013768625930397_4315927215550079478_n.jpg",
   },
   {
     quote: "Our families cried, laughed, and then watched it all over again.",
     names: "Mira & Dev",
-    image: "/images/IMG_8241.JPG",
+    image: "/images/IMG_8260.JPG",
   },
 ];
 
@@ -349,7 +349,7 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
             </button>
           </div>
           <figure className="archive-photo archive-photo--small reveal">
-            <img src={galleryImages[3].src} alt="Bride and groom preparing for their ceremony" />
+            <img src="/images/774075669_18012659861930397_4795189325462169110_n.jpg" alt="Bride preparing for ceremony" />
             <figcaption>Before the ceremony · Chennai</figcaption>
           </figure>
         </div>
@@ -361,9 +361,9 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
         </p>
         <div className="philosophy__principles">
           {[
-            ["Observe", "We notice the moments before they happen.", galleryImages[1].src],
-            ["Feel", "We understand the emotions behind the frame.", galleryImages[4].src],
-            ["Preserve", "We turn fleeting moments into memories.", galleryImages[5].src],
+            ["Observe", "We notice the moments before they happen.", "/images/775243859_18012847721930397_5187543316986712747_n.jpg"],
+            ["Feel", "We understand the emotions behind the frame.", "/images/779001092_18013551263930397_7122338112566484731_n.jpg"],
+            ["Preserve", "We turn fleeting moments into memories.", "/images/780157309_18013768634930397_4829872854217952865_n.jpg"],
           ].map(([title, body, image], index) => (
             <article className="principle reveal" key={title}>
               <img src={image} alt="" />
@@ -453,9 +453,9 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
         </div>
         <div className="film-list">
           {[
-            ["Ananya & Karthik", "The wedding film", galleryImages[2].src],
-            ["Priya & Arjun", "A celebration in Tirupati", galleryImages[0].src],
-            ["Mira & Dev", "Two families, one story", galleryImages[1].src],
+            ["Ananya & Karthik", "The wedding film", "/images/IMG_8273.WEBP"],
+            ["Priya & Arjun", "A celebration in Tirupati", "/images/two_hearts.jpg"],
+            ["Mira & Dev", "Two families, one story", "/images/IMG_8238.JPG"],
           ].map(([couple, title, image], index) => (
             <button className="film-preview reveal" onClick={() => setFilmIndex(index)} key={couple}>
               <span className="film-preview__image">
@@ -479,19 +479,18 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
           <p>There is someone watching, waiting and feeling the moment with you.</p>
         </div>
         <div className="film-strip">
-          {[...[
-            "photo-1623783356340-95375aac85ce",
-            "photo-1629756048377-09540f52caa1",
-            "photo-1756143058493-2d14887e41e6",
-            "photo-1622550105129-02c04a85a5f3",
-            "photo-1611550287705-7ff8b459c8eb",
-          ], ...[
-            "photo-1623783356340-95375aac85ce",
-            "photo-1629756048377-09540f52caa1",
-            "photo-1756143058493-2d14887e41e6",
-          ]].map((id, index) => (
-            <figure key={`${id}-${index}`}>
-              <img src={imageUrl(id, 1000)} alt="Sri Captures working behind the scenes" />
+          {[
+            "/images/780087469_18013768625930397_4315927215550079478_n.jpg",
+            "/images/780157309_18013768634930397_4829872854217952865_n.jpg",
+            "/images/775243859_18012847721930397_5187543316986712747_n.jpg",
+            "/images/779001092_18013551263930397_7122338112566484731_n.jpg",
+            "/images/779084741_18013551242930397_5876533121056492846_n.jpg",
+            "/images/774075669_18012659861930397_4795189325462169110_n.jpg",
+            "/images/773866782_18012659870930397_1053337824181013945_n.jpg",
+            "/images/726231339_18003973520930397_5044683501249128658_n.jpg",
+          ].map((src, index) => (
+            <figure key={`${src}-${index}`}>
+              <img src={src} alt="Sri Captures working behind the scenes" />
               <figcaption>Frame {pad(index + 1)}</figcaption>
             </figure>
           ))}
@@ -513,13 +512,13 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
           ))}
         </div>
         <figure className="experience__image reveal">
-          <img src={imageUrl("photo-1726068449701-4e11c5d64b11")} alt="A newly married couple reflected in a mirror" />
+          <img src="/images/enquiry_shoot.jpg" alt="A newly married couple in traditional attire" />
           <figcaption>From the first conversation to the photographs you keep.</figcaption>
         </figure>
       </section>
 
       <section className="final-cta">
-        <img src={imageUrl("photo-1754782915842-aa4fca6c203a", 2200)} alt="Couple surrounded by flower petals during their wedding ceremony" />
+        <img src="/images/IMG_8235.JPG" alt="Couple celebrating their wedding ceremony" />
         <div className="final-cta__shade" />
         <div className="final-cta__content reveal">
           <SectionLabel number="16">The invitation</SectionLabel>
