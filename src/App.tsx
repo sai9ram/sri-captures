@@ -36,11 +36,36 @@ const galleryImages: GalleryImage[] = [
 ];
 
 const services = [
-  { name: "Wedding photography", meta: "Candid · Traditional · Editorial", image: "/images/IMG_8235.JPG" },
-  { name: "Pre-wedding stories", meta: "Portraits · Places · People", image: "/images/IMG_8239.JPG" },
-  { name: "Wedding films", meta: "Highlights · Feature films · Reels", image: "/images/IMG_8238.JPG" },
-  { name: "Destination weddings", meta: "India · Worldwide", image: "/images/IMG_8236.JPG" },
-  { name: "Intimate celebrations", meta: "Families · Rituals · Togetherness", image: "/images/IMG_8244.JPG" },
+  {
+    name: "Wedding photography",
+    meta: "Candid · Traditional · Editorial",
+    image: "/images/landscape-poster-1.png",
+  },
+  {
+    name: "Pre-wedding stories",
+    meta: "Portraits · Places · People",
+    image: "/images/landscape-poster-3.png",
+  },
+  {
+    name: "Wedding films & cinema",
+    meta: "Highlights · Feature films · 4K Reels",
+    image: "/images/landscape-poster-2.png",
+  },
+  {
+    name: "Destination weddings",
+    meta: "India · Worldwide · Heritage Venues",
+    image: "/images/landscape-poster-4.png",
+  },
+  {
+    name: "Sacred rituals & mandap",
+    meta: "Vedic Traditions · Celebrations · Blessings",
+    image: "/images/landscape-poster-5.png",
+  },
+  {
+    name: "Bridal & fine-art portraits",
+    meta: "Timeless Art · Emotions · Details",
+    image: "/images/landscape-poster-6.png",
+  },
 ];
 
 const testimonials = [
@@ -419,7 +444,7 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
           {services.map((service, index) => (
             <a className="service-row" href="#contact" key={service.name}>
               <div className="service-row__image">
-                <img src={service.image} alt="" />
+                <img src={service.image} alt={service.name} />
               </div>
               <span className="service-row__number">{pad(index + 1)}</span>
               <div>
