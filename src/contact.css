@@ -1,0 +1,938 @@
+/* ==========================================================================
+   CONTACT PAGE — SRI CAPTURES
+   Modern Interpretation of Traditional Indian Wedding Invitation
+   ========================================================================== */
+
+/* ── Design Tokens ─────────────────────────────────────────────────────── */
+.contact-page {
+  --cnt-ivory:       #f8f4ed;
+  --cnt-ivory-warm:  #f2ebe0;
+  --cnt-white:       #ffffff;
+  --cnt-maroon:      #5a1a1c;
+  --cnt-maroon-dk:   #3d1012;
+  --cnt-gold:        #c4a05a;
+  --cnt-gold-lt:     #dfbe82;
+  --cnt-gold-dim:    rgba(196, 160, 90, 0.3);
+  --cnt-terracotta:  #8c4a35;
+  --cnt-charcoal:    #181210;
+  --cnt-text:        #2d221c;
+  --cnt-muted:       #685549;
+
+  background-color: var(--cnt-ivory);
+  color: var(--cnt-text);
+  font-family: "Manrope", sans-serif;
+  overflow-x: hidden;
+  padding-top: 80px; /* clear universal fixed header */
+  min-height: 100vh;
+}
+
+/* ── Universal Container ───────────────────────────────────────────────── */
+.cnt-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* ── Scroll-Reveal System ──────────────────────────────────────────────── */
+.cnt-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cnt-reveal.cnt-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cnt-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Shared Typography & Ornaments ─────────────────────────────────────── */
+.cnt-eyebrow {
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cnt-terracotta);
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.cnt-eyebrow--light {
+  color: var(--cnt-gold-lt);
+}
+
+/* Linework ornament */
+.cnt-ornament {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+  padding: 56px 0 0;
+}
+
+.cnt-ornament span {
+  flex: 1;
+  max-width: 140px;
+  height: 1px;
+  background: var(--cnt-gold);
+  opacity: 0.3;
+}
+
+.cnt-ornament i {
+  font-style: normal;
+  font-size: 9px;
+  color: var(--cnt-gold);
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   SECTION 1 — A WARM WELCOME
+   ========================================================================== */
+.cnt-hero {
+  background: var(--cnt-ivory);
+  padding: 64px 0 40px;
+  position: relative;
+}
+
+.cnt-hero__layout {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.cnt-hero__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.cnt-hero__title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(38px, 4.4vw, 64px);
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--cnt-charcoal);
+  margin: 0 0 20px;
+  letter-spacing: -0.01em;
+}
+
+.cnt-hero__title em {
+  font-style: italic;
+  color: var(--cnt-maroon);
+}
+
+.cnt-hero__body {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--cnt-muted);
+  margin: 0 0 32px;
+  max-width: 480px;
+}
+
+.cnt-scroll-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cnt-maroon);
+  transition: gap 0.25s ease;
+  width: fit-content;
+}
+
+.cnt-scroll-link:hover {
+  gap: 14px;
+}
+
+/* Traditional invitation-style photo frame */
+.cnt-invitation-frame {
+  position: relative;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid var(--cnt-gold-dim);
+  border-radius: 4px;
+  box-shadow: 0 16px 44px rgba(29, 22, 18, 0.08);
+}
+
+.cnt-invitation-border-inner {
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed rgba(196, 160, 90, 0.45);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.cnt-invitation-frame img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: 1px;
+}
+
+.cnt-frame-caption {
+  display: block;
+  margin-top: 12px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--cnt-gold);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   SECTION 2 — A FEW WORDS BEFORE WE BEGIN
+   ========================================================================== */
+.cnt-expectations {
+  background: var(--cnt-ivory-warm);
+  padding: 88px 0;
+  border-top: 1px solid rgba(196, 160, 90, 0.2);
+  border-bottom: 1px solid rgba(196, 160, 90, 0.2);
+}
+
+.cnt-expectations__header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 56px;
+}
+
+.cnt-expectations__title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(34px, 3.8vw, 52px);
+  font-weight: 500;
+  color: var(--cnt-charcoal);
+  margin: 0 0 16px;
+  line-height: 1.15;
+}
+
+.cnt-expectations__title em {
+  font-style: italic;
+  color: var(--cnt-maroon);
+}
+
+.cnt-expectations__sub {
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--cnt-muted);
+  margin: 0;
+}
+
+/* 3 Text points separated by fine lines */
+.cnt-steps-row {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr;
+  gap: 0;
+  align-items: center;
+}
+
+.cnt-step-item {
+  padding: 0 36px;
+}
+
+.cnt-step-num {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: var(--cnt-gold);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cnt-step-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--cnt-charcoal);
+  margin: 0 0 8px;
+}
+
+.cnt-step-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--cnt-muted);
+  margin: 0;
+}
+
+.cnt-step-divider {
+  width: 1px;
+  height: 80px;
+  background: rgba(196, 160, 90, 0.35);
+}
+
+/* ==========================================================================
+   SECTION 3 — YOUR WEDDING ENQUIRY
+   ========================================================================== */
+.cnt-enquiry-section {
+  padding: 100px 0;
+  background: var(--cnt-ivory);
+}
+
+.cnt-form-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.55fr;
+  gap: 56px;
+  align-items: start;
+}
+
+/* Left side note & portrait */
+.cnt-form-side__card {
+  background: #ffffff;
+  padding: 40px 36px;
+  border-radius: 4px;
+  border: 1px solid rgba(196, 160, 90, 0.28);
+  box-shadow: 0 12px 36px rgba(29, 22, 18, 0.05);
+}
+
+.cnt-form-side__title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--cnt-charcoal);
+  margin: 0 0 16px;
+  line-height: 1.2;
+}
+
+.cnt-form-side__text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--cnt-muted);
+  margin: 0 0 16px;
+}
+
+.cnt-form-side__photo {
+  margin: 28px 0 0;
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid var(--cnt-gold-dim);
+}
+
+.cnt-form-side__photo img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.cnt-form-side__photo figcaption {
+  font-size: 11px;
+  font-style: italic;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 15px;
+  color: var(--cnt-muted);
+  text-align: center;
+  padding: 10px 12px;
+  background: var(--cnt-ivory);
+}
+
+/* Right side form card */
+.cnt-form-card {
+  background: #ffffff;
+  padding: 48px 44px;
+  border-radius: 4px;
+  border: 1px solid rgba(196, 160, 90, 0.35);
+  box-shadow: 0 20px 50px rgba(29, 22, 18, 0.08);
+  position: relative;
+}
+
+.cnt-card-header {
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(196, 160, 90, 0.2);
+}
+
+.cnt-form-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(32px, 3.6vw, 46px);
+  font-weight: 500;
+  color: var(--cnt-charcoal);
+  margin: 0 0 8px;
+  line-height: 1.15;
+}
+
+.cnt-form-intro {
+  font-size: 13px;
+  color: var(--cnt-muted);
+  margin: 0;
+}
+
+.cnt-req {
+  color: #b71c1c;
+  font-weight: 700;
+}
+
+.cnt-opt {
+  font-size: 11.5px;
+  color: var(--cnt-muted);
+  font-weight: 400;
+}
+
+/* Form inputs & fields */
+.cnt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.cnt-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.cnt-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.cnt-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cnt-charcoal);
+}
+
+.cnt-input,
+.cnt-textarea {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--cnt-ivory);
+  border: 1px solid rgba(196, 160, 90, 0.3);
+  border-radius: 2px;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  color: var(--cnt-charcoal);
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.cnt-input:focus,
+.cnt-textarea:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: var(--cnt-maroon);
+  box-shadow: 0 0 0 3px rgba(90, 26, 28, 0.12);
+}
+
+.cnt-input.is-invalid {
+  border-color: #b71c1c;
+  background: #fff8f8;
+}
+
+.cnt-error-msg {
+  font-size: 11.5px;
+  color: #b71c1c;
+  font-weight: 600;
+}
+
+.cnt-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Service chips */
+.cnt-services-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cnt-service-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  background: var(--cnt-ivory);
+  border: 1px solid rgba(196, 160, 90, 0.3);
+  border-radius: 30px;
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cnt-text);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cnt-chip-check {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--cnt-gold);
+}
+
+.cnt-service-chip:hover {
+  background: #ffffff;
+  border-color: var(--cnt-gold);
+}
+
+.cnt-service-chip.is-selected {
+  background: var(--cnt-maroon);
+  border-color: var(--cnt-maroon);
+  color: #ffffff;
+}
+
+.cnt-service-chip.is-selected .cnt-chip-check {
+  color: #ffffff;
+}
+
+/* Submit button */
+.cnt-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: var(--cnt-maroon);
+  border: 1px solid var(--cnt-maroon);
+  color: #ffffff;
+  font-family: "Manrope", sans-serif;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.cnt-submit-btn:hover:not(:disabled) {
+  background: var(--cnt-maroon-dk);
+  border-color: var(--cnt-maroon-dk);
+  box-shadow: 0 8px 24px rgba(90, 26, 28, 0.25);
+  transform: translateY(-2px);
+}
+
+.cnt-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Success panel */
+.cnt-success-panel {
+  text-align: center;
+  padding: 48px 24px;
+  background: rgba(196, 160, 90, 0.08);
+  border: 1px dashed var(--cnt-gold);
+  border-radius: 4px;
+}
+
+.cnt-success-icon {
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  text-align: center;
+  background: #2e7d32;
+  color: #ffffff;
+  font-size: 26px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+}
+
+.cnt-success-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--cnt-charcoal);
+  margin: 0 0 12px;
+}
+
+.cnt-success-text {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--cnt-muted);
+  max-width: 440px;
+  margin: 0 auto 28px;
+}
+
+.cnt-reset-btn {
+  background: transparent;
+  border: 1px solid var(--cnt-maroon);
+  color: var(--cnt-maroon);
+  padding: 10px 24px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cnt-reset-btn:hover {
+  background: var(--cnt-maroon);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   SECTION 4 — PREFER A DIRECT CONVERSATION?
+   ========================================================================== */
+.cnt-direct {
+  padding: 96px 0;
+  background: var(--cnt-ivory-warm);
+  border-top: 1px solid rgba(196, 160, 90, 0.22);
+}
+
+.cnt-direct__card {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.cnt-direct__title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(32px, 3.8vw, 48px);
+  font-weight: 500;
+  color: var(--cnt-charcoal);
+  margin: 0 0 16px;
+  line-height: 1.15;
+}
+
+.cnt-direct__desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--cnt-muted);
+  margin: 0;
+}
+
+.cnt-direct__channels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.cnt-channel-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: #ffffff;
+  border: 1px solid rgba(196, 160, 90, 0.28);
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 18px rgba(29, 22, 18, 0.04);
+}
+
+.cnt-channel-link:hover:not(.cnt-channel-link--static) {
+  border-color: var(--cnt-maroon);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(29, 22, 18, 0.08);
+}
+
+.cnt-channel-icon {
+  font-size: 24px;
+}
+
+.cnt-channel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cnt-channel-label {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--cnt-terracotta);
+}
+
+.cnt-channel-value {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--cnt-charcoal);
+}
+
+.cnt-channel-link--static {
+  cursor: default;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* ==========================================================================
+   SECTION 5 — A FEW THINGS YOU MAY BE WONDERING (FAQ)
+   ========================================================================== */
+.cnt-faq {
+  padding: 96px 0;
+  background: var(--cnt-ivory);
+}
+
+.cnt-faq__header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 56px;
+}
+
+.cnt-faq__title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(32px, 3.6vw, 48px);
+  font-weight: 500;
+  color: var(--cnt-charcoal);
+  margin: 0;
+  line-height: 1.15;
+}
+
+.cnt-accordion {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(196, 160, 90, 0.28);
+}
+
+.cnt-accordion-item {
+  border-bottom: 1px solid rgba(196, 160, 90, 0.28);
+}
+
+.cnt-accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cnt-accordion-q {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--cnt-charcoal);
+  transition: color 0.25s ease;
+}
+
+.cnt-accordion-trigger:hover .cnt-accordion-q {
+  color: var(--cnt-maroon);
+}
+
+.cnt-accordion-indicator {
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--cnt-gold);
+  line-height: 1;
+}
+
+.cnt-accordion-content {
+  padding: 0 0 24px;
+}
+
+.cnt-accordion-a {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--cnt-muted);
+  margin: 0;
+}
+
+/* ==========================================================================
+   SECTION 6 — WE'D LOVE TO HEAR YOUR STORY (Deep Maroon Closing)
+   ========================================================================== */
+.cnt-closing {
+  position: relative;
+  background: var(--cnt-maroon-dk);
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 100px 0;
+}
+
+.cnt-closing__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.22;
+  filter: saturate(0.8);
+  transition: transform 12s ease;
+}
+
+.cnt-closing:hover .cnt-closing__bg {
+  transform: scale(1.03);
+}
+
+.cnt-closing__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(61, 16, 18, 0.95) 0%,
+    rgba(30, 8, 9, 0.92) 100%
+  );
+}
+
+.cnt-closing__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 680px;
+  color: #ffffff;
+}
+
+.cnt-closing__ornament {
+  width: 180px;
+  margin: 0 auto 28px;
+  color: var(--cnt-gold);
+}
+
+.cnt-closing__ornament svg {
+  width: 100%;
+  height: auto;
+}
+
+.cnt-closing__title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(36px, 4.2vw, 56px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 18px;
+}
+
+.cnt-closing__title em {
+  font-style: italic;
+  color: var(--cnt-gold-lt);
+}
+
+.cnt-closing__desc {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: rgba(248, 244, 237, 0.76);
+  margin: 0 auto 36px;
+  max-width: 480px;
+}
+
+.cnt-closing-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 36px;
+  background: var(--cnt-gold);
+  border: 1px solid var(--cnt-gold);
+  color: var(--cnt-maroon-dk);
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cnt-closing-cta-btn:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--cnt-maroon-dk);
+  gap: 18px;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.cnt-cta-arrow {
+  transition: transform 0.25s ease;
+}
+
+.cnt-closing-cta-btn:hover .cnt-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   RESPONSIVE — TABLET (max 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .cnt-container {
+    padding: 0 36px;
+  }
+
+  .cnt-hero__layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cnt-steps-row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .cnt-step-divider {
+    display: none;
+  }
+
+  .cnt-step-item {
+    padding: 0;
+  }
+
+  .cnt-form-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cnt-direct__card {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE — MOBILE (max 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .contact-page {
+    padding-top: 64px;
+  }
+
+  .cnt-container {
+    padding: 0 20px;
+  }
+
+  .cnt-hero {
+    padding: 40px 0 24px;
+  }
+
+  .cnt-field-row {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .cnt-form-card {
+    padding: 32px 20px;
+  }
+
+  .cnt-direct__channels {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .cnt-expectations,
+  .cnt-enquiry-section,
+  .cnt-direct,
+  .cnt-faq,
+  .cnt-closing {
+    padding: 64px 0;
+  }
+}

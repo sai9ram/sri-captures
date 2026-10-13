@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import StoryPage from "./StoryPage";
 import ServicesPage from "./ServicesPage";
 import GalleryPage from "./GalleryPage";
+import ContactPage from "./ContactPage";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 
@@ -163,7 +164,7 @@ function SectionLabel({ number, children }: { number: string; children: React.Re
   );
 }
 
-type Page = "home" | "story" | "services" | "gallery";
+type Page = "home" | "story" | "services" | "gallery" | "contact";
 
 const getPageFromHash = (): Page => {
   if (typeof window === "undefined") return "home";
@@ -171,6 +172,7 @@ const getPageFromHash = (): Page => {
   if (hash === "#story" || hash.startsWith("#story/")) return "story";
   if (hash === "#services" || hash.startsWith("#services/")) return "services";
   if (hash === "#gallery" || hash.startsWith("#gallery/")) return "gallery";
+  if (hash === "#contact" || hash.startsWith("#contact/")) return "contact";
   return "home";
 };
 
@@ -633,9 +635,13 @@ export default function App() {
       if (window.location.hash !== "#gallery") {
         window.location.hash = "#gallery";
       }
+    } else if (page === "contact") {
+      if (window.location.hash !== "#contact") {
+        window.location.hash = "#contact";
+      }
     } else {
       const h = window.location.hash;
-      if (h === "#story" || h === "#services" || h === "#gallery") {
+      if (h === "#story" || h === "#services" || h === "#gallery" || h === "#contact") {
         window.history.pushState(null, "", window.location.pathname + window.location.search);
       }
     }
@@ -644,6 +650,11 @@ export default function App() {
   };
 
   const navigateToSection = (sectionId: string) => {
+    if (sectionId === "contact") {
+      navigateTo("contact");
+      return;
+    }
+
     const shouldChangePage = currentPage !== "home";
     if (shouldChangePage) {
       navigateTo("home");
@@ -660,13 +671,12 @@ export default function App() {
       setStoryInquiryRequestKey((key) => key + 1);
       return;
     }
-    if (currentPage === "services" || currentPage === "gallery") {
-      navigateTo("home");
-      window.setTimeout(() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }), 90);
+    if (currentPage === "contact") {
+      document.getElementById("contact-form-section")?.scrollIntoView({ behavior: "smooth" });
       return;
     }
 
-    navigateToSection("contact");
+    navigateTo("contact");
   };
 
   return (
@@ -677,6 +687,7 @@ export default function App() {
         onNavigateStory={() => navigateTo("story")}
         onNavigateServices={() => navigateTo("services")}
         onNavigateGallery={() => navigateTo("gallery")}
+        onNavigateContact={() => navigateTo("contact")}
         onNavigateSection={navigateToSection}
         onOpenInquire={openInquiry}
       />
@@ -686,6 +697,8 @@ export default function App() {
         <ServicesPage onOpenInquiry={openInquiry} />
       ) : currentPage === "gallery" ? (
         <GalleryPage onOpenInquiry={openInquiry} />
+      ) : currentPage === "contact" ? (
+        <ContactPage />
       ) : (
         <HomePage onNavigateStory={() => navigateTo("story")} />
       )}
@@ -695,6 +708,7 @@ export default function App() {
         onNavigateStory={() => navigateTo("story")}
         onNavigateServices={() => navigateTo("services")}
         onNavigateGallery={() => navigateTo("gallery")}
+        onNavigateContact={() => navigateTo("contact")}
         onNavigateSection={navigateToSection}
       />
     </>

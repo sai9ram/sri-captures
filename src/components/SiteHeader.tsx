@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 
 export interface SiteHeaderProps {
-  currentPage: "home" | "story" | "services" | "gallery";
+  currentPage: "home" | "story" | "services" | "gallery" | "contact";
   onNavigateHome: () => void;
   onNavigateStory: () => void;
   onNavigateServices: () => void;
   onNavigateGallery: () => void;
+  onNavigateContact: () => void;
   onNavigateSection: (sectionId: string) => void;
   onOpenInquire: () => void;
 }
@@ -16,6 +17,7 @@ export default function SiteHeader({
   onNavigateStory,
   onNavigateServices,
   onNavigateGallery,
+  onNavigateContact,
   onNavigateSection,
   onOpenInquire,
 }: SiteHeaderProps) {
@@ -120,8 +122,10 @@ export default function SiteHeader({
               Gallery
             </button>
             <button
-              className="universal-nav__item"
-              onClick={() => handleNavClick(() => onNavigateSection("contact"))}
+              className={`universal-nav__item ${
+                currentPage === "contact" ? "is-active" : ""
+              }`}
+              onClick={() => handleNavClick(onNavigateContact)}
             >
               Contact
             </button>
@@ -186,7 +190,7 @@ export default function SiteHeader({
                 { label: "Our Story", action: onNavigateStory, active: currentPage === "story" },
                 { label: "Services", action: onNavigateServices, active: currentPage === "services" },
                 { label: "Gallery", action: onNavigateGallery, active: currentPage === "gallery" },
-                { label: "Contact", action: () => onNavigateSection("contact") },
+                { label: "Contact", action: onNavigateContact, active: currentPage === "contact" },
               ].map((item, idx) => (
                 <button
                   key={item.label}

@@ -1,9 +1,10 @@
 export interface SiteFooterProps {
-  currentPage: "home" | "story" | "services" | "gallery";
+  currentPage: "home" | "story" | "services" | "gallery" | "contact";
   onNavigateHome: () => void;
   onNavigateStory: () => void;
   onNavigateServices: () => void;
   onNavigateGallery: () => void;
+  onNavigateContact: () => void;
   onNavigateSection: (sectionId: string) => void;
 }
 
@@ -13,6 +14,7 @@ export default function SiteFooter({
   onNavigateStory,
   onNavigateServices,
   onNavigateGallery,
+  onNavigateContact,
   onNavigateSection,
 }: SiteFooterProps) {
   const currentYear = new Date().getFullYear();
@@ -59,7 +61,7 @@ export default function SiteFooter({
         </button>
         <button onClick={onNavigateServices} className={currentPage === "services" ? "is-active" : ""}>Services</button>
         <button onClick={onNavigateGallery} className={currentPage === "gallery" ? "is-active" : ""}>Gallery</button>
-        <button onClick={() => onNavigateSection("contact")}>Contact</button>
+        <button onClick={onNavigateContact} className={currentPage === "contact" ? "is-active" : ""}>Contact</button>
       </nav>
 
       <p className="album-footer__closing">Until the next story...</p>
