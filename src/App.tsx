@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import StoryPage from "./StoryPage";
 import ServicesPage from "./ServicesPage";
+import GalleryPage from "./GalleryPage";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 
@@ -162,13 +163,14 @@ function SectionLabel({ number, children }: { number: string; children: React.Re
   );
 }
 
-type Page = "home" | "story" | "services";
+type Page = "home" | "story" | "services" | "gallery";
 
 const getPageFromHash = (): Page => {
   if (typeof window === "undefined") return "home";
   const hash = window.location.hash.toLowerCase();
   if (hash === "#story" || hash.startsWith("#story/")) return "story";
   if (hash === "#services" || hash.startsWith("#services/")) return "services";
+  if (hash === "#gallery" || hash.startsWith("#gallery/")) return "gallery";
   return "home";
 };
 
@@ -627,9 +629,13 @@ export default function App() {
       if (window.location.hash !== "#services") {
         window.location.hash = "#services";
       }
+    } else if (page === "gallery") {
+      if (window.location.hash !== "#gallery") {
+        window.location.hash = "#gallery";
+      }
     } else {
       const h = window.location.hash;
-      if (h === "#story" || h === "#services") {
+      if (h === "#story" || h === "#services" || h === "#gallery") {
         window.history.pushState(null, "", window.location.pathname + window.location.search);
       }
     }
@@ -654,7 +660,7 @@ export default function App() {
       setStoryInquiryRequestKey((key) => key + 1);
       return;
     }
-    if (currentPage === "services") {
+    if (currentPage === "services" || currentPage === "gallery") {
       navigateTo("home");
       window.setTimeout(() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }), 90);
       return;
@@ -670,6 +676,7 @@ export default function App() {
         onNavigateHome={() => navigateTo("home")}
         onNavigateStory={() => navigateTo("story")}
         onNavigateServices={() => navigateTo("services")}
+        onNavigateGallery={() => navigateTo("gallery")}
         onNavigateSection={navigateToSection}
         onOpenInquire={openInquiry}
       />
@@ -677,6 +684,8 @@ export default function App() {
         <StoryPage inquiryRequestKey={storyInquiryRequestKey} />
       ) : currentPage === "services" ? (
         <ServicesPage onOpenInquiry={openInquiry} />
+      ) : currentPage === "gallery" ? (
+        <GalleryPage onOpenInquiry={openInquiry} />
       ) : (
         <HomePage onNavigateStory={() => navigateTo("story")} />
       )}
@@ -685,6 +694,7 @@ export default function App() {
         onNavigateHome={() => navigateTo("home")}
         onNavigateStory={() => navigateTo("story")}
         onNavigateServices={() => navigateTo("services")}
+        onNavigateGallery={() => navigateTo("gallery")}
         onNavigateSection={navigateToSection}
       />
     </>

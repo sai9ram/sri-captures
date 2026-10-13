@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 
 export interface SiteHeaderProps {
-  currentPage: "home" | "story" | "services";
+  currentPage: "home" | "story" | "services" | "gallery";
   onNavigateHome: () => void;
   onNavigateStory: () => void;
   onNavigateServices: () => void;
+  onNavigateGallery: () => void;
   onNavigateSection: (sectionId: string) => void;
   onOpenInquire: () => void;
 }
@@ -14,6 +15,7 @@ export default function SiteHeader({
   onNavigateHome,
   onNavigateStory,
   onNavigateServices,
+  onNavigateGallery,
   onNavigateSection,
   onOpenInquire,
 }: SiteHeaderProps) {
@@ -110,8 +112,10 @@ export default function SiteHeader({
               Services
             </button>
             <button
-              className="universal-nav__item"
-              onClick={() => handleNavClick(() => onNavigateSection("gallery"))}
+              className={`universal-nav__item ${
+                currentPage === "gallery" ? "is-active" : ""
+              }`}
+              onClick={() => handleNavClick(onNavigateGallery)}
             >
               Gallery
             </button>
@@ -181,7 +185,7 @@ export default function SiteHeader({
                 { label: "Home", action: onNavigateHome, active: currentPage === "home" },
                 { label: "Our Story", action: onNavigateStory, active: currentPage === "story" },
                 { label: "Services", action: onNavigateServices, active: currentPage === "services" },
-                { label: "Gallery", action: () => onNavigateSection("gallery") },
+                { label: "Gallery", action: onNavigateGallery, active: currentPage === "gallery" },
                 { label: "Contact", action: () => onNavigateSection("contact") },
               ].map((item, idx) => (
                 <button
