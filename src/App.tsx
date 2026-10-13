@@ -832,18 +832,16 @@ export default function App() {
       ) : (
         <HomePage onNavigateStory={() => navigateTo("story")} />
       )}
-      {currentPage !== "quote" && (
-        <SiteFooter
-          currentPage={currentPage}
-          onNavigateHome={() => navigateTo("home")}
-          onNavigateStory={() => navigateTo("story")}
-          onNavigateServices={() => navigateTo("services")}
-          onNavigateGallery={() => navigateTo("gallery")}
-          onNavigateContact={() => navigateTo("contact")}
-          onNavigateQuote={() => navigateTo("quote")}
-          onNavigateSection={navigateToSection}
-        />
-      )}
+      <SiteFooter
+        currentPage={currentPage}
+        onNavigateHome={() => navigateTo("home")}
+        onNavigateStory={() => navigateTo("story")}
+        onNavigateServices={() => navigateTo("services")}
+        onNavigateGallery={() => navigateTo("gallery")}
+        onNavigateContact={() => navigateTo("contact")}
+        onNavigateQuote={() => navigateTo("quote")}
+        onNavigateSection={navigateToSection}
+      />
     </>
   );
 }
