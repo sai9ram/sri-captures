@@ -1,7 +1,8 @@
 export interface SiteFooterProps {
-  currentPage: "home" | "story";
+  currentPage: "home" | "story" | "services";
   onNavigateHome: () => void;
   onNavigateStory: () => void;
+  onNavigateServices: () => void;
   onNavigateSection: (sectionId: string) => void;
 }
 
@@ -9,6 +10,7 @@ export default function SiteFooter({
   currentPage,
   onNavigateHome,
   onNavigateStory,
+  onNavigateServices,
   onNavigateSection,
 }: SiteFooterProps) {
   const currentYear = new Date().getFullYear();
@@ -53,7 +55,7 @@ export default function SiteFooter({
         >
           Our Story
         </button>
-        <button onClick={() => onNavigateSection("services")}>Services</button>
+        <button onClick={onNavigateServices} className={currentPage === "services" ? "is-active" : ""}>Services</button>
         <button onClick={() => onNavigateSection("gallery")}>Gallery</button>
         <button onClick={() => onNavigateSection("contact")}>Contact</button>
       </nav>

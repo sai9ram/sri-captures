@@ -102,6 +102,42 @@ a {
   box-shadow: 0 8px 30px rgba(45, 30, 20, 0.05);
 }
 
+/* --- Theme: Services (Warm Ivory Catalogue) --- */
+.universal-header--services {
+  color: #1e1510;
+}
+
+.universal-header--services.is-scrolled {
+  background-color: rgba(244, 237, 226, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(196, 160, 90, 0.2);
+  box-shadow: 0 6px 28px rgba(30, 21, 16, 0.07);
+}
+
+.universal-header--services .universal-nav__item.is-active::after {
+  background: #5a1a1c;
+}
+
+.universal-header--services .universal-inquire-btn {
+  background: rgba(90, 26, 28, 0.07);
+  border: 1px solid rgba(90, 26, 28, 0.3);
+  color: #5a1a1c;
+}
+
+.universal-header--services .universal-inquire-btn:hover {
+  background: #5a1a1c;
+  color: #f4ede2;
+  border-color: #5a1a1c;
+  transform: translateY(-1px);
+}
+
+body.is-services-page {
+  background: #f4ede2;
+  color: #2e201a;
+}
+
+
 /* Universal Brand Wordmark */
 .universal-wordmark {
   display: flex;

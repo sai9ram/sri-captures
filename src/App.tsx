@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import StoryPage from "./StoryPage";
+import ServicesPage from "./ServicesPage";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 
@@ -161,12 +162,14 @@ function SectionLabel({ number, children }: { number: string; children: React.Re
   );
 }
 
-type Page = "home" | "story";
+type Page = "home" | "story" | "services";
 
 const getPageFromHash = (): Page => {
   if (typeof window === "undefined") return "home";
   const hash = window.location.hash.toLowerCase();
-  return hash === "#story" || hash.startsWith("#story/") ? "story" : "home";
+  if (hash === "#story" || hash.startsWith("#story/")) return "story";
+  if (hash === "#services" || hash.startsWith("#services/")) return "services";
+  return "home";
 };
 
 function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
@@ -612,6 +615,7 @@ export default function App() {
 
   useEffect(() => {
     document.body.classList.toggle("is-story-page", currentPage === "story");
+    document.body.classList.toggle("is-services-page", currentPage === "services");
   }, [currentPage]);
 
   const navigateTo = (page: Page) => {
@@ -619,8 +623,13 @@ export default function App() {
       if (window.location.hash !== "#story") {
         window.location.hash = "#story";
       }
+    } else if (page === "services") {
+      if (window.location.hash !== "#services") {
+        window.location.hash = "#services";
+      }
     } else {
-      if (window.location.hash === "#story") {
+      const h = window.location.hash;
+      if (h === "#story" || h === "#services") {
         window.history.pushState(null, "", window.location.pathname + window.location.search);
       }
     }
@@ -645,6 +654,11 @@ export default function App() {
       setStoryInquiryRequestKey((key) => key + 1);
       return;
     }
+    if (currentPage === "services") {
+      navigateTo("home");
+      window.setTimeout(() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }), 90);
+      return;
+    }
 
     navigateToSection("contact");
   };
@@ -655,11 +669,14 @@ export default function App() {
         currentPage={currentPage}
         onNavigateHome={() => navigateTo("home")}
         onNavigateStory={() => navigateTo("story")}
+        onNavigateServices={() => navigateTo("services")}
         onNavigateSection={navigateToSection}
         onOpenInquire={openInquiry}
       />
       {currentPage === "story" ? (
         <StoryPage inquiryRequestKey={storyInquiryRequestKey} />
+      ) : currentPage === "services" ? (
+        <ServicesPage onOpenInquiry={openInquiry} />
       ) : (
         <HomePage onNavigateStory={() => navigateTo("story")} />
       )}
@@ -667,6 +684,7 @@ export default function App() {
         currentPage={currentPage}
         onNavigateHome={() => navigateTo("home")}
         onNavigateStory={() => navigateTo("story")}
+        onNavigateServices={() => navigateTo("services")}
         onNavigateSection={navigateToSection}
       />
     </>

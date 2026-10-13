@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 
 export interface SiteHeaderProps {
-  currentPage: "home" | "story";
+  currentPage: "home" | "story" | "services";
   onNavigateHome: () => void;
   onNavigateStory: () => void;
+  onNavigateServices: () => void;
   onNavigateSection: (sectionId: string) => void;
   onOpenInquire: () => void;
 }
@@ -12,6 +13,7 @@ export default function SiteHeader({
   currentPage,
   onNavigateHome,
   onNavigateStory,
+  onNavigateServices,
   onNavigateSection,
   onOpenInquire,
 }: SiteHeaderProps) {
@@ -100,8 +102,10 @@ export default function SiteHeader({
               Our Story
             </button>
             <button
-              className="universal-nav__item"
-              onClick={() => handleNavClick(() => onNavigateSection("services"))}
+              className={`universal-nav__item ${
+                currentPage === "services" ? "is-active" : ""
+              }`}
+              onClick={() => handleNavClick(onNavigateServices)}
             >
               Services
             </button>
@@ -176,7 +180,7 @@ export default function SiteHeader({
               {[
                 { label: "Home", action: onNavigateHome, active: currentPage === "home" },
                 { label: "Our Story", action: onNavigateStory, active: currentPage === "story" },
-                { label: "Services", action: () => onNavigateSection("services") },
+                { label: "Services", action: onNavigateServices, active: currentPage === "services" },
                 { label: "Gallery", action: () => onNavigateSection("gallery") },
                 { label: "Contact", action: () => onNavigateSection("contact") },
               ].map((item, idx) => (
