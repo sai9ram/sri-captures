@@ -464,7 +464,11 @@ export default function ContactPage() {
 
             <div className="cnt-direct__channels">
               <a href="tel:+918142490545" className="cnt-channel-link">
-                <div className="cnt-channel-icon" aria-hidden="true">📞</div>
+                <div className="cnt-channel-icon cnt-channel-icon--phone" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                  </svg>
+                </div>
                 <div className="cnt-channel-info">
                   <span className="cnt-channel-label">PHONE CALL</span>
                   <span className="cnt-channel-value">+91 81424 90545</span>
@@ -477,7 +481,12 @@ export default function ContactPage() {
                 rel="noreferrer"
                 className="cnt-channel-link"
               >
-                <div className="cnt-channel-icon" aria-hidden="true">💬</div>
+                <div className="cnt-channel-icon cnt-channel-icon--whatsapp" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 1.892.525 3.663 1.438 5.176L2.1 21.9l4.87-1.308A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.635 0-3.167-.487-4.453-1.328l-.32-.208-2.91.782.78-2.84-.226-.339A8.17 8.17 0 013.8 12c0-4.529 3.671-8.2 8.2-8.2s8.2 3.671 8.2 8.2-3.671 8.2-8.2 8.2z" />
+                    <path d="M17.507 14.307l-.009.075c-.244.757-.96 1.34-1.782 1.453-.787.108-1.558.005-2.298-.225-1.428-.444-2.738-1.25-3.882-2.327-1.143-1.077-2.023-2.333-2.585-3.738-.285-.715-.436-1.472-.375-2.261.06-.799.58-1.523 1.309-1.838.225-.097.472-.146.721-.146.188 0 .375.028.555.084.285.089.518.291.645.563.263.563.563 1.106.885 1.631.18.292.195.66.037.968-.112.217-.262.405-.442.562-.18.158-.337.338-.457.54-.038.067-.038.15 0 .218.428.847.982 1.613 1.65 2.28.667.668 1.433 1.223 2.28 1.65.068.038.15.038.218 0 .202-.12.382-.277.54-.457.157-.18.345-.33.562-.442.308-.158.676-.143.968.037.525.322 1.068.622 1.631.885.272.127.474.36.563.645.056.18.084.367.084.555 0 .249-.049.496-.146.721z" />
+                  </svg>
+                </div>
                 <div className="cnt-channel-info">
                   <span className="cnt-channel-label">WHATSAPP</span>
                   <span className="cnt-channel-value">+91 81424 90545</span>
@@ -485,7 +494,11 @@ export default function ContactPage() {
               </a>
 
               <a href="mailto:sricapture929@gmail.com" className="cnt-channel-link">
-                <div className="cnt-channel-icon" aria-hidden="true">✉️</div>
+                <div className="cnt-channel-icon cnt-channel-icon--email" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                  </svg>
+                </div>
                 <div className="cnt-channel-info">
                   <span className="cnt-channel-label">EMAIL US</span>
                   <span className="cnt-channel-value">sricapture929@gmail.com</span>
@@ -498,7 +511,11 @@ export default function ContactPage() {
                 rel="noreferrer"
                 className="cnt-channel-link"
               >
-                <div className="cnt-channel-icon" aria-hidden="true">📷</div>
+                <div className="cnt-channel-icon cnt-channel-icon--instagram" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                  </svg>
+                </div>
                 <div className="cnt-channel-info">
                   <span className="cnt-channel-label">INSTAGRAM</span>
                   <span className="cnt-channel-value">@sri_capture9</span>

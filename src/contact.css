@@ -642,7 +642,66 @@
 }
 
 .cnt-channel-icon {
-  font-size: 24px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(196, 160, 90, 0.12);
+  color: var(--cnt-maroon);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.cnt-channel-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.cnt-channel-icon--phone {
+  background: rgba(196, 91, 56, 0.1);
+  color: #c45b38;
+}
+
+.cnt-channel-icon--whatsapp {
+  background: rgba(37, 211, 102, 0.12);
+  color: #25d366;
+}
+
+.cnt-channel-icon--email {
+  background: rgba(122, 43, 34, 0.1);
+  color: #7a2b22;
+}
+
+.cnt-channel-icon--instagram {
+  background: rgba(225, 48, 108, 0.12);
+  color: #e1306c;
+}
+
+.cnt-channel-link:hover .cnt-channel-icon {
+  transform: scale(1.1);
+}
+
+.cnt-channel-link:hover .cnt-channel-icon--phone {
+  background: #c45b38;
+  color: #ffffff;
+}
+
+.cnt-channel-link:hover .cnt-channel-icon--whatsapp {
+  background: #25d366;
+  color: #ffffff;
+}
+
+.cnt-channel-link:hover .cnt-channel-icon--email {
+  background: #7a2b22;
+  color: #ffffff;
+}
+
+.cnt-channel-link:hover .cnt-channel-icon--instagram {
+  background: #e1306c;
+  color: #ffffff;
 }
 
 .cnt-channel-info {
