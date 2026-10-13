@@ -131,14 +131,6 @@ export default function SiteHeader({
             >
               Contact
             </button>
-            <button
-              className={`universal-nav__item universal-nav__item--quote ${
-                currentPage === "quote" ? "is-active" : ""
-              }`}
-              onClick={() => handleNavClick(onNavigateQuote)}
-            >
-              Get a Quote
-            </button>
           </nav>
 
           {/* Right Header Actions */}
@@ -201,7 +193,6 @@ export default function SiteHeader({
                 { label: "Services", action: onNavigateServices, active: currentPage === "services" },
                 { label: "Gallery", action: onNavigateGallery, active: currentPage === "gallery" },
                 { label: "Contact", action: onNavigateContact, active: currentPage === "contact" },
-                { label: "Get a Quote", action: onNavigateQuote, active: currentPage === "quote" },
               ].map((item, idx) => (
                 <button
                   key={item.label}
@@ -221,10 +212,10 @@ export default function SiteHeader({
                 className="universal-mobile-menu__cta"
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  onOpenInquire();
+                  onNavigateQuote();
                 }}
               >
-                Begin Your Story <span>↗</span>
+                Get a Quote <span>↗</span>
               </button>
               <div className="universal-mobile-menu__direct" style={{ display: "flex", flexDirection: "column", gap: "6px", margin: "14px 0 8px", fontSize: "12px" }}>
                 <a href="tel:+918142490545" style={{ color: "inherit", textDecoration: "none", opacity: 0.85 }}>
