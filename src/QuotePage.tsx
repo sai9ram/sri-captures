@@ -6,10 +6,23 @@ const img = (id: string, w = 1600) =>
 
 /* ── Authentic Indian Wedding Visuals ─────────────────────────────── */
 const HERO_PHOTO = img("photo-1630526720753-aa4e71acf67d", 1800);
-const CANDID_STYLE_IMG = img("photo-1611106211090-8f3c79eb8552", 1200);
-const TRAD_STYLE_IMG = img("photo-1599462616558-2b75fd26a283", 1200);
-const LED_WALL_IMG = img("photo-1741201864879-c5e7f81c98b0", 1200);
-const LIVESTREAM_IMG = img("photo-1665960213508-48f07086d49c", 1200);
+const CANDID_STYLE_IMG = "/images/Candid Camera.webp";
+const TRAD_STYLE_IMG = "/images/Traditional camera.jpg";
+const LED_WALL_IMG = "/images/LED wall.webp";
+const LIVESTREAM_IMG = "/images/live Stream.avif";
+
+/* ── Service image map (name → local thumbnail) ────────────────────── */
+const SERVICE_IMG_MAP: Record<string, string> = {
+  "Traditional Photo": "/images/Traditional camera.jpg",
+  "Traditional Video": "/images/Traditional Video.webp",
+  "Candid Photo":      "/images/Candid Camera.webp",
+  "Candid Video":      "/images/Candid Video.avif",
+  "Drone Coverage":    "/images/Drone camera.webp",
+  "Drone Camera":      "/images/Drone camera.webp",
+  "LED Wall":          "/images/LED wall.webp",
+  "Live Stream":       "/images/live Stream.avif",
+  "Live Streaming":    "/images/live Stream.avif",
+};
 
 export interface ServiceOption {
   id: string;
@@ -81,6 +94,9 @@ export const WEDDING_EVENTS: WeddingEvent[] = [
       { id: "rec_trad_video", name: "Traditional Video", price: 10000, category: "video" },
       { id: "rec_candid_photo", name: "Candid Photo", price: 15000, category: "photo" },
       { id: "rec_candid_video", name: "Candid Video", price: 15000, category: "video" },
+      { id: "rec_drone", name: "Drone Coverage", price: 12000, category: "drone" },
+      { id: "rec_led_wall", name: "LED Wall", price: 15000, category: "video" },
+      { id: "rec_livestream", name: "Live Stream", price: 8000, category: "video" },
     ],
   },
   {
@@ -93,6 +109,8 @@ export const WEDDING_EVENTS: WeddingEvent[] = [
       { id: "gw_candid_photo", name: "Candid Photo", price: 20000, category: "photo" },
       { id: "gw_candid_video", name: "Candid Video", price: 20000, category: "video" },
       { id: "gw_drone", name: "Drone Coverage", price: 12000, category: "drone" },
+      { id: "gw_led_wall", name: "LED Wall", price: 15000, category: "video" },
+      { id: "gw_livestream", name: "Live Stream", price: 8000, category: "video" },
     ],
   },
   {
@@ -159,6 +177,74 @@ export const formatINR = (val: number): string => {
     currency: "INR",
     maximumFractionDigits: 0,
   }).format(val);
+};
+
+export interface StyleOption {
+  id: string;
+  alias?: string;
+  name: string;
+  subtitle: string;
+  tag: string;
+  img: string;
+  badge: string;
+}
+
+export const STYLE_OPTIONS: StyleOption[] = [
+  {
+    id: "candid",
+    alias: "candid_photo",
+    name: "Candid Photography",
+    subtitle: "Storytelling & authentic emotions",
+    tag: "Natural laughs • Emotional tears • Unrehearsed moments",
+    img: "/images/Candid Camera.webp",
+    badge: "CANDID CAMERA",
+  },
+  {
+    id: "candid_video",
+    name: "Candid Video / Cinema",
+    subtitle: "Cinematic story & emotional highlights",
+    tag: "4K cinematic teaser • Couple romance • Storytelling",
+    img: "/images/Candid Video.avif",
+    badge: "CANDID VIDEO",
+  },
+  {
+    id: "traditional",
+    alias: "trad_photo",
+    name: "Traditional Photography",
+    subtitle: "Classic stage poses & full family portraits",
+    tag: "Stage portraits • Formal groups • Complete ritual archives",
+    img: "/images/Traditional camera.jpg",
+    badge: "TRADITIONAL CAMERA",
+  },
+  {
+    id: "trad_video",
+    name: "Traditional Video",
+    subtitle: "Full ceremony archival coverage",
+    tag: "Full ritual recording • Auspicious proceedings • Crystal audio",
+    img: "/images/Traditional Video.webp",
+    badge: "TRADITIONAL VIDEO",
+  },
+  {
+    id: "drone_aerial",
+    name: "Drone Cinematography",
+    subtitle: "Epic aerial perspectives & grand scale",
+    tag: "Breathtaking 4K aerial sweeps • Baraat & venue scale",
+    img: "/images/Drone camera.webp",
+    badge: "DRONE CAMERA",
+  },
+];
+
+export const getStyleLabel = (styleId: string): string => {
+  const map: Record<string, string> = {
+    candid: "Candid Photography",
+    candid_photo: "Candid Photography",
+    candid_video: "Candid Video",
+    traditional: "Traditional Photography",
+    trad_photo: "Traditional Photography",
+    trad_video: "Traditional Video",
+    drone_aerial: "Drone Cinematography",
+  };
+  return map[styleId] || styleId;
 };
 
 interface QuotePageProps {
@@ -397,7 +483,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
               </tr>
               <tr>
                 <td><strong>Email:</strong> ${details.email}</td>
-                <td><strong>Style:</strong> ${selectedStyles.map((s) => (s === "candid" ? "Candid" : "Traditional")).join(" & ")}</td>
+                <td><strong>Style:</strong> ${selectedStyles.map(getStyleLabel).join(" & ")}</td>
               </tr>
             </table>
           </div>
@@ -564,75 +650,49 @@ Please check availability and connect with me.`;
                 <div className="quote-step__header">
                   <span className="quote-eyebrow">STEP 01 OF 05</span>
                   <h2 id="step2-heading" className="quote-section-title">
-                    What type of photography do you want?
+                    What style of photography &amp; video do you want?
                   </h2>
                   <p className="quote-section-desc">
-                    Select your primary style preference. You can choose either or both.
+                    Select your preferred coverage styles. You can choose any combination.
                   </p>
                 </div>
 
                 <div className="quote-styles-grid">
-                  {/* Style A: Candid */}
-                  <div
-                    className={`quote-style-card ${
-                      selectedStyles.includes("candid") ? "is-selected" : ""
-                    }`}
-                    onClick={() => toggleStyle("candid")}
-                    role="checkbox"
-                    aria-checked={selectedStyles.includes("candid")}
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        toggleStyle("candid");
-                      }
-                    }}
-                  >
-                    <div className="quote-style-card__img">
-                      <img src={CANDID_STYLE_IMG} alt="Candid wedding emotions" />
-                      <div className="quote-style-card__badge">
-                        {selectedStyles.includes("candid") ? "✓ SELECTED" : "SELECT"}
-                      </div>
-                    </div>
-                    <div className="quote-style-card__body">
-                      <h3 className="quote-style-card__name">Candid Photography</h3>
-                      <p className="quote-style-card__desc">Storytelling &amp; emotions.</p>
-                      <span className="quote-style-card__tag">
-                        Natural laughs &bull; Unrehearsed tears &bull; Authentic moments
-                      </span>
-                    </div>
-                  </div>
+                  {STYLE_OPTIONS.map((style) => {
+                    const isSelected =
+                      selectedStyles.includes(style.id) ||
+                      (style.alias && selectedStyles.includes(style.alias));
 
-                  {/* Style B: Traditional */}
-                  <div
-                    className={`quote-style-card ${
-                      selectedStyles.includes("traditional") ? "is-selected" : ""
-                    }`}
-                    onClick={() => toggleStyle("traditional")}
-                    role="checkbox"
-                    aria-checked={selectedStyles.includes("traditional")}
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        toggleStyle("traditional");
-                      }
-                    }}
-                  >
-                    <div className="quote-style-card__img">
-                      <img src={TRAD_STYLE_IMG} alt="Traditional wedding portraits and rituals" />
-                      <div className="quote-style-card__badge">
-                        {selectedStyles.includes("traditional") ? "✓ SELECTED" : "SELECT"}
+                    return (
+                      <div
+                        key={style.id}
+                        className={`quote-style-card ${isSelected ? "is-selected" : ""}`}
+                        onClick={() => toggleStyle(style.id)}
+                        role="checkbox"
+                        aria-checked={!!isSelected}
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            toggleStyle(style.id);
+                          }
+                        }}
+                      >
+                        <div className="quote-style-card__img">
+                          <img src={style.img} alt={style.name} />
+                          <div className="quote-style-card__badge">
+                            {isSelected ? "✓ SELECTED" : "SELECT"}
+                          </div>
+                          <span className="quote-style-card__type-tag">{style.badge}</span>
+                        </div>
+                        <div className="quote-style-card__body">
+                          <h3 className="quote-style-card__name">{style.name}</h3>
+                          <p className="quote-style-card__desc">{style.subtitle}</p>
+                          <span className="quote-style-card__tag">{style.tag}</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="quote-style-card__body">
-                      <h3 className="quote-style-card__name">Traditional Photography</h3>
-                      <p className="quote-style-card__desc">Classic poses &amp; family.</p>
-                      <span className="quote-style-card__tag">
-                        Family stage portraits &bull; Complete ritual archives
-                      </span>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
 
                 <div className="quote-nav-actions">
@@ -725,12 +785,13 @@ Please check availability and connect with me.`;
                             <div className="quote-services-grid">
                               {event.services.map((srv) => {
                                 const isChecked = !!selectedServices[srv.id];
+                                const srvImg = SERVICE_IMG_MAP[srv.name];
                                 return (
                                   <label
                                     key={srv.id}
                                     className={`quote-service-tile ${
                                       isChecked ? "is-checked" : ""
-                                    }`}
+                                    } ${srvImg ? "has-thumb" : ""}`}
                                   >
                                     <input
                                       type="checkbox"
@@ -750,6 +811,11 @@ Please check availability and connect with me.`;
                                         {formatINR(srv.price)}
                                       </span>
                                     </div>
+                                    {srvImg && (
+                                      <div className="quote-service-tile__thumb" aria-hidden="true">
+                                        <img src={srvImg} alt={srv.name} />
+                                      </div>
+                                    )}
                                   </label>
                                 );
                               })}
@@ -1093,9 +1159,7 @@ Please check availability and connect with me.`;
                         <p>Date: {details.weddingDate}</p>
                         <p>
                           Style:{" "}
-                          {selectedStyles
-                            .map((s) => (s === "candid" ? "Candid" : "Traditional"))
-                            .join(" & ")}
+                          {selectedStyles.map(getStyleLabel).join(" & ")}
                         </p>
                       </div>
                     </div>

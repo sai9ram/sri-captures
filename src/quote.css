@@ -284,8 +284,8 @@
    ========================================================================== */
 .quote-styles-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
   margin-bottom: 40px;
 }
 
@@ -313,6 +313,22 @@
 .quote-style-card__img {
   position: relative;
   overflow: hidden;
+}
+
+.quote-style-card__type-tag {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 3px 8px;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  border-radius: 2px;
+  background: rgba(24, 18, 16, 0.82);
+  color: #f7e7ce;
+  backdrop-filter: blur(4px);
+  text-transform: uppercase;
+  border: 1px solid rgba(196, 160, 90, 0.4);
 }
 
 .quote-style-card__img img {
@@ -483,10 +499,10 @@
 .quote-service-tile {
   background: #ffffff;
   border: 1px solid rgba(196, 160, 90, 0.3);
-  border-radius: 3px;
-  padding: 14px 16px;
+  border-radius: 4px;
+  padding: 12px 14px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -517,7 +533,6 @@
   font-weight: 800;
   color: var(--q-muted);
   flex-shrink: 0;
-  margin-top: 2px;
   transition: all 0.2s ease;
 }
 
@@ -530,6 +545,8 @@
 .quote-service-tile__info {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-width: 0;
 }
 
 .quote-service-tile__category {
@@ -545,12 +562,44 @@
   font-weight: 700;
   color: var(--q-charcoal);
   margin: 0 0 4px;
+  line-height: 1.25;
 }
 
 .quote-service-tile__price {
   font-size: 13.5px;
   font-weight: 800;
   color: var(--q-maroon);
+}
+
+.quote-service-tile__thumb {
+  width: 54px;
+  height: 54px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(196, 160, 90, 0.35);
+  background: #f7f3ee;
+  margin-left: auto;
+  box-shadow: 0 2px 6px rgba(24, 18, 16, 0.08);
+}
+
+.quote-service-tile__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.quote-service-tile:hover .quote-service-tile__thumb img {
+  transform: scale(1.08);
+}
+
+@media (max-width: 640px) {
+  .quote-service-tile__thumb {
+    width: 46px;
+    height: 46px;
+  }
 }
 
 /* ==========================================================================
