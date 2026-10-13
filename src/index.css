@@ -241,8 +241,8 @@ body.is-services-page {
 /* Universal Brand Wordmark */
 .universal-wordmark {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  gap: 12px;
   background: none;
   border: 0;
   padding: 0;
@@ -253,7 +253,23 @@ body.is-services-page {
 }
 
 .universal-wordmark:hover {
-  opacity: 0.82;
+  opacity: 0.86;
+}
+
+.universal-wordmark__logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(196, 160, 90, 0.45);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.universal-wordmark__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .universal-wordmark__main {
@@ -470,6 +486,21 @@ body.is-services-page {
   border-bottom: 1px solid rgba(128, 128, 128, 0.18);
 }
 
+.universal-mobile-menu__brand-grp {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.universal-mobile-menu__logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(196, 160, 90, 0.45);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 .universal-mobile-menu__brand {
   font-family: "Cormorant Garamond", serif;
   font-size: 16px;
@@ -677,9 +708,30 @@ body.is-services-page {
   text-align: center;
 }
 
+.hero-brand-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 auto 32px;
+  padding: 6px 18px 6px 8px;
+  background: rgba(24, 18, 16, 0.45);
+  border: 1px solid rgba(196, 160, 90, 0.35);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-brand-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(196, 160, 90, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
 .hero-brand {
-  margin: 0 0 32px;
-  font-size: clamp(12px, 1.25vw, 18px);
+  margin: 0;
+  font-size: clamp(12px, 1.25vw, 17px);
   font-weight: 600;
   letter-spacing: 0.38em;
 }
@@ -2464,6 +2516,27 @@ body.is-services-page {
 
 @keyframes drawFlower {
   to { stroke-dashoffset: 0; }
+}
+
+.album-footer__logo-wrap {
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.album-footer__logo {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(196, 160, 90, 0.55);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.album-footer__logo:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 30px rgba(196, 160, 90, 0.45);
 }
 
 .album-footer__brand {

@@ -85,8 +85,15 @@ export default function SiteHeader({
             onClick={handleWordmarkClick}
             aria-label="SRI CAPTURES - Return to home"
           >
-            <span className="universal-wordmark__main">SRI</span>
-            <span className="universal-wordmark__sub">CAPTURES</span>
+            <img
+              src="/images/sricaptures-logo.jpg"
+              alt="Sri Captures Logo"
+              className="universal-wordmark__logo"
+            />
+            <div className="universal-wordmark__text">
+              <span className="universal-wordmark__main">SRI</span>
+              <span className="universal-wordmark__sub">CAPTURES</span>
+            </div>
           </button>
 
           {/* Desktop & Tablet Navigation */}
@@ -176,7 +183,14 @@ export default function SiteHeader({
           <div className="universal-mobile-menu__backdrop" onClick={() => setMobileMenuOpen(false)} />
           <div className="universal-mobile-menu__panel">
             <div className="universal-mobile-menu__header">
-              <span className="universal-mobile-menu__brand">SRI CAPTURES</span>
+              <div className="universal-mobile-menu__brand-grp">
+                <img
+                  src="/images/sricaptures-logo.jpg"
+                  alt="Sri Captures Logo"
+                  className="universal-mobile-menu__logo"
+                />
+                <span className="universal-mobile-menu__brand">SRI CAPTURES</span>
+              </div>
               <button
                 className="universal-mobile-menu__close"
                 onClick={() => setMobileMenuOpen(false)}

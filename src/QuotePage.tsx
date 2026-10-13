@@ -460,8 +460,13 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
         <body>
           <div class="header">
             <div>
-              <h1 class="brand">SRI CAPTURES</h1>
-              <span class="brand-sub">PREMIUM WEDDING PHOTOGRAPHY & FILMS</span>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+                <img src="/images/sricaptures-logo.jpg" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:1.5px solid #c4a05a;" alt="Sri Captures" />
+                <div>
+                  <h1 class="brand" style="margin:0;line-height:1;">SRI CAPTURES</h1>
+                  <span class="brand-sub">PREMIUM WEDDING PHOTOGRAPHY & FILMS</span>
+                </div>
+              </div>
               <p style="margin:4px 0 0;font-size:12px;color:#666;">Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com</p>
             </div>
             <div class="ref-box">
@@ -1128,11 +1133,25 @@ Please check availability and connect with me.`;
 
                   <div className="quote-invoice-sheet">
                     <div className="quote-invoice-header">
-                      <div>
-                        <h3 className="quote-invoice-brand">SRI CAPTURES</h3>
-                        <p className="quote-invoice-meta">
-                          Phone: +91 81424 90545 &bull; sricapture929@gmail.com
-                        </p>
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                        <img
+                          src="/images/sricaptures-logo.jpg"
+                          alt="Sri Captures Logo"
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "50%",
+                            objectFit: "cover",
+                            border: "1.5px solid rgba(196, 160, 90, 0.5)",
+                            boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+                          }}
+                        />
+                        <div>
+                          <h3 className="quote-invoice-brand" style={{ margin: 0 }}>SRI CAPTURES</h3>
+                          <p className="quote-invoice-meta" style={{ margin: "2px 0 0" }}>
+                            Phone: +91 81424 90545 &bull; sricapture929@gmail.com
+                          </p>
+                        </div>
                       </div>
                       <div className="quote-invoice-ref-box">
                         <span className="quote-ref-badge">REF: {quoteReference}</span>

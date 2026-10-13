@@ -29,6 +29,14 @@ export default function SiteFooter({
         <path d="M110 145C108 103 111 69 111 29M111 70C80 67 62 49 53 29C78 27 101 40 111 62M111 88C139 83 158 65 168 43C142 43 121 56 111 79M111 39C99 28 98 12 110 4C123 13 123 28 111 39Z" />
       </svg>
 
+      <div className="album-footer__logo-wrap">
+        <img
+          src="/images/sricaptures-logo.jpg"
+          alt="Sri Captures Logo"
+          className="album-footer__logo"
+        />
+      </div>
+
       <p className="album-footer__brand">SRI CAPTURES</p>
 
       <h2>

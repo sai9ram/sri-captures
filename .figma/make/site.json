@@ -7,6 +7,9 @@
   "openGraph": {
     "image": "/images/Hero 1st image.jpg"
   },
+  "icons": {
+    "icon": "/images/fav-icon.jpg"
+  },
   "accessibility": {
     "addBypassLinks": false,
     "ignoreReducedMotion": false
