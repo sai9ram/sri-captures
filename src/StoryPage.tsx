@@ -506,7 +506,7 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
               className="story-philosophy-mosaic story-reveal"
               style={{ transitionDelay: "220ms" }}
             >
-              <div className="story-philosophy-mosaic-wide story-clip-reveal">
+              <div className="story-philosophy-mosaic-wide story-reveal">
                 <img
                   src={storyImages.philosophyWide}
                   alt="Wedding guests celebrating during an evening reception"
