@@ -219,6 +219,44 @@ function SectionLabel({ number, children }: { number: string; children: React.Re
 
 type Page = "home" | "story" | "services" | "gallery" | "contact" | "quote";
 
+interface PageSEO {
+  title: string;
+  description: string;
+}
+
+export const PAGE_SEO: Record<Page, PageSEO> = {
+  home: {
+    title: "Sri Captures | Luxury Wedding Photography & Cinematic Films",
+    description:
+      "Sri Captures — Premium wedding photography and cinematic films across India. Capturing raw human emotions, sacred rituals, fine-art portraits, and timeless love stories.",
+  },
+  story: {
+    title: "Our Story & Philosophy | Sri Captures Wedding Photography",
+    description:
+      "Discover the story, creative vision, and craft behind Sri Captures. Learn how we capture unfiltered emotion, heritage traditions, and cinematic wedding memories.",
+  },
+  services: {
+    title: "Wedding Photography & Cinema Services | Sri Captures",
+    description:
+      "Explore Sri Captures tailored wedding services: Candid photography, 4K cinematic films, pre-wedding couple sessions, drone cinematography, and traditional ceremony coverage.",
+  },
+  gallery: {
+    title: "Wedding Archive & Visual Gallery | Sri Captures",
+    description:
+      "Browse our curated portfolio of weddings, intimate pre-wedding stories, sacred Vedic rituals, and timeless moments captured with artistic depth by Sri Captures.",
+  },
+  contact: {
+    title: "Contact & Check Wedding Availability | Sri Captures",
+    description:
+      "Get in touch with Sri Captures. Check wedding dates, discuss venue coverage, and connect directly via Phone, WhatsApp, Email, or Instagram.",
+  },
+  quote: {
+    title: "Custom Wedding Quotation Builder | Sri Captures",
+    description:
+      "Build your customized wedding photography and videography estimate online. Transparent pricing for engagement, haldi, mehandi, grand wedding, and reception.",
+  },
+};
+
 const getPageFromHash = (): Page => {
   if (typeof window === "undefined") return "home";
   const hash = window.location.hash.toLowerCase();
@@ -682,6 +720,35 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const seo = PAGE_SEO[currentPage] || PAGE_SEO.home;
+    document.title = seo.title;
+
+    // Update meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement("meta");
+      metaDescription.setAttribute("name", "description");
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute("content", seo.description);
+
+    // Update Open Graph title and description
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+      ogTitle = document.createElement("meta");
+      ogTitle.setAttribute("property", "og:title");
+      document.head.appendChild(ogTitle);
+    }
+    ogTitle.setAttribute("content", seo.title);
+
+    let ogDesc = document.querySelector('meta[property="og:description"]');
+    if (!ogDesc) {
+      ogDesc = document.createElement("meta");
+      ogDesc.setAttribute("property", "og:description");
+      document.head.appendChild(ogDesc);
+    }
+    ogDesc.setAttribute("content", seo.description);
+
     document.body.classList.toggle("is-story-page", currentPage === "story");
     document.body.classList.toggle("is-services-page", currentPage === "services");
     document.body.classList.toggle("is-quote-page", currentPage === "quote");

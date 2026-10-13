@@ -1,7 +1,11 @@
 {
-  "description": "Experience a captivating storytelling journey through wedding photography with a unique full-screen, sticky scroll design that immerses users in layered narratives.",
+  "title": "Sri Captures | Premium Wedding Photography & Cinematic Films",
+  "description": "Sri Captures — Luxury wedding photography and cinematic films. Capturing raw human emotions, timeless sacred rituals, fine-art bridal portraits, and celebratory wedding stories across India.",
   "robots": {
-    "index": false
+    "index": true
+  },
+  "openGraph": {
+    "image": "/images/Hero 1st image.jpg"
   },
   "accessibility": {
     "addBypassLinks": false,
