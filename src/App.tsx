@@ -67,31 +67,31 @@ const cinemaFilms: FilmItem[] = [
   {
     couple: "Our Story Continues",
     title: "Cinematic Pre-Wedding Film",
-    image: "/images/two_hearts.jpg",
+    image: "/images/thumbs/film-3-thumb.jpg",
     video: "/videos/film-3.mp4",
   },
   {
     couple: "Feel the Emotion",
     title: "Wedding Ceremony Highlights",
-    image: "/images/IMG_8274.JPG",
+    image: "/images/thumbs/film-4-thumb.jpg",
     video: "/videos/film-4.mp4",
   },
   {
     couple: "Unspoken Connection",
     title: "Bridal & Couple Portrait Film",
-    image: "/images/IMG_8273.WEBP",
+    image: "/images/thumbs/film-5-thumb.jpg",
     video: "/videos/film-5.mp4",
   },
   {
     couple: "Sacred Vows",
     title: "Vedic Rituals & Mandap Celebrations",
-    image: "/images/IMG_8241.JPG",
+    image: "/images/thumbs/film-1-thumb.jpg",
     video: "/videos/film-1.mp4",
   },
   {
     couple: "Eternal Bond",
     title: "Engagement & Love Story",
-    image: "/images/IMG_8238.JPG",
+    image: "/images/thumbs/film-2-thumb.jpg",
     video: "/videos/film-2.mp4",
   },
 ];
@@ -490,7 +490,17 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
           {cinemaFilms.map((film, index) => (
             <button className="film-preview reveal" onClick={() => setFilmIndex(index)} key={film.couple}>
               <span className="film-preview__image">
-                <img src={film.image} alt={film.couple} />
+                <video
+                  src={film.video}
+                  poster={film.image}
+                  preload="none"
+                  muted
+                  playsInline
+                  loop
+                  onMouseEnter={e => (e.currentTarget as HTMLVideoElement).play()}
+                  onMouseLeave={e => { const v = e.currentTarget as HTMLVideoElement; v.pause(); v.currentTime = 0; }}
+                  aria-label={film.couple}
+                />
                 <i aria-hidden="true">Play</i>
               </span>
               <span className="film-preview__meta">
