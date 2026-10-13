@@ -2599,11 +2599,13 @@ body.is-services-page {
   overflow: hidden;
 }
 
-.film-modal__screen img {
+.film-modal__screen img,
+.film-modal__screen video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: brightness(0.65);
+  object-fit: contain;
+  background: #000;
+  border-radius: 4px;
 }
 
 .film-modal__screen > button {

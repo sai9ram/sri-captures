@@ -45,19 +45,54 @@ const services = [
 
 const testimonials = [
   {
-    quote: "You captured moments we didn't even know were happening.",
+    quote: "You captured moments we didn't even know were happening. Every photograph feels full, warm and alive.",
     names: "Ananya & Karthik",
-    image: "/images/779084741_18013551242930397_5876533121056492846_n.jpg",
+    image: "/images/IMG_8253.JPG",
   },
   {
-    quote: "Every photograph feels exactly like the day did—full, warm and alive.",
+    quote: "Our families cried, laughed, and then watched it all over again. Memories we will cherish for generations.",
     names: "Priya & Arjun",
-    image: "/images/780087469_18013768625930397_4315927215550079478_n.jpg",
+    image: "/images/IMG_8234.JPG",
+  },
+];
+
+type FilmItem = {
+  couple: string;
+  title: string;
+  image: string;
+  video: string;
+};
+
+const cinemaFilms: FilmItem[] = [
+  {
+    couple: "Our Story Continues",
+    title: "Cinematic Pre-Wedding Film",
+    image: "/images/two_hearts.jpg",
+    video: "/videos/film-3.mp4",
   },
   {
-    quote: "Our families cried, laughed, and then watched it all over again.",
-    names: "Mira & Dev",
-    image: "/images/IMG_8260.JPG",
+    couple: "Feel the Emotion",
+    title: "Wedding Ceremony Highlights",
+    image: "/images/IMG_8274.JPG",
+    video: "/videos/film-4.mp4",
+  },
+  {
+    couple: "Unspoken Connection",
+    title: "Bridal & Couple Portrait Film",
+    image: "/images/IMG_8273.WEBP",
+    video: "/videos/film-5.mp4",
+  },
+  {
+    couple: "Sacred Vows",
+    title: "Vedic Rituals & Mandap Celebrations",
+    image: "/images/IMG_8241.JPG",
+    video: "/videos/film-1.mp4",
+  },
+  {
+    couple: "Eternal Bond",
+    title: "Engagement & Love Story",
+    image: "/images/IMG_8238.JPG",
+    video: "/videos/film-2.mp4",
   },
 ];
 
@@ -452,19 +487,15 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
           <p>Some stories deserve to move.</p>
         </div>
         <div className="film-list">
-          {[
-            ["Ananya & Karthik", "The wedding film", "/images/IMG_8273.WEBP"],
-            ["Priya & Arjun", "A celebration in Tirupati", "/images/two_hearts.jpg"],
-            ["Mira & Dev", "Two families, one story", "/images/IMG_8238.JPG"],
-          ].map(([couple, title, image], index) => (
-            <button className="film-preview reveal" onClick={() => setFilmIndex(index)} key={couple}>
+          {cinemaFilms.map((film, index) => (
+            <button className="film-preview reveal" onClick={() => setFilmIndex(index)} key={film.couple}>
               <span className="film-preview__image">
-                <img src={image} alt="" />
+                <img src={film.image} alt={film.couple} />
                 <i aria-hidden="true">Play</i>
               </span>
               <span className="film-preview__meta">
-                <b>{couple}</b>
-                <small>{title}</small>
+                <b>{film.couple}</b>
+                <small>{film.title}</small>
                 <em>0{index + 1}</em>
               </span>
             </button>
@@ -580,15 +611,20 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
         </div>
       )}
 
-      {filmIndex !== null && (
+      {filmIndex !== null && cinemaFilms[filmIndex] && (
         <div className="film-modal" role="dialog" aria-modal="true" aria-label="Wedding film player">
           <button className="modal-close" onClick={() => setFilmIndex(null)}>Close</button>
           <div className="film-modal__screen">
-            <img src={[galleryImages[2].src, galleryImages[0].src, galleryImages[1].src][filmIndex]} alt="" />
-            <button aria-label="Play wedding film">▶</button>
+            <video
+              src={cinemaFilms[filmIndex].video}
+              controls
+              autoPlay
+              playsInline
+              className="film-modal__video"
+            />
           </div>
-          <p>A story by Sri Captures</p>
-          <span>Film preview · Sound available on play</span>
+          <p>{cinemaFilms[filmIndex].couple} — {cinemaFilms[filmIndex].title}</p>
+          <span>Sri Captures Cinema · Live HD audio & video playback</span>
         </div>
       )}
     </main>
