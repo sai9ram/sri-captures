@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 
 export interface SiteHeaderProps {
-  currentPage: "home" | "story" | "services" | "gallery" | "contact";
+  currentPage: "home" | "story" | "services" | "gallery" | "contact" | "quote";
   onNavigateHome: () => void;
   onNavigateStory: () => void;
   onNavigateServices: () => void;
   onNavigateGallery: () => void;
   onNavigateContact: () => void;
+  onNavigateQuote: () => void;
   onNavigateSection: (sectionId: string) => void;
   onOpenInquire: () => void;
 }
@@ -18,6 +19,7 @@ export default function SiteHeader({
   onNavigateServices,
   onNavigateGallery,
   onNavigateContact,
+  onNavigateQuote,
   onNavigateSection,
   onOpenInquire,
 }: SiteHeaderProps) {
@@ -129,6 +131,14 @@ export default function SiteHeader({
             >
               Contact
             </button>
+            <button
+              className={`universal-nav__item universal-nav__item--quote ${
+                currentPage === "quote" ? "is-active" : ""
+              }`}
+              onClick={() => handleNavClick(onNavigateQuote)}
+            >
+              Get a Quote
+            </button>
           </nav>
 
           {/* Right Header Actions */}
@@ -137,11 +147,11 @@ export default function SiteHeader({
               className="universal-inquire-btn"
               onClick={() => {
                 setMobileMenuOpen(false);
-                onOpenInquire();
+                onNavigateQuote();
               }}
-              aria-label="Begin your wedding inquiry"
+              aria-label="Get a wedding photography quote"
             >
-              <span>Inquire</span>
+              <span>Get a Quote</span>
               <span className="universal-inquire-btn__arrow" aria-hidden="true">
                 ↗
               </span>
@@ -191,6 +201,7 @@ export default function SiteHeader({
                 { label: "Services", action: onNavigateServices, active: currentPage === "services" },
                 { label: "Gallery", action: onNavigateGallery, active: currentPage === "gallery" },
                 { label: "Contact", action: onNavigateContact, active: currentPage === "contact" },
+                { label: "Get a Quote", action: onNavigateQuote, active: currentPage === "quote" },
               ].map((item, idx) => (
                 <button
                   key={item.label}

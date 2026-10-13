@@ -197,6 +197,46 @@ body.is-services-page {
   transform: translateY(-1px);
 }
 
+/* ── Quote page header theme (warm ivory – same as contact) ─────── */
+.universal-header--quote {
+  color: #181210;
+}
+
+.universal-header--quote.is-scrolled {
+  background-color: rgba(248, 244, 237, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(196, 160, 90, 0.22);
+  box-shadow: 0 6px 28px rgba(29, 22, 18, 0.06);
+}
+
+.universal-header--quote .universal-nav__item.is-active::after {
+  background: #5a1a1c;
+}
+
+.universal-header--quote .universal-inquire-btn {
+  background: #5a1a1c;
+  border: 1px solid #5a1a1c;
+  color: #f8f4ed;
+}
+
+.universal-header--quote .universal-inquire-btn:hover {
+  background: #7a2628;
+  border-color: #7a2628;
+  transform: translateY(-1px);
+}
+
+/* "Get a Quote" nav item – subtle maroon highlight in desktop nav */
+.universal-nav__item--quote {
+  color: #5a1a1c !important;
+  font-weight: 600;
+}
+
+.universal-nav__item--quote.is-active,
+.universal-nav__item--quote:hover {
+  color: #7a2628 !important;
+}
+
 
 /* Universal Brand Wordmark */
 .universal-wordmark {

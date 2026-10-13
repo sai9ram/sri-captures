@@ -3,6 +3,7 @@ import StoryPage from "./StoryPage";
 import ServicesPage from "./ServicesPage";
 import GalleryPage from "./GalleryPage";
 import ContactPage from "./ContactPage";
+import QuotePage from "./QuotePage";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 
@@ -164,7 +165,7 @@ function SectionLabel({ number, children }: { number: string; children: React.Re
   );
 }
 
-type Page = "home" | "story" | "services" | "gallery" | "contact";
+type Page = "home" | "story" | "services" | "gallery" | "contact" | "quote";
 
 const getPageFromHash = (): Page => {
   if (typeof window === "undefined") return "home";
@@ -173,6 +174,7 @@ const getPageFromHash = (): Page => {
   if (hash === "#services" || hash.startsWith("#services/")) return "services";
   if (hash === "#gallery" || hash.startsWith("#gallery/")) return "gallery";
   if (hash === "#contact" || hash.startsWith("#contact/")) return "contact";
+  if (hash === "#quote" || hash.startsWith("#quote/")) return "quote";
   return "home";
 };
 
@@ -620,6 +622,7 @@ export default function App() {
   useEffect(() => {
     document.body.classList.toggle("is-story-page", currentPage === "story");
     document.body.classList.toggle("is-services-page", currentPage === "services");
+    document.body.classList.toggle("is-quote-page", currentPage === "quote");
   }, [currentPage]);
 
   const navigateTo = (page: Page) => {
@@ -639,9 +642,13 @@ export default function App() {
       if (window.location.hash !== "#contact") {
         window.location.hash = "#contact";
       }
+    } else if (page === "quote") {
+      if (window.location.hash !== "#quote") {
+        window.location.hash = "#quote";
+      }
     } else {
       const h = window.location.hash;
-      if (h === "#story" || h === "#services" || h === "#gallery" || h === "#contact") {
+      if (h === "#story" || h === "#services" || h === "#gallery" || h === "#contact" || h === "#quote") {
         window.history.pushState(null, "", window.location.pathname + window.location.search);
       }
     }
@@ -667,16 +674,7 @@ export default function App() {
   };
 
   const openInquiry = () => {
-    if (currentPage === "story") {
-      setStoryInquiryRequestKey((key) => key + 1);
-      return;
-    }
-    if (currentPage === "contact") {
-      document.getElementById("contact-form-section")?.scrollIntoView({ behavior: "smooth" });
-      return;
-    }
-
-    navigateTo("contact");
+    navigateTo("quote");
   };
 
   return (
@@ -688,6 +686,7 @@ export default function App() {
         onNavigateServices={() => navigateTo("services")}
         onNavigateGallery={() => navigateTo("gallery")}
         onNavigateContact={() => navigateTo("contact")}
+        onNavigateQuote={() => navigateTo("quote")}
         onNavigateSection={navigateToSection}
         onOpenInquire={openInquiry}
       />
@@ -699,18 +698,23 @@ export default function App() {
         <GalleryPage onOpenInquiry={openInquiry} />
       ) : currentPage === "contact" ? (
         <ContactPage />
+      ) : currentPage === "quote" ? (
+        <QuotePage onNavigateHome={() => navigateTo("home")} />
       ) : (
         <HomePage onNavigateStory={() => navigateTo("story")} />
       )}
-      <SiteFooter
-        currentPage={currentPage}
-        onNavigateHome={() => navigateTo("home")}
-        onNavigateStory={() => navigateTo("story")}
-        onNavigateServices={() => navigateTo("services")}
-        onNavigateGallery={() => navigateTo("gallery")}
-        onNavigateContact={() => navigateTo("contact")}
-        onNavigateSection={navigateToSection}
-      />
+      {currentPage !== "quote" && (
+        <SiteFooter
+          currentPage={currentPage}
+          onNavigateHome={() => navigateTo("home")}
+          onNavigateStory={() => navigateTo("story")}
+          onNavigateServices={() => navigateTo("services")}
+          onNavigateGallery={() => navigateTo("gallery")}
+          onNavigateContact={() => navigateTo("contact")}
+          onNavigateQuote={() => navigateTo("quote")}
+          onNavigateSection={navigateToSection}
+        />
+      )}
     </>
   );
 }
