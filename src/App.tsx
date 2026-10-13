@@ -26,38 +26,38 @@ const imageUrl = (id: string, width = 1800) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=86`;
 
 const galleryImages: GalleryImage[] = [
-  { src: imageUrl("photo-1741201864879-c5e7f81c98b0"), couple: "Priya × Arjun", place: "Tirupati · 2026" },
-  { src: imageUrl("photo-1610173827002-62c0f1f05d04"), couple: "Mira × Dev", place: "Jaipur · 2025" },
-  { src: imageUrl("photo-1754782915842-aa4fca6c203a"), couple: "Ananya × Karthik", place: "Chennai · 2026" },
-  { src: imageUrl("photo-1679937698873-6065742c8d32"), couple: "Ishita × Rohan", place: "Bengaluru · 2025" },
-  { src: imageUrl("photo-1698419193331-5b2fb90a6304"), couple: "Nila × Adi", place: "Udaipur · 2025" },
-  { src: imageUrl("photo-1573951648026-fa38ff3f6770"), couple: "Leela × Vikram", place: "Hyderabad · 2024" },
-  { src: imageUrl("photo-1760080903831-3cfeac3200dc"), couple: "Tara × Neel", place: "Goa · 2026" },
+  { src: "/images/IMG_8274.JPG", couple: "Vedic Union", place: "Mandap Ceremonies · 2026" },
+  { src: "/images/IMG_8241.JPG", couple: "Srikanth × Nikitha", place: "Tirupati · 2026" },
+  { src: "/images/IMG_8246.JPG", couple: "Archana", place: "Bridal Portrait · 2026" },
+  { src: "/images/IMG_8258.JPG", couple: "Quiet Reverie", place: "Hyderabad · 2025" },
+  { src: "/images/IMG_8253.JPG", couple: "Haldi Celebrations", place: "Bengaluru · 2025" },
+  { src: "/images/IMG_8234.JPG", couple: "Crimson Twilight", place: "Vijayawada · 2025" },
+  { src: "/images/IMG_8249.JPG", couple: "Unfiltered Bliss", place: "Vizag · 2026" },
 ];
 
 const services = [
-  { name: "Wedding photography", meta: "Candid · Traditional · Editorial", image: galleryImages[0].src },
-  { name: "Pre-wedding stories", meta: "Portraits · Places · People", image: imageUrl("photo-1735052712464-9d24b69be5f5") },
-  { name: "Wedding films", meta: "Highlights · Feature films · Reels", image: galleryImages[2].src },
-  { name: "Destination weddings", meta: "India · Worldwide", image: imageUrl("photo-1630526720753-aa4e71acf67d") },
-  { name: "Intimate celebrations", meta: "Families · Rituals · Togetherness", image: imageUrl("photo-1581256163941-900dae854787") },
+  { name: "Wedding photography", meta: "Candid · Traditional · Editorial", image: "/images/IMG_8274.JPG" },
+  { name: "Pre-wedding stories", meta: "Portraits · Places · People", image: "/images/IMG_8241.JPG" },
+  { name: "Wedding films", meta: "Highlights · Feature films · Reels", image: "/images/IMG_8234.JPG" },
+  { name: "Destination weddings", meta: "India · Worldwide", image: "/images/IMG_8235.JPG" },
+  { name: "Intimate celebrations", meta: "Families · Rituals · Togetherness", image: "/images/IMG_8258.JPG" },
 ];
 
 const testimonials = [
   {
     quote: "You captured moments we didn't even know were happening.",
     names: "Ananya & Karthik",
-    image: galleryImages[2].src,
+    image: "/images/IMG_8246.JPG",
   },
   {
     quote: "Every photograph feels exactly like the day did—full, warm and alive.",
     names: "Priya & Arjun",
-    image: galleryImages[0].src,
+    image: "/images/IMG_8274.JPG",
   },
   {
     quote: "Our families cried, laughed, and then watched it all over again.",
     names: "Mira & Dev",
-    image: galleryImages[1].src,
+    image: "/images/IMG_8241.JPG",
   },
 ];
 
@@ -74,72 +74,64 @@ const scenes: Scene[] = [
     eyebrow: "The beginning",
     title: "Stories of love,\nfamily & everything\nin between.",
     body: "Wedding stories, held with honesty and heart.",
-    image:
-      "https://images.unsplash.com/photo-1630526720753-aa4e71acf67d?auto=format&fit=crop&w=2200&q=88",
-    credit: "Sean Williams",
+    image: "/images/IMG_8274.JPG",
+    credit: "Sri Captures",
     align: "center",
   },
   {
     eyebrow: "We begin with you",
     title: "Before the rituals,\nthere are two people.",
     body: "We listen first—so every frame feels unmistakably yours.",
-    image:
-      "https://images.unsplash.com/photo-1735052712464-9d24b69be5f5?auto=format&fit=crop&w=2200&q=88",
-    credit: "iKshana Productions",
+    image: "/images/IMG_8241.JPG",
+    credit: "Sri Captures",
     align: "left",
   },
   {
     eyebrow: "The little things",
     title: "The moments you\nalmost miss.",
     body: "A glance across the room. A steadying hand. The quiet before everything begins.",
-    image:
-      "https://images.unsplash.com/photo-1611106211090-8f3c79eb8552?auto=format&fit=crop&w=2200&q=88",
-    credit: "Aastha Bansal",
+    image: "/images/241512d0-4bb2-4d3f-bc6a-e6a7ddb2e983.JPG",
+    credit: "Sri Captures",
     align: "right",
   },
   {
     eyebrow: "When families become one",
     title: "A thousand histories,\nin a single room.",
     body: "The embraces, blessings and beautiful chaos that make a celebration feel like home.",
-    image:
-      "https://images.unsplash.com/photo-1665960213508-48f07086d49c?auto=format&fit=crop&w=2200&q=88",
-    credit: "Arto Suraj",
+    image: "/images/IMG_8254.JPG",
+    credit: "Sri Captures",
     align: "left",
   },
   {
     eyebrow: "The moment",
     title: "And then,\neverything changes.",
     body: "Sacred traditions unfold. Time softens. Two lives become one.",
-    image:
-      "https://images.unsplash.com/photo-1599462616558-2b75fd26a283?auto=format&fit=crop&w=2200&q=88",
-    credit: "Mohit Maru",
+    image: "/images/IMG_8246.JPG",
+    credit: "Sri Captures",
     align: "right",
   },
   {
     eyebrow: "The celebration",
     title: "Joy, in\nfull colour.",
     body: "Unscripted, unrestrained and alive—the part where everyone forgets the camera.",
-    image:
-      "https://images.unsplash.com/photo-1665960213530-3fb10da1f25e?auto=format&fit=crop&w=2200&q=88",
-    credit: "Arto Suraj",
+    image: "/images/IMG_8253.JPG",
+    credit: "Sri Captures",
     align: "left",
   },
   {
     eyebrow: "Why we capture",
     title: "Because memory\nmoves quickly.",
     body: "We make photographs for the people you are today—and the family you will become.",
-    image:
-      "https://images.unsplash.com/photo-1587271339318-2e78fdf79586?auto=format&fit=crop&w=2200&q=88",
-    credit: "Amish Thakkar",
+    image: "/images/IMG_8234.JPG",
+    credit: "Sri Captures",
     align: "right",
   },
   {
     eyebrow: "Your story",
     title: "Your story hasn't\nbeen written yet.",
     body: "Let's capture it together.",
-    image:
-      "https://images.unsplash.com/photo-1735052712489-f45220126a0c?auto=format&fit=crop&w=2200&q=88",
-    credit: "iKshana Productions",
+    image: "/images/IMG_8258.JPG",
+    credit: "Sri Captures",
     align: "center",
   },
 ];
@@ -303,7 +295,7 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
               )}
             </div>
 
-            <p className="photo-credit">Photo · {scene.credit} / Unsplash</p>
+            <p className="photo-credit">Photo · {scene.credit}</p>
 
             {index === 0 && (
               <button className="scroll-cue" onClick={scrollToNext}>
@@ -334,7 +326,7 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
         <SectionLabel number="09">The story behind Sri Captures</SectionLabel>
         <div className="about-editorial__canvas">
           <figure className="archive-photo archive-photo--main reveal">
-            <img src={imageUrl("photo-1519689950823-0a2251441815")} alt="Photographer looking through a camera" />
+            <img src="/images/IMG_8247.JPG" alt="Bride smiling during wedding moments" />
             <figcaption>Watching. Waiting. Never interrupting.</figcaption>
           </figure>
           <div className="about-editorial__copy reveal">
