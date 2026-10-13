@@ -34,16 +34,26 @@ export default function SiteFooter({
       </h2>
 
       <nav className="social-links" aria-label="Social links">
-        <a href="https://instagram.com" target="_blank" rel="noreferrer">
+        <a
+          href="https://instagram.com/sri_capture9?srtk=MW5ndWRmeDF5dW85bw%3D%3D&utm_source=qr"
+          target="_blank"
+          rel="noreferrer"
+        >
           Instagram
         </a>
-        <a href="https://youtube.com" target="_blank" rel="noreferrer">
-          YouTube
-        </a>
-        <a href="https://whatsapp.com" target="_blank" rel="noreferrer">
+        <a
+          href="https://wa.me/918142490545"
+          target="_blank"
+          rel="noreferrer"
+        >
           WhatsApp
         </a>
-        <a href="mailto:hello@sricaptures.com">Email</a>
+        <a href="tel:+918142490545">
+          +91 81424 90545
+        </a>
+        <a href="mailto:sricapture929@gmail.com">
+          sricapture929@gmail.com
+        </a>
       </nav>
 
       <nav className="footer-nav" aria-label="Footer navigation">

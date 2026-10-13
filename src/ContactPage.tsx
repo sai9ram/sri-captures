@@ -343,7 +343,7 @@ export default function ContactPage() {
                         type="tel"
                         name="phone"
                         className="cnt-input"
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 81424 90545"
                         value={formData.phone}
                         onChange={(e) =>
                           setFormData({ ...formData, phone: e.target.value })
@@ -463,16 +463,16 @@ export default function ContactPage() {
             </div>
 
             <div className="cnt-direct__channels">
-              <a href="tel:+919849012345" className="cnt-channel-link">
+              <a href="tel:+918142490545" className="cnt-channel-link">
                 <div className="cnt-channel-icon" aria-hidden="true">📞</div>
                 <div className="cnt-channel-info">
                   <span className="cnt-channel-label">PHONE CALL</span>
-                  <span className="cnt-channel-value">+91 98490 12345</span>
+                  <span className="cnt-channel-value">+91 81424 90545</span>
                 </div>
               </a>
 
               <a
-                href="https://wa.me/919849012345?text=Hello%20SRI%20CAPTURES%2C%20I%20would%20like%20to%20enquire%20about%20wedding%20photography"
+                href="https://wa.me/918142490545?text=Hello%20SRI%20CAPTURES%2C%20I%20would%20like%20to%20enquire%20about%20wedding%20photography"
                 target="_blank"
                 rel="noreferrer"
                 className="cnt-channel-link"
@@ -480,25 +480,30 @@ export default function ContactPage() {
                 <div className="cnt-channel-icon" aria-hidden="true">💬</div>
                 <div className="cnt-channel-info">
                   <span className="cnt-channel-label">WHATSAPP</span>
-                  <span className="cnt-channel-value">Chat on WhatsApp</span>
+                  <span className="cnt-channel-value">+91 81424 90545</span>
                 </div>
               </a>
 
-              <a href="mailto:hello@sricaptures.com" className="cnt-channel-link">
+              <a href="mailto:sricapture929@gmail.com" className="cnt-channel-link">
                 <div className="cnt-channel-icon" aria-hidden="true">✉️</div>
                 <div className="cnt-channel-info">
                   <span className="cnt-channel-label">EMAIL US</span>
-                  <span className="cnt-channel-value">hello@sricaptures.com</span>
+                  <span className="cnt-channel-value">sricapture929@gmail.com</span>
                 </div>
               </a>
 
-              <div className="cnt-channel-link cnt-channel-link--static">
-                <div className="cnt-channel-icon" aria-hidden="true">📍</div>
+              <a
+                href="https://instagram.com/sri_capture9?srtk=MW5ndWRmeDF5dW85bw%3D%3D&utm_source=qr"
+                target="_blank"
+                rel="noreferrer"
+                className="cnt-channel-link"
+              >
+                <div className="cnt-channel-icon" aria-hidden="true">📷</div>
                 <div className="cnt-channel-info">
-                  <span className="cnt-channel-label">STUDIO BASE</span>
-                  <span className="cnt-channel-value">Hyderabad & Bengaluru · Pan-India</span>
+                  <span className="cnt-channel-label">INSTAGRAM</span>
+                  <span className="cnt-channel-value">@sri_capture9</span>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>

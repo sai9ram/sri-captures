@@ -1027,7 +1027,7 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                         id="contact-phone"
                         type="tel"
                         required
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 81424 90545"
                         className="story-form-input"
                         value={formData.phone}
                         onChange={(e) =>

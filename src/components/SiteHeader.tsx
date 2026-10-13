@@ -215,6 +215,20 @@ export default function SiteHeader({
               >
                 Begin Your Story <span>↗</span>
               </button>
+              <div className="universal-mobile-menu__direct" style={{ display: "flex", flexDirection: "column", gap: "6px", margin: "14px 0 8px", fontSize: "12px" }}>
+                <a href="tel:+918142490545" style={{ color: "inherit", textDecoration: "none", opacity: 0.85 }}>
+                  📞 +91 81424 90545
+                </a>
+                <a href="https://wa.me/918142490545" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "none", opacity: 0.85 }}>
+                  💬 WhatsApp: +91 81424 90545
+                </a>
+                <a href="mailto:sricapture929@gmail.com" style={{ color: "inherit", textDecoration: "none", opacity: 0.85 }}>
+                  ✉️ sricapture929@gmail.com
+                </a>
+                <a href="https://instagram.com/sri_capture9?srtk=MW5ndWRmeDF5dW85bw%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "none", opacity: 0.85 }}>
+                  📷 Instagram: @sri_capture9
+                </a>
+              </div>
               <p className="universal-mobile-menu__note">
                 Wedding stories · India &amp; Worldwide
               </p>
