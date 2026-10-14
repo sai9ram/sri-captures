@@ -2614,13 +2614,49 @@ body.is-services-page {
   cursor: pointer;
 }
 
-.album-footer__legal {
+.album-footer__bottom-info {
   position: absolute;
-  bottom: 39px;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0 20px;
+  z-index: 5;
+}
+
+.album-footer__legal {
+  position: static;
   margin: 0;
-  font-size: 7px;
+  font-size: 7.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.album-footer__credit {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: inherit;
+  opacity: 0.9;
+}
+
+.album-footer__credit-link {
+  font-weight: 700;
+  color: #5a1a1c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: all 0.25s ease;
+}
+
+.album-footer__credit-link:hover {
+  color: #a7472f;
+  text-decoration-color: #a7472f;
+  opacity: 1;
 }
 
 /* Cinematic overlays */

@@ -93,9 +93,22 @@ export default function SiteFooter({
         ↑ Back to the beginning
       </button>
 
-      <p className="album-footer__legal">
-        © {currentYear} Sri Captures — All stories reserved
-      </p>
+      <div className="album-footer__bottom-info">
+        <p className="album-footer__legal">
+          © {currentYear} Sri Captures — All stories reserved
+        </p>
+        <p className="album-footer__credit">
+          Crafted with Love by{" "}
+          <a
+            href="https://www.theupliv.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="album-footer__credit-link"
+          >
+            UPliv
+          </a>
+        </p>
+      </div>
     </footer>
   );
 }

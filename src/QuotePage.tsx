@@ -788,6 +788,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
 
             <div class="footer-strip">
               <p><strong>SRI CAPTURES</strong> &bull; Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com</p>
+              <p style="font-size:10px;margin-top:4px;opacity:0.85;">Crafted with Love by <a href="https://www.theupliv.com" target="_blank" rel="noopener noreferrer" style="color:#5a1a1c;font-weight:700;text-decoration:underline;">UPliv</a></p>
             </div>
 
             <div class="no-print">
@@ -1627,6 +1628,17 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                     <div className="quote-invoice-seal-footer">
                       <p className="quote-seal-brand">
                         <strong>SRI CAPTURES</strong> &bull; Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com
+                      </p>
+                      <p className="quote-seal-credit" style={{ fontSize: "11px", marginTop: "6px", opacity: 0.85 }}>
+                        Crafted with Love by{" "}
+                        <a
+                          href="https://www.theupliv.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: "#5a1a1c", fontWeight: 700, textDecoration: "underline" }}
+                        >
+                          UPliv
+                        </a>
                       </p>
                     </div>
                   </div>
