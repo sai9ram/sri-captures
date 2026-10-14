@@ -17,8 +17,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     return false;
   });
 
-  // Default to sound active (auto play sound)
-  const [isMuted, setIsMuted] = useState(false);
+  const [isEntered, setIsEntered] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
   const hasDismissedRef = useRef(false);
@@ -41,16 +40,51 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     };
   }, []);
 
-  // Dismiss handler
+  // Smooth audio fade helpers
+  const fadeInAudio = (video: HTMLVideoElement, durationMs = 800) => {
+    video.muted = false;
+    video.volume = 0;
+    const start = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - start;
+      const pct = Math.min(elapsed / durationMs, 1);
+      video.volume = pct;
+      if (pct < 1 && !hasDismissedRef.current) {
+        requestAnimationFrame(step);
+      }
+    };
+    requestAnimationFrame(step);
+  };
+
+  const fadeOutAudio = (video: HTMLVideoElement, durationMs = 600) => {
+    const startVolume = video.volume;
+    const start = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - start;
+      const pct = Math.min(elapsed / durationMs, 1);
+      video.volume = Math.max(0, startVolume * (1 - pct));
+      if (pct < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+    requestAnimationFrame(step);
+  };
+
+  // Smooth dismiss handler with audio fadeout
   const dismissSplash = () => {
     if (hasDismissedRef.current) return;
     hasDismissedRef.current = true;
     setIsExiting(true);
 
+    const video = videoRef.current;
+    if (video) {
+      fadeOutAudio(video, 600);
+    }
+
     setTimeout(() => {
       document.body.style.overflow = "";
       if (onComplete) onComplete();
-    }, 700);
+    }, 750);
   };
 
   // Lock body scroll during splash
@@ -63,55 +97,58 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     };
   }, []);
 
-  // Autoplay with SOUND attempt
+  // Trigger smooth entrance on mount
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      setIsEntered(true);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  // Automatic unmuted playback with smooth audio fade
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Configure for unmuted audio autoplay
-    video.muted = false;
-    video.volume = 1.0;
-
     let cleanupListeners: (() => void) | null = null;
+
+    // Attempt direct unmuted playback first
+    video.muted = false;
+    video.volume = 0;
 
     const playPromise = video.play();
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          // Unmuted autoplay succeeded
-          setIsMuted(false);
+          // Direct unmuted autoplay succeeded: smoothly ramp up volume
+          fadeInAudio(video, 800);
         })
         .catch(() => {
-          // If browser policy blocks unmuted autoplay without prior gesture,
-          // play muted so playback starts instantly, and immediately hook up
-          // one-shot tap/click/touch anywhere to unmute audio seamlessly.
+          // Browser strict policy blocked immediate unmuted play:
+          // Start video muted instantly so the visual presentation never lags
           video.muted = true;
-          setIsMuted(true);
           video.play().catch(() => {});
 
-          const unlockAudio = () => {
+          // Unlock sound automatically on the very first micro-interaction
+          const unlockSound = () => {
             if (video && !hasDismissedRef.current) {
-              video.muted = false;
-              setIsMuted(false);
+              fadeInAudio(video, 600);
             }
             if (cleanupListeners) cleanupListeners();
           };
 
-          const handlePointer = () => unlockAudio();
-          const handleTouch = () => unlockAudio();
-          const handleClick = () => unlockAudio();
-          const handleKey = () => unlockAudio();
-
-          window.addEventListener("pointerdown", handlePointer, { once: true, passive: true });
-          window.addEventListener("touchstart", handleTouch, { once: true, passive: true });
-          window.addEventListener("click", handleClick, { once: true, passive: true });
-          window.addEventListener("keydown", handleKey, { once: true, passive: true });
+          window.addEventListener("pointerdown", unlockSound, { once: true, passive: true });
+          window.addEventListener("touchstart", unlockSound, { once: true, passive: true });
+          window.addEventListener("click", unlockSound, { once: true, passive: true });
+          window.addEventListener("wheel", unlockSound, { once: true, passive: true });
+          window.addEventListener("keydown", unlockSound, { once: true, passive: true });
 
           cleanupListeners = () => {
-            window.removeEventListener("pointerdown", handlePointer);
-            window.removeEventListener("touchstart", handleTouch);
-            window.removeEventListener("click", handleClick);
-            window.removeEventListener("keydown", handleKey);
+            window.removeEventListener("pointerdown", unlockSound);
+            window.removeEventListener("touchstart", unlockSound);
+            window.removeEventListener("click", unlockSound);
+            window.removeEventListener("wheel", unlockSound);
+            window.removeEventListener("keydown", unlockSound);
           };
         });
     }
@@ -129,28 +166,14 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
-    if (video && video.duration) {
-      const pct = (video.currentTime / video.duration) * 100;
-      setProgress(pct);
-    }
-  };
+    if (!video || !video.duration) return;
 
-  const toggleSound = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const video = videoRef.current;
-    if (video) {
-      const newMuted = !video.muted;
-      video.muted = newMuted;
-      setIsMuted(newMuted);
-    }
-  };
+    const pct = (video.currentTime / video.duration) * 100;
+    setProgress(pct);
 
-  // Clicking anywhere on splash screen unlocks sound if muted
-  const handleContainerClick = () => {
-    const video = videoRef.current;
-    if (video && video.muted) {
-      video.muted = false;
-      setIsMuted(false);
+    // Smoothly initiate crossfade 0.6s before video ends to avoid sudden cut
+    if (video.duration > 1 && video.currentTime >= video.duration - 0.6) {
+      dismissSplash();
     }
   };
 
@@ -160,10 +183,18 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
   return (
     <aside
-      className={`splash-screen ${isExiting ? "splash-screen--exiting" : ""}`}
+      className={`splash-screen ${isEntered ? "splash-screen--entered" : ""} ${
+        isExiting ? "splash-screen--exiting" : ""
+      }`}
       role="region"
-      aria-label="Welcome splash screen video"
-      onClick={handleContainerClick}
+      aria-label="Welcome cinematic splash screen"
+      onClick={() => {
+        // Tapping screen automatically ensures sound is active with smooth fade
+        const video = videoRef.current;
+        if (video && video.muted) {
+          fadeInAudio(video, 500);
+        }
+      }}
     >
       <div className="splash-screen__video-wrapper">
         <video
@@ -174,6 +205,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           autoPlay
           muted={false}
           playsInline
+          // @ts-expect-error webkit-playsinline for iOS Safari
+          webkit-playsinline="true"
           preload="auto"
           onTimeUpdate={handleTimeUpdate}
           onEnded={dismissSplash}
@@ -190,55 +223,14 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         </video>
       </div>
 
-      {/* Top Controls Header */}
+      {/* Cinematic Vignette Overlay */}
+      <div className="splash-screen__vignette" aria-hidden="true" />
+
+      {/* Top Header with Discreet Skip Button */}
       <div className="splash-screen__controls">
-        <button
-          type="button"
-          onClick={toggleSound}
-          className={`splash-screen__btn splash-screen__btn--sound ${
-            isMuted ? "splash-screen__btn--pulse" : ""
-          }`}
-          aria-label={isMuted ? "Unmute splash audio" : "Mute splash audio"}
-        >
-          {isMuted ? (
-            <>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                <line x1="23" y1="9" x2="17" y2="15" />
-                <line x1="17" y1="9" x2="23" y2="15" />
-              </svg>
-              <span>Tap for Sound</span>
-            </>
-          ) : (
-            <>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-              </svg>
-              <span>Sound Auto On</span>
-            </>
-          )}
-        </button>
+        <div className="splash-screen__brand">
+          <span className="splash-screen__brand-tag">Sri Captures</span>
+        </div>
 
         <button
           type="button"
@@ -249,10 +241,10 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           className="splash-screen__btn splash-screen__btn--skip"
           aria-label="Skip splash screen"
         >
-          <span>Skip Intro</span>
+          <span>Skip</span>
           <svg
-            width="14"
-            height="14"
+            width="12"
+            height="12"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -266,7 +258,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         </button>
       </div>
 
-      {/* Elegant Hairline Progress Bar */}
+      {/* Delicate Gold Hairline Progress Bar */}
       <div className="splash-screen__progress-track" aria-hidden="true">
         <div
           className="splash-screen__progress-bar"
