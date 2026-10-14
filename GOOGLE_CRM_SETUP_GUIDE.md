@@ -44,20 +44,12 @@ This project includes a built-in integration to capture every wedding enquiry an
 5. Grant permissions if prompted by Google (click "Advanced" > "Go to Sri Captures CRM (unsafe)").
 6. Copy the **Web app URL** (it ends with `/exec`).
 
-### Step 4: Link URL to Sri Captures Website
-You have two easy ways:
-
-- **Option A (Via Website UI - Recommended)**:
-  1. Open the Sri Captures website and go to **Get a Quote** page.
-  2. On the final step, click **"⚙️ Google CRM Settings"**.
-  3. Paste your Web App URL into the input field and click **"Save & Connect"**.
-
-- **Option B (Via Environment Variable)**:
-  1. Add to your `.env` or Vercel Environment Variables:
-     ```env
-     VITE_GOOGLE_CRM_WEBHOOK_URL="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"
-     ```
-  2. Redeploy the website.
+### Step 4: Active Deployed Google CRM URL
+The live Web App URL is now configured and active across the entire platform:
+```text
+https://script.google.com/macros/s/AKfycbzXUTVLaQ4gfvAZKFkb1_BKuh-JvmoUoCl2n4ufRC-7JkRHWSAuZ3xtQRq3U7xj3MUR/exec
+```
+It is hardwired into `leadService.ts`, `.env`, and `.env.production`. Every quotation request and contact enquiry automatically connects to this Google CRM without requiring any manual setup from visitors!
 
 ---
 

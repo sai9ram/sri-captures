@@ -44,12 +44,19 @@ export const ADMIN_CONFIG = {
   websiteUrl: "https://sri-captures-delta.vercel.app",
 };
 
+export const LIVE_GOOGLE_CRM_URL =
+  "https://script.google.com/macros/s/AKfycbzXUTVLaQ4gfvAZKFkb1_BKuh-JvmoUoCl2n4ufRC-7JkRHWSAuZ3xtQRq3U7xj3MUR/exec";
+
 const STORAGE_CRM_KEY = "sricaptures_google_crm_url";
 const STORAGE_LEADS_KEY = "sricaptures_leads_archive";
 
 export function getGoogleCrmUrl(): string {
-  if (typeof window === "undefined") return "";
-  return localStorage.getItem(STORAGE_CRM_KEY) || (import.meta.env.VITE_GOOGLE_CRM_WEBHOOK_URL as string) || "";
+  if (typeof window === "undefined") return LIVE_GOOGLE_CRM_URL;
+  return (
+    localStorage.getItem(STORAGE_CRM_KEY) ||
+    (import.meta.env.VITE_GOOGLE_CRM_WEBHOOK_URL as string) ||
+    LIVE_GOOGLE_CRM_URL
+  );
 }
 
 export function setGoogleCrmUrl(url: string): void {
