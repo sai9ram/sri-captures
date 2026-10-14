@@ -3373,18 +3373,20 @@ body.is-services-page {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  opacity: 0;
-  filter: blur(8px);
+  opacity: 1;
   pointer-events: auto;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
+  animation: splashFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.splash-screen--entered {
-  opacity: 1 !important;
-  filter: blur(0px) !important;
+@keyframes splashFadeIn {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+  }
 }
 
 .splash-screen--exiting {
@@ -3392,9 +3394,9 @@ body.is-services-page {
   filter: blur(12px) !important;
   transform: scale(1.03) !important;
   pointer-events: none !important;
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .splash-screen__video-wrapper {

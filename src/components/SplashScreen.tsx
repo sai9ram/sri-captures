@@ -17,12 +17,11 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     return false;
   });
 
-  const [isEntered, setIsEntered] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
   const hasDismissedRef = useRef(false);
 
-  // Check device viewport
+  // Responsive device check
   useEffect(() => {
     const handleResize = () => {
       const mobileCheck =
@@ -40,37 +39,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     };
   }, []);
 
-  // Smooth audio fade helpers
-  const fadeInAudio = (video: HTMLVideoElement, durationMs = 800) => {
-    video.muted = false;
-    video.volume = 0;
-    const start = performance.now();
-    const step = (now: number) => {
-      const elapsed = now - start;
-      const pct = Math.min(elapsed / durationMs, 1);
-      video.volume = pct;
-      if (pct < 1 && !hasDismissedRef.current) {
-        requestAnimationFrame(step);
-      }
-    };
-    requestAnimationFrame(step);
-  };
-
-  const fadeOutAudio = (video: HTMLVideoElement, durationMs = 600) => {
-    const startVolume = video.volume;
-    const start = performance.now();
-    const step = (now: number) => {
-      const elapsed = now - start;
-      const pct = Math.min(elapsed / durationMs, 1);
-      video.volume = Math.max(0, startVolume * (1 - pct));
-      if (pct < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-    requestAnimationFrame(step);
-  };
-
-  // Smooth dismiss handler with audio fadeout
+  // Smooth dismiss handler
   const dismissSplash = () => {
     if (hasDismissedRef.current) return;
     hasDismissedRef.current = true;
@@ -78,13 +47,26 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
     const video = videoRef.current;
     if (video) {
-      fadeOutAudio(video, 600);
+      try {
+        // Fade out audio before removing
+        const startVol = video.volume;
+        const fadeInterval = setInterval(() => {
+          if (video.volume > 0.1) {
+            video.volume = Math.max(0, video.volume - 0.15);
+          } else {
+            video.volume = 0;
+            clearInterval(fadeInterval);
+          }
+        }, 50);
+      } catch {
+        // Ignore audio fade errors
+      }
     }
 
     setTimeout(() => {
       document.body.style.overflow = "";
       if (onComplete) onComplete();
-    }, 750);
+    }, 700);
   };
 
   // Lock body scroll during splash
@@ -97,70 +79,74 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     };
   }, []);
 
-  // Trigger smooth entrance on mount
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => {
-      setIsEntered(true);
-    });
-    return () => cancelAnimationFrame(raf);
-  }, []);
-
-  // Automatic unmuted playback with smooth audio fade
+  // Video Autoplay & Audio Management
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    let cleanupListeners: (() => void) | null = null;
-
-    // Attempt direct unmuted playback first
-    video.muted = false;
-    video.volume = 0;
+    // Start with muted playback guaranteed to play on all mobile & desktop browsers
+    video.muted = true;
+    video.playsInline = true;
 
     const playPromise = video.play();
+
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          // Direct unmuted autoplay succeeded: smoothly ramp up volume
-          fadeInAudio(video, 800);
+          // Video is successfully playing!
+          // Attempt to unmute sound automatically:
+          try {
+            video.muted = false;
+            video.volume = 1.0;
+            if (video.paused) {
+              // If unmuting caused a pause due to browser restriction, resume muted
+              video.muted = true;
+              video.play().catch(() => {});
+            }
+          } catch {
+            video.muted = true;
+            video.play().catch(() => {});
+          }
         })
         .catch(() => {
-          // Browser strict policy blocked immediate unmuted play:
-          // Start video muted instantly so the visual presentation never lags
+          // Autoplay fallback retry
           video.muted = true;
           video.play().catch(() => {});
-
-          // Unlock sound automatically on the very first micro-interaction
-          const unlockSound = () => {
-            if (video && !hasDismissedRef.current) {
-              fadeInAudio(video, 600);
-            }
-            if (cleanupListeners) cleanupListeners();
-          };
-
-          window.addEventListener("pointerdown", unlockSound, { once: true, passive: true });
-          window.addEventListener("touchstart", unlockSound, { once: true, passive: true });
-          window.addEventListener("click", unlockSound, { once: true, passive: true });
-          window.addEventListener("wheel", unlockSound, { once: true, passive: true });
-          window.addEventListener("keydown", unlockSound, { once: true, passive: true });
-
-          cleanupListeners = () => {
-            window.removeEventListener("pointerdown", unlockSound);
-            window.removeEventListener("touchstart", unlockSound);
-            window.removeEventListener("click", unlockSound);
-            window.removeEventListener("wheel", unlockSound);
-            window.removeEventListener("keydown", unlockSound);
-          };
         });
     }
 
-    // Safety fallback timeout
+    // Immediate sound unlock on ANY user touch, click, or key anywhere on screen
+    const unlockSound = () => {
+      if (video && !hasDismissedRef.current) {
+        try {
+          video.muted = false;
+          video.volume = 1.0;
+          if (video.paused) {
+            video.play().catch(() => {});
+          }
+        } catch {
+          // Ignore
+        }
+      }
+    };
+
+    window.addEventListener("pointerdown", unlockSound, { passive: true });
+    window.addEventListener("touchstart", unlockSound, { passive: true });
+    window.addEventListener("click", unlockSound, { passive: true });
+    window.addEventListener("keydown", unlockSound, { passive: true });
+
+    // Safety timeout: 7.5s for desktop, 5.5s for mobile
+    const maxDuration = isMobile ? 5500 : 7500;
     const safetyTimer = setTimeout(() => {
       dismissSplash();
-    }, 8500);
+    }, maxDuration);
 
     return () => {
       clearTimeout(safetyTimer);
-      if (cleanupListeners) cleanupListeners();
+      window.removeEventListener("pointerdown", unlockSound);
+      window.removeEventListener("touchstart", unlockSound);
+      window.removeEventListener("click", unlockSound);
+      window.removeEventListener("keydown", unlockSound);
     };
   }, [isMobile]);
 
@@ -171,8 +157,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     const pct = (video.currentTime / video.duration) * 100;
     setProgress(pct);
 
-    // Smoothly initiate crossfade 0.6s before video ends to avoid sudden cut
-    if (video.duration > 1 && video.currentTime >= video.duration - 0.6) {
+    // Crossfade 0.5s before end to ensure smooth visual transition
+    if (video.duration > 1 && video.currentTime >= video.duration - 0.5) {
       dismissSplash();
     }
   };
@@ -183,16 +169,18 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
   return (
     <aside
-      className={`splash-screen ${isEntered ? "splash-screen--entered" : ""} ${
-        isExiting ? "splash-screen--exiting" : ""
-      }`}
+      className={`splash-screen ${isExiting ? "splash-screen--exiting" : ""}`}
       role="region"
       aria-label="Welcome cinematic splash screen"
       onClick={() => {
-        // Tapping screen automatically ensures sound is active with smooth fade
+        // Unmute on direct screen tap if browser held sound
         const video = videoRef.current;
-        if (video && video.muted) {
-          fadeInAudio(video, 500);
+        if (video) {
+          video.muted = false;
+          video.volume = 1.0;
+          if (video.paused) {
+            video.play().catch(() => {});
+          }
         }
       }}
     >
@@ -203,30 +191,18 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           className="splash-screen__video"
           src={videoSrc}
           autoPlay
-          muted={false}
+          muted
           playsInline
-          // @ts-expect-error webkit-playsinline for iOS Safari
-          webkit-playsinline="true"
           preload="auto"
           onTimeUpdate={handleTimeUpdate}
           onEnded={dismissSplash}
-          onError={dismissSplash}
-        >
-          <source
-            src={
-              isMobile
-                ? "/videos/mobile-splash.mp4"
-                : "/videos/desktop-splash.mp4"
-            }
-            type="video/mp4"
-          />
-        </video>
+        />
       </div>
 
       {/* Cinematic Vignette Overlay */}
       <div className="splash-screen__vignette" aria-hidden="true" />
 
-      {/* Top Header with Discreet Skip Button */}
+      {/* Top Header with Brand Tag & Skip Button */}
       <div className="splash-screen__controls">
         <div className="splash-screen__brand">
           <span className="splash-screen__brand-tag">Sri Captures</span>
