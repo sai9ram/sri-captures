@@ -6,6 +6,7 @@ import ContactPage from "./ContactPage";
 import QuotePage from "./QuotePage";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
+import SplashScreen from "./components/SplashScreen";
 
 type Scene = {
   eyebrow: string;
@@ -713,6 +714,7 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
 }
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
   const [currentPage, setCurrentPage] = useState<Page>(getPageFromHash);
   const [storyInquiryRequestKey, setStoryInquiryRequestKey] = useState(0);
 
@@ -816,6 +818,9 @@ export default function App() {
 
   return (
     <>
+      {showSplash && (
+        <SplashScreen onComplete={() => setShowSplash(false)} />
+      )}
       <SiteHeader
         currentPage={currentPage}
         onNavigateHome={() => navigateTo("home")}
