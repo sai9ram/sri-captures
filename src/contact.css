@@ -994,4 +994,41 @@
   .cnt-closing {
     padding: 64px 0;
   }
+
+  .cnt-submit-btn {
+    white-space: nowrap !important;
+    min-height: 48px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+  }
+
+  .cnt-service-chip {
+    white-space: nowrap !important;
+    min-height: 40px;
+    font-size: 12px;
+  }
+
+  .cnt-input,
+  .cnt-textarea {
+    font-size: 16px !important;
+    min-height: 44px;
+  }
+
+  .cnt-hero__title,
+  .cnt-form-title,
+  .cnt-direct__title,
+  .cnt-closing__title {
+    font-size: clamp(26px, 7.5vw, 38px) !important;
+    line-height: 1.2 !important;
+  }
+
+  .cnt-hero__desc,
+  .cnt-direct__desc {
+    font-size: clamp(14px, 3.8vw, 15.5px) !important;
+    line-height: 1.6 !important;
+  }
 }

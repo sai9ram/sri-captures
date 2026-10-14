@@ -1168,4 +1168,34 @@
   .srv-cta__content {
     padding: 48px 20px;
   }
+
+  .srv-nav-pill {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    min-height: 40px;
+  }
+
+  .srv-cta__btn {
+    white-space: nowrap !important;
+    min-height: 48px;
+    width: 100%;
+    max-width: 320px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(11px, 3vw, 12px);
+    padding: 12px 20px;
+  }
+
+  .srv-hero__title,
+  .srv-cta__headline {
+    font-size: clamp(26px, 7.5vw, 38px) !important;
+    line-height: 1.2 !important;
+  }
+
+  .srv-hero__lead,
+  .srv-cta__body {
+    font-size: clamp(14px, 3.8vw, 15.5px) !important;
+    line-height: 1.6 !important;
+  }
 }

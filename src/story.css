@@ -1945,4 +1945,45 @@
     gap: 1rem;
     text-align: center;
   }
+
+  /* Mobile-first buttons & readable typography */
+  .story-cta-btn {
+    white-space: nowrap !important;
+    min-height: 46px;
+    width: 100%;
+    max-width: 320px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: clamp(11px, 3.2vw, 12.5px);
+  }
+
+  .story-form-submit {
+    white-space: nowrap !important;
+    min-height: 48px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  .story-form-input,
+  .story-form-textarea {
+    font-size: 16px !important;
+    min-height: 44px;
+  }
+
+  .story-intro-headline,
+  .story-cta-headline {
+    font-size: clamp(26px, 7.5vw, 38px) !important;
+    line-height: 1.2 !important;
+  }
+
+  .story-intro-copy,
+  .story-cta-text {
+    font-size: clamp(14px, 3.8vw, 15.5px) !important;
+    line-height: 1.6 !important;
+  }
 }

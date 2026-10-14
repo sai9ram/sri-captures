@@ -1600,26 +1600,61 @@
    ========================================================================== */
 @media (max-width: 768px) {
   .quote-page {
-    padding-top: 64px;
+    padding-top: 56px;
   }
 
   .quote-progress {
-    top: 60px;
-    padding: 10px 14px;
+    top: 56px !important;
+    padding: 8px 12px !important;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .quote-progress__inner {
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-bottom: 2px;
+  }
+
+  .quote-progress__inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .quote-progress__item {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 6px 11px !important;
+    font-size: 11px !important;
   }
 
   .quote-container {
-    padding: 0 16px 120px;
+    padding: 0 16px 100px;
   }
 
   .quote-layout {
-    margin-top: 24px;
+    margin-top: 18px;
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
   .quote-hero-card {
     grid-template-columns: 1fr;
-    padding: 28px 20px;
-    gap: 32px;
+    padding: 24px 18px;
+    gap: 24px;
+  }
+
+  .quote-headline {
+    font-size: clamp(26px, 7.5vw, 36px) !important;
+    line-height: 1.2 !important;
+  }
+
+  .quote-section-title {
+    font-size: clamp(24px, 7vw, 32px) !important;
+    line-height: 1.25 !important;
   }
 
   .quote-styles-grid,
@@ -1630,15 +1665,56 @@
     grid-template-columns: 1fr;
   }
 
+  .quote-nav-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    margin-top: 28px;
+  }
+
+  .quote-primary-btn {
+    white-space: nowrap !important;
+    min-height: 46px;
+    padding: 12px 20px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.12em !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    max-width: 260px;
+    margin-left: auto;
+  }
+
+  .quote-back-btn {
+    white-space: nowrap !important;
+    min-height: 44px;
+    padding: 10px 14px !important;
+    font-size: 11px !important;
+    display: inline-flex;
+    align-items: center;
+  }
+
   .quote-form-card,
   .quote-summary-review,
   .quote-confirmation-card,
   .quote-invoice-sheet {
-    padding: 24px 18px;
+    padding: 20px 16px;
+  }
+
+  .quote-input,
+  .quote-textarea,
+  .quote-select {
+    font-size: 16px !important;
+    min-height: 44px;
   }
 
   .quote-invoice-header {
     flex-direction: column;
+    align-items: flex-start;
     gap: 12px;
   }
 
@@ -1646,24 +1722,82 @@
     text-align: left;
   }
 
-  .quote-invoice-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+  .quote-table {
+    table-layout: fixed;
+    width: 100%;
   }
 
-  .quote-footer-total {
-    text-align: left;
+  .quote-table th {
+    padding: 10px 12px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  .quote-event-row-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .quote-event-row-title {
+    font-size: 13px;
+  }
+
+  .quote-event-row-badge {
+    font-size: 10.5px;
+    white-space: nowrap !important;
+  }
+
+  .quote-table-item-row td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .quote-table-item-row td.quote-item-name-cell {
+    padding-left: 14px;
+  }
+
+  .quote-table-item-row td.quote-item-price-cell {
+    white-space: nowrap !important;
+    text-align: right !important;
+    font-size: 13px;
+  }
+
+  .quote-total-panel {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px 18px;
+  }
+
+  .quote-total-panel__figure {
+    font-size: 28px !important;
+    white-space: nowrap !important;
   }
 
   .quote-final-actions {
     flex-direction: column;
     width: 100%;
+    gap: 10px;
   }
 
   .quote-action-btn {
     width: 100%;
+    min-height: 46px;
     justify-content: center;
+    white-space: nowrap !important;
+    font-size: 11px;
+    padding: 12px 18px;
+  }
+
+  .quote-dispatch-card {
+    padding: 14px 16px;
+  }
+
+  .quote-dispatch-card__body strong {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
