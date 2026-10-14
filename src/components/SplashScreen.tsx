@@ -177,27 +177,10 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
                   startExperience();
                 }}
                 className="splash-cover__btn-enter"
-                aria-label="Enter cinematic experience with sound"
+                aria-label="Enter cinematic experience"
               >
                 <span className="splash-cover__btn-spark">✦</span>
                 <span>Enter Experience</span>
-                <span className="splash-cover__btn-audio">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-                  </svg>
-                  Sound 100%
-                </span>
               </button>
 
               <button

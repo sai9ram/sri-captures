@@ -3650,18 +3650,6 @@ body.is-services-page {
   font-size: 14px;
 }
 
-.splash-cover__btn-audio {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 4px 8px;
-  border-radius: 999px;
-  margin-left: 2px;
-}
-
 .splash-cover__link-skip {
   background: none;
   border: none;
