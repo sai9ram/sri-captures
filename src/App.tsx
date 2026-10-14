@@ -375,13 +375,12 @@ function HomePage({ onNavigateStory }: { onNavigateStory: () => void }) {
 
             <div className="scene__content">
               {index === 0 && (
-                <div className="hero-brand-wrap">
+              <div className="hero-brand-wrap">
                   <img
                     src="/images/sricaptures-logo.jpg"
                     alt="Sri Captures Logo"
                     className="hero-brand-logo"
                   />
-                  <p className="hero-brand">SRI CAPTURES</p>
                 </div>
               )}
               <p className="scene__eyebrow">
