@@ -20,7 +20,7 @@
 var ADMIN_EMAIL = "sricapture929@gmail.com";
 var ADMIN_PHONE = "+91 81424 90545";
 var BRAND_NAME = "SRI CAPTURES";
-var LOGO_URL = "https://sri-captures-delta.vercel.app/images/Sricaptures%20Logo%20.jpg";
+var LOGO_URL = "https://www.sricaptures.com/images/Sricaptures%20Logo%20.jpg";
 
 function doPost(e) {
   try {
@@ -185,7 +185,7 @@ function sendCustomerQuotationEmail(lead) {
     + "    ✦ &nbsp; SRI CAPTURES ATELIER &bull; BESPOKE WEDDING CINEMA &nbsp; ✦"
     + "  </div>"
     + "  <div style='background: #181210; color: #f1eadc; padding: 32px 24px; text-align: center; border-bottom: 2px solid #c4a05a;'>"
-    + "    <img src='https://sri-captures-delta.vercel.app/images/Sricaptures%20Logo%20.jpg' alt='Sri Captures' style='height: 58px; max-width: 160px; object-fit: contain; margin-bottom: 12px;' />"
+    + "    <img src='https://www.sricaptures.com/images/Sricaptures%20Logo%20.jpg' alt='Sri Captures' style='height: 58px; max-width: 160px; object-fit: contain; margin-bottom: 12px;' />"
     + "    <h1 style='margin: 0; font-size: 26px; letter-spacing: 3px; color: #fdfaf5; font-family: Georgia, serif;'>SRI CAPTURES</h1>"
     + "    <p style='margin: 4px 0 0; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #c4a05a;'>LUXURY WEDDING PHOTOGRAPHY & FILMS</p>"
     + "    <p style='margin: 6px 0 0; font-style: italic; font-size: 14px; color: #e5b974; font-family: Georgia, serif;'>\"Let's Make Some జ్ఞాపకాలు\"</p>"

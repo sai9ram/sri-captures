@@ -1,0 +1,9 @@
+# Robots.txt for Sri Captures
+# https://www.sricaptures.com
+
+User-agent: *
+Allow: /
+
+# Host & Sitemap
+Host: https://www.sricaptures.com
+Sitemap: https://www.sricaptures.com/sitemap.xml

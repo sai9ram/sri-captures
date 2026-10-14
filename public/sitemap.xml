@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://www.sricaptures.com/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.sricaptures.com/images/Sricaptures%20Logo%20.jpg</image:loc>
+      <image:title>Sri Captures - Luxury Wedding Photography and Films</image:title>
+      <image:caption>Authentic wedding stories and cinematic films across India</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Our Story -->
+  <url>
+    <loc>https://www.sricaptures.com/#story</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Services -->
+  <url>
+    <loc>https://www.sricaptures.com/#services</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- Gallery / Portfolio -->
+  <url>
+    <loc>https://www.sricaptures.com/#gallery</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Contact -->
+  <url>
+    <loc>https://www.sricaptures.com/#contact</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Quotation Calculator -->
+  <url>
+    <loc>https://www.sricaptures.com/#quote</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+</urlset>

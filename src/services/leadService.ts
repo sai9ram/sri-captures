@@ -41,7 +41,7 @@ export const ADMIN_CONFIG = {
   cleanPhone: "918142490545",
   brandName: "SRI CAPTURES",
   tagline: "Let's Make Some 'జ్ఞాపకాలు'",
-  websiteUrl: "https://sri-captures-delta.vercel.app",
+  websiteUrl: "https://www.sricaptures.com",
 };
 
 export const LIVE_GOOGLE_CRM_URL =
