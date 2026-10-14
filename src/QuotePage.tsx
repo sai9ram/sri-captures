@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import "./quote.css";
 import {
   LeadPayload,
@@ -12,6 +12,90 @@ import {
   setGoogleCrmUrl,
   getSavedLeads,
 } from "./services/leadService";
+
+/* ── Sleek Favicon SVGs ─────────────────────────────────────────────── */
+const SvgWhatsApp = ({ size = 16 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.41a8.19 8.19 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.42 0-2.82-.37-4.05-1.07l-.29-.17-3.12.82.83-3.04-.19-.3a8.16 8.16 0 01-1.25-4.47c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.66c-.25-.12-1.47-.72-1.7-.8-.23-.08-.39-.12-.56.12-.17.25-.64.8-.79.97-.15.17-.29.19-.54.07-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.32-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+  </svg>
+);
+
+const SvgMail = ({ size = 16 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="2" y="4" width="20" height="16" rx="2"/>
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+  </svg>
+);
+
+const SvgCalendar = ({ size = 14 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+    <line x1="16" y1="2" x2="16" y2="6"/>
+    <line x1="8" y1="2" x2="8" y2="6"/>
+    <line x1="3" y1="10" x2="21" y2="10"/>
+  </svg>
+);
+
+const SvgMapPin = ({ size = 14 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+    <circle cx="12" cy="10" r="3"/>
+  </svg>
+);
+
+const SvgDownload = ({ size = 15 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7 10 12 15 17 10"/>
+    <line x1="12" y1="15" x2="12" y2="3"/>
+  </svg>
+);
+
+const SvgArrowUpRight = ({ size = 14 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <line x1="7" y1="17" x2="17" y2="7"/>
+    <polyline points="7 7 17 7 17 17"/>
+  </svg>
+);
+
+const SvgCheck = ({ size = 13 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+);
+
+const SvgSparkle = ({ size = 12 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
+    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+  </svg>
+);
+
+const SvgArrowRight = ({ size = 14 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <line x1="5" y1="12" x2="19" y2="12"/>
+    <polyline points="12 5 19 12 12 19"/>
+  </svg>
+);
+
+const SvgArrowLeft = ({ size = 14 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <line x1="19" y1="12" x2="5" y2="12"/>
+    <polyline points="12 19 5 12 12 5"/>
+  </svg>
+);
+
+const SvgPencil = ({ size = 13 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+  </svg>
+);
+
+const SvgUser = ({ size = 14 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+);
 
 const img = (id: string, w = 1600) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=86`;
@@ -444,7 +528,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
       .map(
         (group) => `
         <tr style="background:#faf6ee;border-top:1.5px solid #c4a05a;">
-          <td colspan="2" style="padding:12px 18px;font-family:'Cormorant Garamond',serif;font-weight:700;color:#5a1a1c;font-size:16px;letter-spacing:0.04em;">
+          <td colspan="2" style="padding:10px 18px;font-family:'Cormorant Garamond',serif;font-weight:700;color:#5a1a1c;font-size:16px;letter-spacing:0.04em;">
             ✦ ${group.eventName.toUpperCase()} <span style="font-family:'Manrope',sans-serif;font-size:11px;font-weight:500;color:#8a6d3b;margin-left:8px;">(8-Hour Comprehensive Coverage)</span>
           </td>
         </tr>
@@ -452,7 +536,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
           .map(
             (srv) => `
           <tr style="border-bottom:1px solid #eee6d8;">
-            <td style="padding:10px 18px 10px 32px;color:#2c2420;font-size:13.5px;">
+            <td style="padding:10px 18px;color:#2c2420;font-size:13.5px;text-align:left;">
               <span style="color:#c4a05a;margin-right:8px;">•</span> ${srv.name}
             </td>
             <td style="padding:10px 18px;text-align:right;font-weight:700;color:#181210;font-size:14px;letter-spacing:0.02em;">
@@ -469,15 +553,15 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
       selectedAddonsList.length > 0
         ? `
         <tr style="background:#faf6ee;border-top:1.5px solid #c4a05a;">
-          <td colspan="2" style="padding:12px 18px;font-family:'Cormorant Garamond',serif;font-weight:700;color:#5a1a1c;font-size:16px;letter-spacing:0.04em;">
-            ✦ OPTIONAL ADD-ONS & CINEMATIC EXPERIENCES
+          <td colspan="2" style="padding:10px 18px;font-family:'Cormorant Garamond',serif;font-weight:700;color:#5a1a1c;font-size:16px;letter-spacing:0.04em;">
+            ✦ OPTIONAL ADD-ONS & EXPERIENCES
           </td>
         </tr>
         ${selectedAddonsList
           .map(
             (addon) => `
           <tr style="border-bottom:1px solid #eee6d8;">
-            <td style="padding:10px 18px 10px 32px;color:#2c2420;font-size:13.5px;">
+            <td style="padding:10px 18px;color:#2c2420;font-size:13.5px;text-align:left;">
               <span style="color:#c4a05a;margin-right:8px;">•</span> ${addon.name}
             </td>
             <td style="padding:10px 18px;text-align:right;font-weight:700;color:#181210;font-size:14px;">
@@ -493,7 +577,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>SRI CAPTURES — Luxury Wedding Quotation (${quoteReference})</title>
+          <title>SRI CAPTURES — Wedding Quotation (${quoteReference})</title>
           <meta charset="utf-8" />
           <link rel="preconnect" href="https://fonts.googleapis.com">
           <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -515,73 +599,24 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
               background: #ffffff;
               max-width: 860px;
               margin: 0 auto;
-              padding: 44px 48px;
-              border: 2px solid #5a1a1c;
-              box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-              position: relative;
-            }
-            .document-sheet::before {
-              content: '';
-              position: absolute;
-              top: 6px; left: 6px; right: 6px; bottom: 6px;
-              border: 1px solid rgba(196, 160, 90, 0.45);
-              pointer-events: none;
-            }
-            .ornament-bar {
-              text-align: center;
-              font-size: 11px;
-              letter-spacing: 0.28em;
-              color: #c4a05a;
-              margin-bottom: 12px;
-              text-transform: uppercase;
+              padding: 40px 44px;
+              border: 1px solid rgba(196, 160, 90, 0.4);
+              box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+              border-radius: 4px;
             }
             .header-grid {
               display: flex;
               justify-content: space-between;
               align-items: center;
               border-bottom: 2px solid #5a1a1c;
-              padding-bottom: 20px;
+              padding-bottom: 18px;
               margin-bottom: 24px;
-            }
-            .brand-block {
-              display: flex;
-              align-items: center;
-              gap: 16px;
             }
             .brand-logo {
               height: 52px;
-              max-width: 140px;
+              max-width: 160px;
               object-fit: contain;
               display: block;
-            }
-            .brand-titles {
-              border-left: 1.5px solid rgba(196, 160, 90, 0.5);
-              padding-left: 14px;
-            }
-            .brand-name {
-              font-family: 'Cormorant Garamond', Georgia, serif;
-              font-size: 28px;
-              font-weight: 700;
-              letter-spacing: 0.08em;
-              color: #5a1a1c;
-              margin: 0;
-              line-height: 1;
-            }
-            .brand-sub {
-              font-size: 10px;
-              font-weight: 700;
-              letter-spacing: 0.22em;
-              color: #8c6d32;
-              text-transform: uppercase;
-              margin-top: 4px;
-              display: block;
-            }
-            .brand-tagline {
-              font-family: 'Cormorant Garamond', Georgia, serif;
-              font-size: 13px;
-              font-style: italic;
-              color: #a85432;
-              margin-top: 2px;
             }
             .meta-block {
               text-align: right;
@@ -592,11 +627,11 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
               color: #5a1a1c;
               font-size: 11.5px;
               font-weight: 800;
-              letter-spacing: 0.12em;
+              letter-spacing: 0.1em;
               padding: 4px 12px;
               border-radius: 20px;
               display: inline-block;
-              margin-bottom: 6px;
+              margin-bottom: 4px;
             }
             .date-label {
               font-size: 12px;
@@ -608,13 +643,13 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
               border: 1px solid #e7dcce;
               border-radius: 4px;
               padding: 18px 22px;
-              margin-bottom: 26px;
+              margin-bottom: 24px;
               display: grid;
               grid-template-columns: 1fr 1fr;
               gap: 20px;
             }
             .dossier-col span {
-              font-size: 10px;
+              font-size: 9.5px;
               font-weight: 800;
               letter-spacing: 0.16em;
               color: #a85432;
@@ -639,18 +674,28 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
             .items-table {
               width: 100%;
               border-collapse: collapse;
+              table-layout: fixed;
               margin-bottom: 24px;
-              font-size: 13.5px;
+              border: 1px solid #e8dec8;
+              border-radius: 4px;
+              overflow: hidden;
+            }
+            .items-table thead tr {
+              background: #5a1a1c;
             }
             .items-table th {
-              background: #5a1a1c;
               color: #ffffff;
-              padding: 11px 18px;
-              text-align: left;
+              padding: 12px 18px;
               font-size: 11px;
               font-weight: 800;
-              letter-spacing: 0.14em;
+              letter-spacing: 0.12em;
               text-transform: uppercase;
+            }
+            .items-table th:first-child {
+              text-align: left;
+            }
+            .items-table th:last-child {
+              text-align: right;
             }
             .total-panel {
               background: #faf5ed;
@@ -663,9 +708,9 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
               margin-bottom: 24px;
             }
             .total-label {
-              font-size: 11.5px;
+              font-size: 11px;
               font-weight: 800;
-              letter-spacing: 0.16em;
+              letter-spacing: 0.14em;
               color: #5a1a1c;
               text-transform: uppercase;
               display: block;
@@ -678,36 +723,10 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
             }
             .total-figure {
               font-family: 'Cormorant Garamond', Georgia, serif;
-              font-size: 32px;
+              font-size: 30px;
               font-weight: 700;
               color: #5a1a1c;
               letter-spacing: 0.02em;
-            }
-            .atelier-guarantees {
-              display: grid;
-              grid-template-columns: repeat(3, 1fr);
-              gap: 14px;
-              background: #fdfbf7;
-              border: 1px dashed #d8c7b0;
-              border-radius: 4px;
-              padding: 14px 18px;
-              margin-bottom: 24px;
-              text-align: center;
-            }
-            .guarantee-item span {
-              font-size: 11px;
-              font-weight: 700;
-              letter-spacing: 0.08em;
-              color: #5a1a1c;
-              text-transform: uppercase;
-              display: block;
-              margin-bottom: 2px;
-            }
-            .guarantee-item p {
-              font-size: 11px;
-              color: #7a6e67;
-              margin: 0;
-              line-height: 1.35;
             }
             .footer-strip {
               border-top: 1px solid #e7dcce;
@@ -727,43 +746,30 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
               background: #5a1a1c;
               color: #ffffff;
               border: none;
-              padding: 13px 32px;
-              font-size: 13px;
+              padding: 12px 28px;
+              font-size: 12px;
               font-weight: 800;
               letter-spacing: 0.14em;
               border-radius: 9999px;
               cursor: pointer;
-              box-shadow: 0 4px 14px rgba(90, 26, 28, 0.25);
-              transition: all 0.2s ease;
-            }
-            .print-btn:hover {
-              background: #3e1012;
+              box-shadow: 0 4px 14px rgba(90, 26, 28, 0.2);
             }
             @media print {
               body { background: #fff; padding: 0; }
               .document-sheet { border: none; box-shadow: none; padding: 0; }
-              .document-sheet::before { display: none; }
               .no-print { display: none !important; }
             }
           </style>
         </head>
         <body>
           <div class="document-sheet">
-            <div class="ornament-bar">✦ &nbsp; SRI CAPTURES ATELIER &bull; BESPOKE WEDDING CINEMA &nbsp; ✦</div>
-            
             <div class="header-grid">
-              <div class="brand-block">
-                <img src="/images/Sricaptures Logo .jpg" class="brand-logo" alt="Sri Captures Emblem" />
-                <div class="brand-titles">
-                  <h1 class="brand-name">SRI CAPTURES</h1>
-                  <span class="brand-sub">LUXURY WEDDING PHOTOGRAPHY & FILMS</span>
-                  <div class="brand-tagline">"Let's Make Some జ్ఞాపకాలు"</div>
-                </div>
+              <div>
+                <img src="/images/Sricaptures Logo .jpg" class="brand-logo" alt="Sri Captures" />
               </div>
               <div class="meta-block">
                 <span class="ref-pill">REF: ${quoteReference}</span>
                 <span class="date-label">Issue Date: <strong>${new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</strong></span>
-                <span class="date-label" style="margin-top:2px;">Status: <strong>Confidential Estimate</strong></span>
               </div>
             </div>
 
@@ -771,22 +777,26 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
               <div class="dossier-col">
                 <span>CLIENT / BRIDE & GROOM</span>
                 <strong>${details.fullName}</strong>
-                <p>✉️ ${details.email}</p>
-                <p>📱 WhatsApp: ${details.whatsapp}</p>
+                <p>Email: ${details.email}</p>
+                <p>WhatsApp: ${details.whatsapp}</p>
               </div>
               <div class="dossier-col">
-                <span>CELEBRATION VENUE & VISION</span>
+                <span>CELEBRATION DETAILS</span>
                 <strong>${details.venue}</strong>
-                <p>📅 Auspicious Date: <strong>${details.weddingDate}</strong></p>
-                <p>🎨 Cinematic Style: <strong>${selectedStyles.map(getStyleLabel).join(" & ")}</strong></p>
+                <p>Wedding Date: <strong>${details.weddingDate}</strong></p>
+                <p>Style: <strong>${selectedStyles.map(getStyleLabel).join(" & ")}</strong></p>
               </div>
             </div>
 
             <table class="items-table">
+              <colgroup>
+                <col style="width: 70%;" />
+                <col style="width: 30%;" />
+              </colgroup>
               <thead>
                 <tr>
                   <th>CEREMONY / SERVICE SCHEDULE</th>
-                  <th style="text-align:right;">INVESTMENT (INR)</th>
+                  <th>INVESTMENT (INR)</th>
                 </tr>
               </thead>
               <tbody>
@@ -798,33 +808,17 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
             <div class="total-panel">
               <div>
                 <span class="total-label">TOTAL ESTIMATED INVESTMENT</span>
-                <p class="total-sub">Includes full ritual documentation, master sound design & cinematic color grading.</p>
+                <p class="total-sub">Includes dual-camera coverage, ceremony preservation & color grading.</p>
               </div>
               <div class="total-figure">${formatINR(estimatedTotal)}</div>
             </div>
 
-            <div class="atelier-guarantees">
-              <div class="guarantee-item">
-                <span>⏱️ 8-Hour Sessions</span>
-                <p>Comprehensive 8 hours coverage per ceremony to capture every authentic emotion without rushing.</p>
-              </div>
-              <div class="guarantee-item">
-                <span>🎬 4K Cinema Grading</span>
-                <p>Ultra-high definition preservation, professional audio capture, and bespoke color correction.</p>
-              </div>
-              <div class="guarantee-item">
-                <span>🔒 Dedicated Crew</span>
-                <p>Dates and crew reservation are secured upon formal contract and deposit confirmation.</p>
-              </div>
-            </div>
-
             <div class="footer-strip">
-              <p><strong>SRI CAPTURES ATELIER</strong> &bull; Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com &bull; Instagram: @sri_capture9</p>
-              <p style="font-size:10px;color:#a89b94;">Headquartered in Hyderabad &bull; Preserving weddings across India & destinations worldwide.</p>
+              <p><strong>SRI CAPTURES</strong> &bull; Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com</p>
             </div>
 
             <div class="no-print">
-              <button onclick="window.print()" class="print-btn">🖨️ PRINT / DOWNLOAD PDF QUOTATION</button>
+              <button onclick="window.print()" class="print-btn">PRINT / DOWNLOAD PDF</button>
             </div>
           </div>
         </body>
@@ -922,7 +916,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                 aria-current={isActive ? "step" : undefined}
               >
                 <span className="quote-progress__dot">
-                  {isCompleted ? "✓" : step.num}
+                  {isCompleted ? <SvgCheck size={11} /> : step.num}
                 </span>
                 <span className="quote-progress__label">{step.label}</span>
               </button>
@@ -956,15 +950,15 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
 
                     <div className="quote-hero-features">
                       <div className="quote-hero-feat">
-                        <span className="quote-feat-icon">✦</span>
+                        <span className="quote-feat-icon"><SvgSparkle size={12} /></span>
                         <span>Transparent, exact event-wise pricing</span>
                       </div>
                       <div className="quote-hero-feat">
-                        <span className="quote-feat-icon">✦</span>
+                        <span className="quote-feat-icon"><SvgSparkle size={12} /></span>
                         <span>Full candid &amp; traditional coverage options</span>
                       </div>
                       <div className="quote-hero-feat">
-                        <span className="quote-feat-icon">✦</span>
+                        <span className="quote-feat-icon"><SvgSparkle size={12} /></span>
                         <span>Instant itemized PDF quotation</span>
                       </div>
                     </div>
@@ -974,7 +968,8 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                       className="quote-primary-btn"
                       onClick={() => setCurrentStep(2)}
                     >
-                      START BUILDING MY QUOTE →
+                      <span>START BUILDING MY QUOTE</span>
+                      <SvgArrowRight size={14} />
                     </button>
                   </div>
 
@@ -1033,7 +1028,13 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                         <div className="quote-style-card__img">
                           <img src={style.img} alt={style.name} />
                           <div className="quote-style-card__badge">
-                            {isSelected ? "✓ SELECTED" : "SELECT"}
+                            {isSelected ? (
+                              <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                                <SvgCheck size={11} /> SELECTED
+                              </span>
+                            ) : (
+                              "SELECT"
+                            )}
                           </div>
                           <span className="quote-style-card__type-tag">{style.badge}</span>
                         </div>
@@ -1053,14 +1054,16 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                     className="quote-back-btn"
                     onClick={() => setCurrentStep(1)}
                   >
-                    ← BACK
+                    <SvgArrowLeft size={14} />
+                    <span>BACK</span>
                   </button>
                   <button
                     type="button"
                     className="quote-primary-btn"
                     onClick={() => setCurrentStep(3)}
                   >
-                    CONTINUE TO EVENTS →
+                    <span>CONTINUE TO EVENTS</span>
+                    <SvgArrowRight size={14} />
                   </button>
                 </div>
               </section>
@@ -1152,7 +1155,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                                       onChange={() => toggleService(srv.id)}
                                     />
                                     <div className="quote-service-tile__check" aria-hidden="true">
-                                      {isChecked ? "✓" : "+"}
+                                      {isChecked ? <SvgCheck size={11} /> : "+"}
                                     </div>
                                     <div className="quote-service-tile__info">
                                       <span className="quote-service-tile__category">
@@ -1185,14 +1188,16 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                     className="quote-back-btn"
                     onClick={() => setCurrentStep(2)}
                   >
-                    ← BACK
+                    <SvgArrowLeft size={14} />
+                    <span>BACK</span>
                   </button>
                   <button
                     type="button"
                     className="quote-primary-btn"
                     onClick={() => setCurrentStep(4)}
                   >
-                    CONTINUE TO ADD-ONS →
+                    <span>CONTINUE TO ADD-ONS</span>
+                    <SvgArrowRight size={14} />
                   </button>
                 </div>
               </section>
@@ -1247,7 +1252,13 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                           </div>
                           <div className="quote-addon-card__toggle">
                             <span className={`quote-toggle-box ${isChecked ? "is-on" : ""}`}>
-                              {isChecked ? "✓ ADDED TO QUOTE" : "+ ADD THIS SERVICE"}
+                              {isChecked ? (
+                                <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                                  <SvgCheck size={11} /> ADDED TO QUOTE
+                                </span>
+                              ) : (
+                                "+ ADD THIS SERVICE"
+                              )}
                             </span>
                           </div>
                         </div>
@@ -1262,14 +1273,16 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                     className="quote-back-btn"
                     onClick={() => setCurrentStep(3)}
                   >
-                    ← BACK
+                    <SvgArrowLeft size={14} />
+                    <span>BACK</span>
                   </button>
                   <button
                     type="button"
                     className="quote-primary-btn"
                     onClick={() => setCurrentStep(5)}
                   >
-                    REVIEW MY QUOTE →
+                    <span>REVIEW MY QUOTE</span>
+                    <SvgArrowRight size={14} />
                   </button>
                 </div>
               </section>
@@ -1297,7 +1310,11 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
 
                     <div className="quote-field">
                       <label htmlFor="qf-name" className="quote-label">
-                        Full Name <span className="req">*</span>
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <SvgUser size={13} />
+                          <span>Full Name</span>
+                        </span>
+                        <span className="req">*</span>
                       </label>
                       <input
                         id="qf-name"
@@ -1315,7 +1332,11 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                     <div className="quote-field-row">
                       <div className="quote-field">
                         <label htmlFor="qf-email" className="quote-label">
-                          Email Address <span className="req">*</span>
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                            <SvgMail size={13} />
+                            <span>Email Address</span>
+                          </span>
+                          <span className="req">*</span>
                         </label>
                         <input
                           id="qf-email"
@@ -1332,7 +1353,11 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
 
                       <div className="quote-field">
                         <label htmlFor="qf-phone" className="quote-label">
-                          WhatsApp Number <span className="req">*</span>
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                            <SvgWhatsApp size={13} />
+                            <span>WhatsApp Number</span>
+                          </span>
+                          <span className="req">*</span>
                         </label>
                         <input
                           id="qf-phone"
@@ -1351,7 +1376,11 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                     <div className="quote-field-row">
                       <div className="quote-field">
                         <label htmlFor="qf-venue" className="quote-label">
-                          Venue / City <span className="req">*</span>
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                            <SvgMapPin size={13} />
+                            <span>Venue / City</span>
+                          </span>
+                          <span className="req">*</span>
                         </label>
                         <input
                           id="qf-venue"
@@ -1368,7 +1397,11 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
 
                       <div className="quote-field">
                         <label htmlFor="qf-date" className="quote-label">
-                          Wedding Date <span className="req">*</span>
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                            <SvgCalendar size={13} />
+                            <span>Wedding Date</span>
+                          </span>
+                          <span className="req">*</span>
                         </label>
                         <input
                           id="qf-date"
@@ -1396,10 +1429,12 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                         className="quote-back-btn"
                         onClick={() => setCurrentStep(4)}
                       >
-                        ← BACK TO ADD-ONS
+                        <SvgArrowLeft size={14} />
+                        <span>BACK TO ADD-ONS</span>
                       </button>
                       <button type="submit" className="quote-primary-btn">
-                        GENERATE MY QUOTE →
+                        <span>GENERATE MY QUOTE</span>
+                        <SvgArrowRight size={14} />
                       </button>
                     </div>
                   </form>
@@ -1454,7 +1489,8 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                       className="quote-modify-link"
                       onClick={() => setCurrentStep(3)}
                     >
-                      ✎ Change ceremonies or services
+                      <SvgPencil size={12} />
+                      <span>Change ceremonies or services</span>
                     </button>
                   </div>
                 </div>
@@ -1479,24 +1515,14 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                   </div>
 
                   <div className="quote-invoice-sheet quote-invoice-sheet--elevated">
-                    {/* Atelier Filigree Bar */}
-                    <div className="quote-invoice-filigree" aria-hidden="true">
-                      <span>✦ &nbsp; SRI CAPTURES ATELIER &bull; BESPOKE WEDDING CINEMA &nbsp; ✦</span>
-                    </div>
-
-                    {/* Brand Header */}
-                    <div className="quote-invoice-header">
+                    {/* Brand Header: Clean & Minimal - Only the Logo and Ref badge */}
+                    <div className="quote-invoice-header quote-invoice-header--minimal">
                       <div className="quote-invoice-brand-block">
                         <img
                           src="/images/Sricaptures Logo .jpg"
-                          alt="Sri Captures Emblem"
+                          alt="Sri Captures"
                           className="quote-invoice-logo"
                         />
-                        <div className="quote-invoice-titles">
-                          <h3 className="quote-invoice-brand">SRI CAPTURES</h3>
-                          <span className="quote-invoice-subtitle">LUXURY WEDDING PHOTOGRAPHY & FILMS</span>
-                          <span className="quote-invoice-tagline">"Let's Make Some జ్ఞాపకాలు"</span>
-                        </div>
                       </div>
 
                       <div className="quote-invoice-ref-box">
@@ -1508,9 +1534,6 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                             year: "numeric",
                           })}</strong>
                         </span>
-                        <span className="quote-invoice-status">
-                          Status: <strong>Confidential Estimate</strong>
-                        </span>
                       </div>
                     </div>
 
@@ -1519,14 +1542,23 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                       <div className="quote-client-col">
                         <span className="quote-dossier-eyebrow">CLIENT / BRIDE & GROOM</span>
                         <strong className="quote-dossier-name">{details.fullName}</strong>
-                        <p className="quote-dossier-info">✉️ {details.email}</p>
-                        <p className="quote-dossier-info">📱 WhatsApp: {details.whatsapp}</p>
+                        <p className="quote-dossier-info">
+                          <span className="quote-dossier-icon"><SvgMail /></span>
+                          <span>{details.email}</span>
+                        </p>
+                        <p className="quote-dossier-info">
+                          <span className="quote-dossier-icon"><SvgWhatsApp /></span>
+                          <span>{details.whatsapp}</span>
+                        </p>
                       </div>
 
                       <div className="quote-client-col">
-                        <span className="quote-dossier-eyebrow">CELEBRATION VENUE & VISION</span>
+                        <span className="quote-dossier-eyebrow">CELEBRATION DETAILS</span>
                         <strong className="quote-dossier-name">{details.venue}</strong>
-                        <p className="quote-dossier-info">📅 Auspicious Date: <strong>{details.weddingDate}</strong></p>
+                        <p className="quote-dossier-info">
+                          <span className="quote-dossier-icon"><SvgCalendar size={15} /></span>
+                          <span>Wedding Date: <strong>{details.weddingDate}</strong></span>
+                        </p>
                         <div className="quote-dossier-styles">
                           {selectedStyles.map((s) => (
                             <span key={s} className="quote-style-pill">
@@ -1537,55 +1569,69 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                       </div>
                     </div>
 
-                    {/* Itemized Table */}
+                    {/* Itemized Table — Strictly Aligned with colgroup & single tbody */}
                     <div className="quote-table-wrap">
                       <table className="quote-table">
+                        <colgroup>
+                          <col style={{ width: "70%" }} />
+                          <col style={{ width: "30%" }} />
+                        </colgroup>
                         <thead>
                           <tr>
                             <th>CEREMONY / SERVICE SCHEDULE</th>
-                            <th style={{ textAlign: "right" }}>INVESTMENT (INR)</th>
+                            <th>INVESTMENT (INR)</th>
                           </tr>
                         </thead>
                         <tbody>
                           {Object.entries(itemizedByEvent).map(([evtId, group]) => (
-                            <tbody key={evtId}>
+                            <React.Fragment key={evtId}>
                               <tr className="quote-table-event-row">
                                 <td colSpan={2}>
-                                  <span className="quote-event-row-title">✦ {group.eventName.toUpperCase()}</span>
-                                  <span className="quote-event-row-badge">8-Hour Comprehensive Coverage</span>
+                                  <div className="quote-event-row-flex">
+                                    <span className="quote-event-row-title">
+                                      <span className="quote-diamond-icon"><SvgSparkle size={10} /></span>
+                                      {group.eventName.toUpperCase()}
+                                    </span>
+                                    <span className="quote-event-row-badge">8-Hour Comprehensive Coverage</span>
+                                  </div>
                                 </td>
                               </tr>
                               {group.services.map((srv) => (
                                 <tr key={srv.id} className="quote-table-item-row">
-                                  <td>
+                                  <td className="quote-item-name-cell">
                                     <span className="quote-item-dot">•</span> {srv.name}
                                   </td>
-                                  <td style={{ textAlign: "right" }} className="quote-item-price">
+                                  <td className="quote-item-price-cell">
                                     {formatINR(srv.price)}
                                   </td>
                                 </tr>
                               ))}
-                            </tbody>
+                            </React.Fragment>
                           ))}
 
                           {selectedAddonsList.length > 0 && (
-                            <tbody>
+                            <React.Fragment key="addons">
                               <tr className="quote-table-event-row">
                                 <td colSpan={2}>
-                                  <span className="quote-event-row-title">✦ OPTIONAL ADD-ONS & CINEMATIC EXPERIENCES</span>
+                                  <div className="quote-event-row-flex">
+                                    <span className="quote-event-row-title">
+                                      <span className="quote-diamond-icon"><SvgSparkle size={10} /></span>
+                                      OPTIONAL ADD-ONS &amp; EXPERIENCES
+                                    </span>
+                                  </div>
                                 </td>
                               </tr>
                               {selectedAddonsList.map((addon) => (
                                 <tr key={addon.id} className="quote-table-item-row">
-                                  <td>
+                                  <td className="quote-item-name-cell">
                                     <span className="quote-item-dot">•</span> {addon.name}
                                   </td>
-                                  <td style={{ textAlign: "right" }} className="quote-item-price">
+                                  <td className="quote-item-price-cell">
                                     {formatINR(addon.price)}
                                   </td>
                                 </tr>
                               ))}
-                            </tbody>
+                            </React.Fragment>
                           )}
                         </tbody>
                       </table>
@@ -1596,7 +1642,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                       <div className="quote-total-panel__meta">
                         <span className="quote-total-panel__eyebrow">TOTAL ESTIMATED INVESTMENT</span>
                         <p className="quote-total-panel__desc">
-                          Includes dual-camera coverage, full ritual preservation & cinematic color grading.
+                          Includes dual-camera coverage, ceremony preservation & color grading.
                         </p>
                       </div>
                       <div className="quote-total-panel__figure">
@@ -1604,72 +1650,12 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                       </div>
                     </div>
 
-                    {/* Atelier Guarantees */}
-                    <div className="quote-atelier-guarantees">
-                      <div className="quote-guarantee-pillar">
-                        <div className="quote-pillar-icon">⏱️</div>
-                        <div className="quote-pillar-text">
-                          <strong>8-Hour Sessions</strong>
-                          <p>Full 8 hours coverage per ceremony to preserve rituals without rushing.</p>
-                        </div>
-                      </div>
-                      <div className="quote-guarantee-pillar">
-                        <div className="quote-pillar-icon">🎬</div>
-                        <div className="quote-pillar-text">
-                          <strong>4K Cinema Grading</strong>
-                          <p>Master tone correction, high dynamic range & audio preservation.</p>
-                        </div>
-                      </div>
-                      <div className="quote-guarantee-pillar">
-                        <div className="quote-pillar-icon">🔒</div>
-                        <div className="quote-pillar-text">
-                          <strong>Guaranteed Reservation</strong>
-                          <p>Exclusive date and dedicated senior crew assigned upon confirmation.</p>
-                        </div>
-                      </div>
-                    </div>
-
                     {/* Studio Footer Sign-off */}
                     <div className="quote-invoice-seal-footer">
                       <p className="quote-seal-brand">
-                        <strong>SRI CAPTURES ATELIER</strong> &bull; Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com &bull; Instagram: @sri_capture9
-                      </p>
-                      <p className="quote-seal-tag">
-                        Headquartered in Hyderabad &bull; Documenting weddings across India & worldwide destinations.
+                        <strong>SRI CAPTURES</strong> &bull; Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com
                       </p>
                     </div>
-                  </div>
-
-                  {/* Google CRM Status Banner */}
-                  <div className={`quote-crm-status-box quote-crm-status-box--${crmStatus.status || "idle"}`}>
-                    <div className="quote-crm-status-box__icon">
-                      {crmStatus.status === "submitting" && "⏳"}
-                      {crmStatus.status === "success" && "✓"}
-                      {crmStatus.status === "warning" && "ℹ️"}
-                      {crmStatus.status === "error" && "⚠️"}
-                      {crmStatus.status === "idle" && "📊"}
-                    </div>
-                    <div className="quote-crm-status-box__body">
-                      <strong>
-                        {crmStatus.status === "submitting" && "Connecting to Google CRM..."}
-                        {crmStatus.status === "success" && "Captured in Google CRM & Logged"}
-                        {crmStatus.status === "warning" && "Quotation Stored & Multi-Channel Ready"}
-                        {crmStatus.status === "error" && "Quotation Stored Locally"}
-                        {crmStatus.status === "idle" && "Quotation Ready for Dispatch"}
-                      </strong>
-                      <p>
-                        {crmStatus.message ||
-                          "Your quote is securely archived. Use the instant dispatch options below to send to WhatsApp and Email for both client and studio."}
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      className="quote-crm-config-btn"
-                      onClick={() => setShowCrmModal(true)}
-                      title="Google CRM Webhook Settings"
-                    >
-                      ⚙️ CRM Settings
-                    </button>
                   </div>
 
                   {emailStatus && (
@@ -1696,13 +1682,13 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                         rel="noreferrer"
                         className="quote-dispatch-card quote-dispatch-card--wa-admin"
                       >
-                        <div className="quote-dispatch-card__icon">💬</div>
+                        <div className="quote-dispatch-card__icon"><SvgWhatsApp /></div>
                         <div className="quote-dispatch-card__info">
                           <span className="quote-dispatch-badge">STUDIO WHATSAPP</span>
                           <strong>Send to Sri Captures</strong>
                           <small>{ADMIN_CONFIG.phone}</small>
                         </div>
-                        <span className="quote-dispatch-card__arrow">→</span>
+                        <span className="quote-dispatch-card__arrow"><SvgArrowUpRight /></span>
                       </a>
 
                       {/* 2. Customer WhatsApp */}
@@ -1712,13 +1698,13 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                         rel="noreferrer"
                         className="quote-dispatch-card quote-dispatch-card--wa-client"
                       >
-                        <div className="quote-dispatch-card__icon">📱</div>
+                        <div className="quote-dispatch-card__icon"><SvgWhatsApp /></div>
                         <div className="quote-dispatch-card__info">
                           <span className="quote-dispatch-badge quote-dispatch-badge--client">REGISTERED CLIENT</span>
                           <strong>Send Copy to My WhatsApp</strong>
                           <small>{details.whatsapp || "Your registered number"}</small>
                         </div>
-                        <span className="quote-dispatch-card__arrow">→</span>
+                        <span className="quote-dispatch-card__arrow"><SvgArrowUpRight /></span>
                       </a>
 
                       {/* 3. Customer Email */}
@@ -1727,13 +1713,13 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                         onClick={handleSendCustomerEmail}
                         className="quote-dispatch-card quote-dispatch-card--email-client"
                       >
-                        <div className="quote-dispatch-card__icon">✉️</div>
+                        <div className="quote-dispatch-card__icon"><SvgMail /></div>
                         <div className="quote-dispatch-card__info">
                           <span className="quote-dispatch-badge quote-dispatch-badge--client">CLIENT INBOX</span>
                           <strong>Send to My Email</strong>
                           <small>{details.email || "Your registered email"}</small>
                         </div>
-                        <span className="quote-dispatch-card__arrow">↗</span>
+                        <span className="quote-dispatch-card__arrow"><SvgArrowUpRight /></span>
                       </button>
 
                       {/* 4. Admin Email */}
@@ -1742,13 +1728,13 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                         onClick={handleSendAdminEmail}
                         className="quote-dispatch-card quote-dispatch-card--email-admin"
                       >
-                        <div className="quote-dispatch-card__icon">📨</div>
+                        <div className="quote-dispatch-card__icon"><SvgMail /></div>
                         <div className="quote-dispatch-card__info">
                           <span className="quote-dispatch-badge">STUDIO BACKEND</span>
                           <strong>Send Copy to Admin Email</strong>
                           <small>{ADMIN_CONFIG.email}</small>
                         </div>
-                        <span className="quote-dispatch-card__arrow">↗</span>
+                        <span className="quote-dispatch-card__arrow"><SvgArrowUpRight /></span>
                       </button>
                     </div>
                   </div>
@@ -1760,15 +1746,8 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                       className="quote-action-btn quote-action-btn--gold"
                       onClick={handleDownloadPDF}
                     >
-                      📄 DOWNLOAD QUOTE PDF
-                    </button>
-
-                    <button
-                      type="button"
-                      className="quote-action-btn quote-action-btn--crm"
-                      onClick={() => setShowCrmModal(true)}
-                    >
-                      ⚙️ GOOGLE CRM INTEGRATION
+                      <SvgDownload />
+                      <span>DOWNLOAD QUOTE PDF</span>
                     </button>
 
                     {onNavigateHome && (
