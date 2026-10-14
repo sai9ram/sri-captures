@@ -296,14 +296,6 @@ export const STYLE_OPTIONS: StyleOption[] = [
     badge: "CANDID CAMERA",
   },
   {
-    id: "candid_video",
-    name: "Candid Video / Cinema",
-    subtitle: "Cinematic story & emotional highlights",
-    tag: "4K cinematic teaser • Couple romance • Storytelling",
-    img: "/images/Candid Video.avif",
-    badge: "CANDID VIDEO",
-  },
-  {
     id: "traditional",
     alias: "trad_photo",
     name: "Traditional Photography",
@@ -312,33 +304,14 @@ export const STYLE_OPTIONS: StyleOption[] = [
     img: "/images/Traditional camera.jpg",
     badge: "TRADITIONAL CAMERA",
   },
-  {
-    id: "trad_video",
-    name: "Traditional Video",
-    subtitle: "Full ceremony archival coverage",
-    tag: "Full ritual recording • Auspicious proceedings • Crystal audio",
-    img: "/images/Traditional Video.webp",
-    badge: "TRADITIONAL VIDEO",
-  },
-  {
-    id: "drone_aerial",
-    name: "Drone Cinematography",
-    subtitle: "Epic aerial perspectives & grand scale",
-    tag: "Breathtaking 4K aerial sweeps • Baraat & venue scale",
-    img: "/images/Drone camera.webp",
-    badge: "DRONE CAMERA",
-  },
 ];
 
 export const getStyleLabel = (styleId: string): string => {
   const map: Record<string, string> = {
     candid: "Candid Photography",
     candid_photo: "Candid Photography",
-    candid_video: "Candid Video",
     traditional: "Traditional Photography",
     trad_photo: "Traditional Photography",
-    trad_video: "Traditional Video",
-    drone_aerial: "Drone Cinematography",
   };
   return map[styleId] || styleId;
 };
