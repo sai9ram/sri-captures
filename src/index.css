@@ -257,37 +257,15 @@ body.is-services-page {
 }
 
 .universal-wordmark__logo {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1.5px solid rgba(196, 160, 90, 0.45);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: 120px;
+  height: 56px;
+  border-radius: 6px;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
   flex-shrink: 0;
 }
 
-.universal-wordmark__text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.universal-wordmark__main {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  line-height: 0.82;
-}
-
-.universal-wordmark__sub {
-  font-family: "Manrope", sans-serif;
-  font-size: 7.5px;
-  font-weight: 600;
-  letter-spacing: 0.38em;
-  margin-top: 4px;
-  opacity: 0.78;
-}
 
 /* Universal Center Navigation */
 .universal-nav {
@@ -493,12 +471,12 @@ body.is-services-page {
 }
 
 .universal-mobile-menu__logo {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1.5px solid rgba(196, 160, 90, 0.45);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  width: 120px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
 }
 
 .universal-mobile-menu__brand {
@@ -2525,13 +2503,12 @@ body.is-services-page {
 }
 
 .album-footer__logo {
-  width: 76px;
+  width: 160px;
   height: 76px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(196, 160, 90, 0.55);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border-radius: 6px;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .album-footer__logo:hover {

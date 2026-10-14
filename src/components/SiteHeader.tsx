@@ -90,10 +90,6 @@ export default function SiteHeader({
               alt="Sri Captures Logo"
               className="universal-wordmark__logo"
             />
-            <div className="universal-wordmark__text">
-              <span className="universal-wordmark__main">SRI</span>
-              <span className="universal-wordmark__sub">CAPTURES</span>
-            </div>
           </button>
 
           {/* Desktop & Tablet Navigation */}
@@ -189,7 +185,6 @@ export default function SiteHeader({
                   alt="Sri Captures Logo"
                   className="universal-mobile-menu__logo"
                 />
-                <span className="universal-mobile-menu__brand">SRI CAPTURES</span>
               </div>
               <button
                 className="universal-mobile-menu__close"

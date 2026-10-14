@@ -37,8 +37,6 @@ export default function SiteFooter({
         />
       </div>
 
-      <p className="album-footer__brand">SRI CAPTURES</p>
-
       <h2>
         Love. People. Moments. <em>Forever.</em>
       </h2>
