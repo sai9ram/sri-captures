@@ -3525,6 +3525,188 @@ body.is-services-page {
   }
 }
 
+/* ==========================================================================
+   LUXURY ENTER EXPERIENCE COVER (OPTION 2)
+   ========================================================================== */
+.splash-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: radial-gradient(circle at center, #16120e 0%, #060504 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  animation: splashFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.splash-cover__content {
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.splash-cover__emblem-wrap {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(212, 175, 55, 0.65);
+  padding: 4px;
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.35);
+  background: rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.splash-cover:hover .splash-cover__emblem-wrap {
+  transform: scale(1.04);
+  box-shadow: 0 0 45px rgba(212, 175, 55, 0.55);
+}
+
+.splash-cover__emblem {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.splash-cover__titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.splash-cover__eyebrow {
+  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #ecd58a;
+}
+
+.splash-cover__headline {
+  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-size: clamp(24px, 5vw, 34px);
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.25;
+  margin: 4px 0 2px;
+  letter-spacing: 0.04em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+.splash-cover__subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.splash-cover__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.splash-cover__btn-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #dfc067 0%, #c49d33 100%);
+  color: #0b0906;
+  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.45);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: enterPulse 2.4s infinite ease-in-out;
+}
+
+.splash-cover__btn-enter:hover {
+  background: linear-gradient(135deg, #f0d588 0%, #d4af37 100%);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.65);
+}
+
+.splash-cover__btn-spark {
+  color: #0b0906;
+  font-size: 14px;
+}
+
+.splash-cover__btn-audio {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 999px;
+  margin-left: 2px;
+}
+
+.splash-cover__link-skip {
+  background: none;
+  border: none;
+  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  padding: 6px 12px;
+  transition: color 0.25s ease;
+}
+
+.splash-cover__link-skip:hover {
+  color: #ecd58a;
+}
+
+@keyframes enterPulse {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.38);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 10px 42px rgba(212, 175, 55, 0.65);
+    transform: scale(1.025);
+  }
+}
+
+@media (max-width: 768px) {
+  .splash-cover__emblem-wrap {
+    width: 78px;
+    height: 78px;
+  }
+  .splash-cover__headline {
+    font-size: 24px;
+  }
+  .splash-cover__subtitle {
+    font-size: 12px;
+  }
+  .splash-cover__btn-enter {
+    font-size: 11px;
+    padding: 12px 24px;
+  }
+}
+
+
 
 
 
