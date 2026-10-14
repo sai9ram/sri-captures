@@ -21,8 +21,9 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
   });
 
   const [isExiting, setIsExiting] = useState(false);
+  const [isAudioActive, setIsAudioActive] = useState(false);
 
-  // Device check
+  // Responsive device check
   useEffect(() => {
     const handleResize = () => {
       const mobileCheck =
@@ -40,7 +41,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     };
   }, []);
 
-  // Dismiss handler
+  // Smooth dismiss handler with audio fadeout
   const dismissSplash = () => {
     if (hasDismissedRef.current) return;
     hasDismissedRef.current = true;
@@ -49,9 +50,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     const video = videoRef.current;
     if (video) {
       try {
-        const startVol = video.volume;
         const fadeInterval = setInterval(() => {
-          if (video.volume > 0.1) {
+          if (video.volume > 0.15) {
             video.volume = Math.max(0, video.volume - 0.2);
           } else {
             video.volume = 0;
@@ -59,7 +59,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           }
         }, 50);
       } catch {
-        // Ignore
+        // Ignore volume write restrictions on mobile iOS
       }
     }
 
@@ -69,7 +69,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     }, 700);
   };
 
-  // Lock body scroll
+  // Lock body scroll during splash
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -78,57 +78,66 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     };
   }, []);
 
-  // Helper to unmute cleanly
+  // Robust Unmute Helper
   const unmuteAudio = () => {
     const video = videoRef.current;
-    if (video && !hasDismissedRef.current) {
+    if (!video || hasDismissedRef.current) return;
+
+    try {
+      video.muted = false;
       try {
-        video.muted = false;
         video.volume = 1.0;
-        if (video.paused) {
-          video.play().catch(() => {});
-        }
       } catch {
-        // Ignore
+        // iOS read-only volume handled safely
       }
+      if (video.paused) {
+        video.play().catch(() => {});
+      }
+      setIsAudioActive(true);
+    } catch {
+      // Ignore
     }
   };
 
-  // Autoplay & Sound logic
+  // Autoplay & Audio Initiation
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // 1. Try unmuted auto-play first
+    // 1. Attempt unmuted autoplay directly
     video.muted = false;
-    video.volume = 1.0;
+    try {
+      video.volume = 1.0;
+    } catch {
+      // iOS volume guard
+    }
 
     const playPromise = video.play();
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          // Unmuted autoplay succeeded! Music is playing.
-          video.muted = false;
-          video.volume = 1.0;
+          // Unmuted autoplay allowed by browser!
+          setIsAudioActive(true);
         })
         .catch(() => {
-          // Browser autoplay policy required muted start:
-          // Immediately start video muted so visuals never hitch
+          // Browser autoplay policy restricted unmuted audio on cold start:
+          // Play video muted so visuals start immediately
           video.muted = true;
           video.play().catch(() => {});
+          setIsAudioActive(false);
         });
     }
 
-    // 2. Unmute on ANY user gesture (tap, touch, click, scroll, key)
-    const handleGesture = () => {
+    // 2. Global user interaction listener to unmute instantly on first touch/click
+    const handleFirstGesture = () => {
       unmuteAudio();
     };
 
-    window.addEventListener("pointerdown", handleGesture, { passive: true, capture: true });
-    window.addEventListener("touchstart", handleGesture, { passive: true, capture: true });
-    window.addEventListener("click", handleGesture, { passive: true, capture: true });
-    window.addEventListener("keydown", handleGesture, { passive: true, capture: true });
-    window.addEventListener("wheel", handleGesture, { passive: true, capture: true });
+    window.addEventListener("pointerdown", handleFirstGesture, { passive: true, capture: true });
+    window.addEventListener("touchstart", handleFirstGesture, { passive: true, capture: true });
+    window.addEventListener("click", handleFirstGesture, { passive: true, capture: true });
+    window.addEventListener("keydown", handleFirstGesture, { passive: true, capture: true });
+    window.addEventListener("wheel", handleFirstGesture, { passive: true, capture: true });
 
     // Safety timeout: 7.5s for desktop, 5.5s for mobile
     const maxDuration = isMobile ? 5500 : 7500;
@@ -138,15 +147,15 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
     return () => {
       clearTimeout(safetyTimer);
-      window.removeEventListener("pointerdown", handleGesture, { capture: true });
-      window.removeEventListener("touchstart", handleGesture, { capture: true });
-      window.removeEventListener("click", handleGesture, { capture: true });
-      window.removeEventListener("keydown", handleGesture, { capture: true });
-      window.removeEventListener("wheel", handleGesture, { capture: true });
+      window.removeEventListener("pointerdown", handleFirstGesture, { capture: true });
+      window.removeEventListener("touchstart", handleFirstGesture, { capture: true });
+      window.removeEventListener("click", handleFirstGesture, { capture: true });
+      window.removeEventListener("keydown", handleFirstGesture, { capture: true });
+      window.removeEventListener("wheel", handleFirstGesture, { capture: true });
     };
   }, [isMobile]);
 
-  // Update progress bar without causing React re-renders (prevents React from re-muting DOM)
+  // Update progress bar directly without React re-render
   const handleTimeUpdate = () => {
     const video = videoRef.current;
     if (!video || !video.duration) return;
@@ -182,7 +191,6 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           className="splash-screen__video"
           src={videoSrc}
           autoPlay
-          defaultMuted={false}
           playsInline
           preload="auto"
           onTimeUpdate={handleTimeUpdate}
@@ -225,7 +233,46 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         </button>
       </div>
 
-      {/* Delicate Gold Hairline Progress Bar (Direct DOM update - zero re-renders) */}
+      {/* Floating Audio Activation Badge (Visible ONLY when browser strictly holds initial cold audio) */}
+      {!isAudioActive && (
+        <div
+          className="splash-screen__audio-cue"
+          onClick={(e) => {
+            e.stopPropagation();
+            unmuteAudio();
+          }}
+          role="button"
+          tabIndex={0}
+          aria-label="Unmute background music"
+        >
+          <div className="splash-screen__audio-cue-inner">
+            <svg
+              className="splash-screen__audio-cue-icon"
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+            </svg>
+            <span>Tap for Music</span>
+            <div className="splash-screen__audio-wave" aria-hidden="true">
+              <span className="splash-screen__audio-bar" />
+              <span className="splash-screen__audio-bar" />
+              <span className="splash-screen__audio-bar" />
+              <span className="splash-screen__audio-bar" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delicate Gold Hairline Progress Bar */}
       <div className="splash-screen__progress-track" aria-hidden="true">
         <div
           ref={progressBarRef}
