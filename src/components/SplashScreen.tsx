@@ -22,7 +22,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
   const [isExiting, setIsExiting] = useState(false);
 
-  // Responsive device check
+  // Device check
   useEffect(() => {
     const handleResize = () => {
       const mobileCheck =
@@ -58,7 +58,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           }
         }, 50);
       } catch {
-        // iOS volume guard
+        // Ignore iOS volume read-only restrictions
       }
     }
 
@@ -68,7 +68,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     }, 700);
   };
 
-  // Lock body scroll during splash
+  // Lock body scroll
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -77,32 +77,12 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     };
   }, []);
 
-  // Automatic 100% Volume Unmute Helper
-  const autoUnmute100 = () => {
-    const video = videoRef.current;
-    if (!video || hasDismissedRef.current) return;
-
-    try {
-      video.muted = false;
-      try {
-        video.volume = 1.0;
-      } catch {
-        // iOS read-only volume handled safely
-      }
-      if (video.paused) {
-        video.play().catch(() => {});
-      }
-    } catch {
-      // Ignore
-    }
-  };
-
-  // Automatic Audio & Video Playback (Without Manual Tap Options)
+  // Clean, automatic 100% volume playback in both mobile and desktop
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // 1. Initial attempt: auto unmuted with 100% volume
+    // Automatic unmute with 100% volume
     video.muted = false;
     try {
       video.volume = 1.0;
@@ -114,45 +94,37 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          // Unmuted 100% audio started automatically!
+          // Playing with sound at 100% volume
           video.muted = false;
-          try {
-            video.volume = 1.0;
-          } catch {}
         })
         .catch(() => {
-          // If browser policy temporarily pauses unmuted start:
-          // Start video visual immediately
+          // If browser blocks unmuted cold-start, start video and auto-unmute on any passive interaction
           video.muted = true;
           video.play().catch(() => {});
 
-          // Automatically retry unmuting at 100% volume
-          const interval = setInterval(() => {
+          const autoUnmute = () => {
             if (video && !hasDismissedRef.current) {
-              autoUnmute100();
-              if (!video.muted) {
-                clearInterval(interval);
+              video.muted = false;
+              try {
+                video.volume = 1.0;
+              } catch {
+                // iOS volume guard
+              }
+              if (video.paused) {
+                video.play().catch(() => {});
               }
             }
-          }, 350);
+          };
 
-          setTimeout(() => clearInterval(interval), 4000);
+          window.addEventListener("mousemove", autoUnmute, { once: true, passive: true });
+          window.addEventListener("pointerdown", autoUnmute, { once: true, passive: true });
+          window.addEventListener("touchstart", autoUnmute, { once: true, passive: true });
+          window.addEventListener("click", autoUnmute, { once: true, passive: true });
+          window.addEventListener("scroll", autoUnmute, { once: true, passive: true });
+          window.addEventListener("wheel", autoUnmute, { once: true, passive: true });
+          window.addEventListener("keydown", autoUnmute, { once: true, passive: true });
         });
     }
-
-    // 2. Automatically unmute at 100% volume on any background ambient event (no buttons)
-    const handleAmbientEvent = () => {
-      autoUnmute100();
-    };
-
-    window.addEventListener("pointerdown", handleAmbientEvent, { passive: true, capture: true });
-    window.addEventListener("touchstart", handleAmbientEvent, { passive: true, capture: true });
-    window.addEventListener("pointermove", handleAmbientEvent, { passive: true, capture: true });
-    window.addEventListener("mousemove", handleAmbientEvent, { passive: true, capture: true });
-    window.addEventListener("click", handleAmbientEvent, { passive: true, capture: true });
-    window.addEventListener("keydown", handleAmbientEvent, { passive: true, capture: true });
-    window.addEventListener("wheel", handleAmbientEvent, { passive: true, capture: true });
-    window.addEventListener("scroll", handleAmbientEvent, { passive: true, capture: true });
 
     // Safety timeout: 7.5s for desktop, 5.5s for mobile
     const maxDuration = isMobile ? 5500 : 7500;
@@ -162,18 +134,10 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
     return () => {
       clearTimeout(safetyTimer);
-      window.removeEventListener("pointerdown", handleAmbientEvent, { capture: true });
-      window.removeEventListener("touchstart", handleAmbientEvent, { capture: true });
-      window.removeEventListener("pointermove", handleAmbientEvent, { capture: true });
-      window.removeEventListener("mousemove", handleAmbientEvent, { capture: true });
-      window.removeEventListener("click", handleAmbientEvent, { capture: true });
-      window.removeEventListener("keydown", handleAmbientEvent, { capture: true });
-      window.removeEventListener("wheel", handleAmbientEvent, { capture: true });
-      window.removeEventListener("scroll", handleAmbientEvent, { capture: true });
     };
   }, [isMobile]);
 
-  // Update progress bar directly without React re-render
+  // Update progress bar without causing React re-renders
   const handleTimeUpdate = () => {
     const video = videoRef.current;
     if (!video || !video.duration) return;
@@ -198,9 +162,6 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
       className={`splash-screen ${isExiting ? "splash-screen--exiting" : ""}`}
       role="region"
       aria-label="Welcome cinematic splash screen"
-      onClick={autoUnmute100}
-      onTouchStart={autoUnmute100}
-      onPointerDown={autoUnmute100}
     >
       <div className="splash-screen__video-wrapper">
         <video
@@ -216,7 +177,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         />
       </div>
 
-      {/* Cinematic Vignette Overlay */}
+      {/* Cinematic Vignette */}
       <div className="splash-screen__vignette" aria-hidden="true" />
 
       {/* Top Header with Brand Tag & Skip Button */}
@@ -251,7 +212,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         </button>
       </div>
 
-      {/* Delicate Gold Hairline Progress Bar */}
+      {/* Hairline Gold Progress Bar */}
       <div className="splash-screen__progress-track" aria-hidden="true">
         <div
           ref={progressBarRef}
