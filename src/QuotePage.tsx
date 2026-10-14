@@ -461,7 +461,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
           <div class="header">
             <div>
               <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-                <img src="/images/sricaptures-logo.jpg" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:1.5px solid #c4a05a;" alt="Sri Captures" />
+                <img src="/images/Sricaptures Logo .jpg" style="height:36px;object-fit:contain;" alt="Sri Captures" />
                 <div>
                   <h1 class="brand" style="margin:0;line-height:1;">SRI CAPTURES</h1>
                   <span class="brand-sub">PREMIUM WEDDING PHOTOGRAPHY & FILMS</span>
@@ -1135,15 +1135,12 @@ Please check availability and connect with me.`;
                     <div className="quote-invoice-header">
                       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                         <img
-                          src="/images/sricaptures-logo.jpg"
+                          src="/images/Sricaptures Logo .jpg"
                           alt="Sri Captures Logo"
                           style={{
-                            width: "40px",
-                            height: "40px",
-                            borderRadius: "50%",
-                            objectFit: "cover",
-                            border: "1.5px solid rgba(196, 160, 90, 0.5)",
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+                            height: "42px",
+                            objectFit: "contain",
+                            display: "block",
                           }}
                         />
                         <div>

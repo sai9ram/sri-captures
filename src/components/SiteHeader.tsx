@@ -86,7 +86,7 @@ export default function SiteHeader({
             aria-label="SRI CAPTURES - Return to home"
           >
             <img
-              src="/images/sricaptures-logo.jpg"
+              src="/images/Sricaptures Logo .jpg"
               alt="Sri Captures Logo"
               className="universal-wordmark__logo"
             />
@@ -181,7 +181,7 @@ export default function SiteHeader({
             <div className="universal-mobile-menu__header">
               <div className="universal-mobile-menu__brand-grp">
                 <img
-                  src="/images/sricaptures-logo.jpg"
+                  src="/images/Sricaptures Logo .jpg"
                   alt="Sri Captures Logo"
                   className="universal-mobile-menu__logo"
                 />

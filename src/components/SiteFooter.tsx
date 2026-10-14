@@ -31,7 +31,7 @@ export default function SiteFooter({
 
       <div className="album-footer__logo-wrap">
         <img
-          src="/images/sricaptures-logo.jpg"
+          src="/images/Sricaptures Logo .jpg"
           alt="Sri Captures Logo"
           className="album-footer__logo"
         />
