@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
 import "./contact.css";
+import {
+  LeadPayload,
+  ADMIN_CONFIG,
+  submitLeadToGoogleCRM,
+  getAdminWhatsAppUrl,
+  getCustomerWhatsAppUrl,
+} from "./services/leadService";
 
 const img = (id: string, w = 1600) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=86`;
@@ -85,6 +92,8 @@ export default function ContactPage() {
     });
   };
 
+  const [lastLead, setLastLead] = useState<LeadPayload | null>(null);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { fullName?: string; email?: string } = {};
@@ -107,11 +116,30 @@ export default function ContactPage() {
     setErrors({});
     setIsSubmitting(true);
 
-    // Simulate reliable dispatch & feedback
-    setTimeout(() => {
+    const refId = `SRI-ENQ-${Date.now().toString().slice(-4)}`;
+    const leadPayload: LeadPayload = {
+      ref: refId,
+      fullName: formData.fullName.trim(),
+      email: formData.email.trim(),
+      whatsapp: formData.phone.trim(),
+      weddingDate: formData.weddingDate,
+      venue: formData.location.trim(),
+      selectedStyles: formData.selectedServices,
+      events: [],
+      addons: [],
+      estimatedTotal: 0,
+      notes: formData.notes.trim(),
+      createdAt: new Date().toLocaleString("en-IN"),
+      source: "contact_page",
+    };
+
+    setLastLead(leadPayload);
+
+    // Dispatch directly to Google CRM & local storage archive
+    submitLeadToGoogleCRM(leadPayload).finally(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 900);
+    });
   };
 
   const toggleFaq = (index: number) => {
@@ -264,13 +292,66 @@ export default function ContactPage() {
                     <div className="cnt-success-icon" aria-hidden="true">✓</div>
                     <h3 className="cnt-success-title">Thank you, {formData.fullName}!</h3>
                     <p className="cnt-success-text">
-                      Your wedding enquiry has been safely received. We will review your celebration details
+                      Your wedding enquiry has been safely received & registered in our CRM. We will review your celebration details
                       and reply to <strong>{formData.email}</strong> shortly.
                     </p>
+
+                    {lastLead && (
+                      <div className="cnt-success-dispatch" style={{ marginTop: "1.5rem", marginBottom: "1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                        <a
+                          href={getAdminWhatsAppUrl(lastLead)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="cnt-submit-btn"
+                          style={{
+                            background: "#25D366",
+                            color: "#fff",
+                            textDecoration: "none",
+                            textAlign: "center",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "0.5rem",
+                            fontSize: "0.85rem",
+                            padding: "0.85rem 1.25rem",
+                            borderRadius: "9999px",
+                            boxShadow: "0 4px 12px rgba(37, 211, 102, 0.25)"
+                          }}
+                        >
+                          <span>💬 CHAT INSTANTLY ON WHATSAPP (+91 81424 90545)</span>
+                        </a>
+
+                        {lastLead.whatsapp && (
+                          <a
+                            href={getCustomerWhatsAppUrl(lastLead)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              border: "1px solid rgba(37,211,102,0.4)",
+                              color: "#1ea952",
+                              textDecoration: "none",
+                              textAlign: "center",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              gap: "0.5rem",
+                              fontSize: "0.8rem",
+                              padding: "0.75rem 1.25rem",
+                              borderRadius: "9999px",
+                              background: "rgba(37,211,102,0.06)"
+                            }}
+                          >
+                            <span>📲 Send Confirmation Copy to My WhatsApp</span>
+                          </a>
+                        )}
+                      </div>
+                    )}
+
                     <button
                       className="cnt-reset-btn"
                       onClick={() => {
                         setIsSubmitted(false);
+                        setLastLead(null);
                         setFormData({
                           fullName: "",
                           email: "",

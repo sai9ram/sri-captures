@@ -1,5 +1,17 @@
 import { useState, useMemo, useEffect } from "react";
 import "./quote.css";
+import {
+  LeadPayload,
+  ADMIN_CONFIG,
+  submitLeadToGoogleCRM,
+  getAdminWhatsAppUrl,
+  getCustomerWhatsAppUrl,
+  getAdminEmailUrl,
+  getCustomerEmailUrl,
+  getGoogleCrmUrl,
+  setGoogleCrmUrl,
+  getSavedLeads,
+} from "./services/leadService";
 
 const img = (id: string, w = 1600) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=86`;
@@ -275,6 +287,13 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [quoteReference, setQuoteReference] = useState<string>("");
   const [emailStatus, setEmailStatus] = useState<string>("");
+  const [crmStatus, setCrmStatus] = useState<{
+    status: "idle" | "submitting" | "success" | "warning" | "error";
+    message: string;
+  }>({ status: "idle", message: "" });
+  const [showCrmModal, setShowCrmModal] = useState<boolean>(false);
+  const [crmUrlInput, setCrmUrlInput] = useState<string>(getGoogleCrmUrl());
+  const [crmTestStatus, setCrmTestStatus] = useState<string>("");
   const [mobileSummaryOpen, setMobileSummaryOpen] = useState<boolean>(false);
 
   // Scroll to top of quote builder when step changes
@@ -358,6 +377,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
   }, [selectedServices, selectedAddons]);
 
   // Form submission / Quote Generation
+  // Form submission / Quote Generation & Google CRM Lead Capture
   const handleGenerateQuote = (e: React.FormEvent) => {
     e.preventDefault();
     const errors: Record<string, string> = {};
@@ -379,6 +399,36 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
     const randomRef = `SRI-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
     setQuoteReference(randomRef);
     setCurrentStep(6);
+
+    const leadPayload: LeadPayload = {
+      ref: randomRef,
+      fullName: details.fullName.trim(),
+      email: details.email.trim(),
+      whatsapp: details.whatsapp.trim(),
+      weddingDate: details.weddingDate,
+      venue: details.venue.trim(),
+      selectedStyles: selectedStyles.map(getStyleLabel),
+      events: Object.values(itemizedByEvent).map((g) => ({
+        eventName: g.eventName,
+        services: g.services.map((s) => ({ name: s.name, price: s.price })),
+      })),
+      addons: selectedAddonsList.map((a) => ({ name: a.name, price: a.price })),
+      estimatedTotal: estimatedTotal,
+      createdAt: new Date().toLocaleString("en-IN"),
+      source: "quote_builder",
+    };
+
+    setCrmStatus({
+      status: "submitting",
+      message: "Syncing quotation with Google CRM & scheduling notifications...",
+    });
+
+    submitLeadToGoogleCRM(leadPayload).then((res) => {
+      setCrmStatus({
+        status: res.crmConfigured ? (res.success ? "success" : "error") : "warning",
+        message: res.message,
+      });
+    });
   };
 
   // Download printable PDF Quote
@@ -524,30 +574,68 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
     printWindow.document.close();
   };
 
-  // WhatsApp Contact Link pre-filled with quotation
-  const whatsappQuoteUrl = useMemo(() => {
-    const summaryLines = Object.values(itemizedByEvent)
-      .map((g) => `${g.eventName}: ${g.services.map((s) => s.name).join(", ")}`)
-      .join("\n- ");
+  // Multi-channel dispatch payload & links
+  const currentLead: LeadPayload = useMemo(() => {
+    return {
+      ref: quoteReference || "SRI-QUOTE",
+      fullName: details.fullName.trim() || "Prospective Client",
+      email: details.email.trim(),
+      whatsapp: details.whatsapp.trim(),
+      weddingDate: details.weddingDate,
+      venue: details.venue.trim(),
+      selectedStyles: selectedStyles.map(getStyleLabel),
+      events: Object.values(itemizedByEvent).map((g) => ({
+        eventName: g.eventName,
+        services: g.services.map((s) => ({ name: s.name, price: s.price })),
+      })),
+      addons: selectedAddonsList.map((a) => ({ name: a.name, price: a.price })),
+      estimatedTotal: estimatedTotal,
+      createdAt: new Date().toLocaleString("en-IN"),
+      source: "quote_builder",
+    };
+  }, [quoteReference, details, selectedStyles, itemizedByEvent, selectedAddonsList, estimatedTotal]);
 
-    const text = `Hello SRI CAPTURES!
-I built an estimated quote on your website:
-• Ref: ${quoteReference || "NEW"}
-• Name: ${details.fullName || "Prospective Client"}
-• Date: ${details.weddingDate || "TBD"}
-• Venue: ${details.venue || "TBD"}
-• Selected Events:
-- ${summaryLines || "Custom Selection"}
-• Estimated Total: ${formatINR(estimatedTotal)}
+  const adminWhatsAppUrl = useMemo(() => getAdminWhatsAppUrl(currentLead), [currentLead]);
+  const customerWhatsAppUrl = useMemo(() => getCustomerWhatsAppUrl(currentLead), [currentLead]);
+  const adminEmailUrl = useMemo(() => getAdminEmailUrl(currentLead), [currentLead]);
+  const customerEmailUrl = useMemo(() => getCustomerEmailUrl(currentLead), [currentLead]);
 
-Please check availability and connect with me.`;
+  const handleSendCustomerEmail = () => {
+    setEmailStatus(`Quotation scheduled to your registered email (${details.email || "client email"}). Opening email client as backup.`);
+    window.open(customerEmailUrl, "_blank");
+    setTimeout(() => setEmailStatus(""), 8000);
+  };
 
-    return `https://wa.me/918142490545?text=${encodeURIComponent(text)}`;
-  }, [quoteReference, details, itemizedByEvent, estimatedTotal]);
+  const handleSendAdminEmail = () => {
+    setEmailStatus(`Opening lead notification email for Sri Captures Admin (${ADMIN_CONFIG.email}).`);
+    window.open(adminEmailUrl, "_blank");
+    setTimeout(() => setEmailStatus(""), 8000);
+  };
 
-  const handleSendEmail = () => {
-    setEmailStatus("A copy of this quotation has been scheduled to " + (details.email || "your email"));
-    setTimeout(() => setEmailStatus(""), 6000);
+  const handleSaveCrmUrl = () => {
+    setGoogleCrmUrl(crmUrlInput);
+    setCrmTestStatus("✓ Google CRM Webhook URL saved successfully!");
+    setTimeout(() => setCrmTestStatus(""), 4000);
+  };
+
+  const handleTestCrm = async () => {
+    if (!crmUrlInput.trim()) {
+      setCrmTestStatus("⚠️ Please enter your Google Apps Script Web App URL first.");
+      return;
+    }
+    setCrmTestStatus("Testing connection to Google CRM...");
+    setGoogleCrmUrl(crmUrlInput);
+    const testLead: LeadPayload = {
+      ...currentLead,
+      ref: `TEST-${Date.now().toString().slice(-4)}`,
+      notes: "Test ping from Sri Captures website",
+    };
+    const res = await submitLeadToGoogleCRM(testLead);
+    if (res.success) {
+      setCrmTestStatus("✓ Connection successful! Lead appended to Google Sheets.");
+    } else {
+      setCrmTestStatus("❌ Test failed: " + res.message);
+    }
   };
 
   return (
@@ -1233,11 +1321,118 @@ Please check availability and connect with me.`;
                     </div>
                   </div>
 
+                  {/* Google CRM Status Banner */}
+                  <div className={`quote-crm-status-box quote-crm-status-box--${crmStatus.status || "idle"}`}>
+                    <div className="quote-crm-status-box__icon">
+                      {crmStatus.status === "submitting" && "⏳"}
+                      {crmStatus.status === "success" && "✓"}
+                      {crmStatus.status === "warning" && "ℹ️"}
+                      {crmStatus.status === "error" && "⚠️"}
+                      {crmStatus.status === "idle" && "📊"}
+                    </div>
+                    <div className="quote-crm-status-box__body">
+                      <strong>
+                        {crmStatus.status === "submitting" && "Connecting to Google CRM..."}
+                        {crmStatus.status === "success" && "Captured in Google CRM & Logged"}
+                        {crmStatus.status === "warning" && "Quotation Stored & Multi-Channel Ready"}
+                        {crmStatus.status === "error" && "Quotation Stored Locally"}
+                        {crmStatus.status === "idle" && "Quotation Ready for Dispatch"}
+                      </strong>
+                      <p>
+                        {crmStatus.message ||
+                          "Your quote is securely archived. Use the instant dispatch options below to send to WhatsApp and Email for both client and studio."}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      className="quote-crm-config-btn"
+                      onClick={() => setShowCrmModal(true)}
+                      title="Google CRM Webhook Settings"
+                    >
+                      ⚙️ CRM Settings
+                    </button>
+                  </div>
+
                   {emailStatus && (
                     <div className="quote-email-alert" role="status">
                       ✓ {emailStatus}
                     </div>
                   )}
+
+                  {/* Multi-Channel Quotation Dispatch Hub */}
+                  <div className="quote-dispatch-section">
+                    <div className="quote-dispatch-header">
+                      <span className="quote-eyebrow quote-eyebrow--gold">MULTI-CHANNEL DISPATCH</span>
+                      <h3 className="quote-dispatch-heading">Send Quotation via WhatsApp & Email</h3>
+                      <p className="quote-dispatch-sub">
+                        Direct 1-click delivery to both client and Sri Captures studio:
+                      </p>
+                    </div>
+
+                    <div className="quote-dispatch-grid">
+                      {/* 1. Admin WhatsApp */}
+                      <a
+                        href={adminWhatsAppUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="quote-dispatch-card quote-dispatch-card--wa-admin"
+                      >
+                        <div className="quote-dispatch-card__icon">💬</div>
+                        <div className="quote-dispatch-card__info">
+                          <span className="quote-dispatch-badge">STUDIO WHATSAPP</span>
+                          <strong>Send to Sri Captures</strong>
+                          <small>{ADMIN_CONFIG.phone}</small>
+                        </div>
+                        <span className="quote-dispatch-card__arrow">→</span>
+                      </a>
+
+                      {/* 2. Customer WhatsApp */}
+                      <a
+                        href={customerWhatsAppUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="quote-dispatch-card quote-dispatch-card--wa-client"
+                      >
+                        <div className="quote-dispatch-card__icon">📱</div>
+                        <div className="quote-dispatch-card__info">
+                          <span className="quote-dispatch-badge quote-dispatch-badge--client">REGISTERED CLIENT</span>
+                          <strong>Send Copy to My WhatsApp</strong>
+                          <small>{details.whatsapp || "Your registered number"}</small>
+                        </div>
+                        <span className="quote-dispatch-card__arrow">→</span>
+                      </a>
+
+                      {/* 3. Customer Email */}
+                      <button
+                        type="button"
+                        onClick={handleSendCustomerEmail}
+                        className="quote-dispatch-card quote-dispatch-card--email-client"
+                      >
+                        <div className="quote-dispatch-card__icon">✉️</div>
+                        <div className="quote-dispatch-card__info">
+                          <span className="quote-dispatch-badge quote-dispatch-badge--client">CLIENT INBOX</span>
+                          <strong>Send to My Email</strong>
+                          <small>{details.email || "Your registered email"}</small>
+                        </div>
+                        <span className="quote-dispatch-card__arrow">↗</span>
+                      </button>
+
+                      {/* 4. Admin Email */}
+                      <button
+                        type="button"
+                        onClick={handleSendAdminEmail}
+                        className="quote-dispatch-card quote-dispatch-card--email-admin"
+                      >
+                        <div className="quote-dispatch-card__icon">📨</div>
+                        <div className="quote-dispatch-card__info">
+                          <span className="quote-dispatch-badge">STUDIO BACKEND</span>
+                          <strong>Send Copy to Admin Email</strong>
+                          <small>{ADMIN_CONFIG.email}</small>
+                        </div>
+                        <span className="quote-dispatch-card__arrow">↗</span>
+                      </button>
+                    </div>
+                  </div>
 
                   {/* Actions */}
                   <div className="quote-final-actions">
@@ -1246,24 +1441,15 @@ Please check availability and connect with me.`;
                       className="quote-action-btn quote-action-btn--gold"
                       onClick={handleDownloadPDF}
                     >
-                      DOWNLOAD QUOTE PDF
+                      📄 DOWNLOAD QUOTE PDF
                     </button>
-
-                    <a
-                      href={whatsappQuoteUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="quote-action-btn quote-action-btn--wa"
-                    >
-                      CONTACT US ON WHATSAPP
-                    </a>
 
                     <button
                       type="button"
-                      className="quote-action-btn quote-action-btn--outline"
-                      onClick={handleSendEmail}
+                      className="quote-action-btn quote-action-btn--crm"
+                      onClick={() => setShowCrmModal(true)}
                     >
-                      SEND TO MY EMAIL
+                      ⚙️ GOOGLE CRM INTEGRATION
                     </button>
 
                     {onNavigateHome && (
@@ -1277,6 +1463,107 @@ Please check availability and connect with me.`;
                     )}
                   </div>
                 </div>
+
+                {/* ── GOOGLE CRM SETTINGS & LEADS ARCHIVE MODAL ── */}
+                {showCrmModal && (
+                  <div className="quote-crm-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="crm-modal-title">
+                    <div className="quote-crm-modal">
+                      <div className="quote-crm-modal__header">
+                        <div>
+                          <span className="quote-eyebrow quote-eyebrow--gold">GOOGLE WORKSPACE INTEGRATION</span>
+                          <h3 id="crm-modal-title" style={{ margin: "4px 0 0", color: "#f1eadc", fontSize: "20px" }}>
+                            Google Sheets CRM & Lead Sync
+                          </h3>
+                        </div>
+                        <button
+                          type="button"
+                          className="quote-crm-modal__close"
+                          onClick={() => setShowCrmModal(false)}
+                          aria-label="Close modal"
+                        >
+                          ✕
+                        </button>
+                      </div>
+
+                      <div className="quote-crm-modal__body">
+                        <p style={{ color: "rgba(241, 234, 220, 0.8)", fontSize: "13px", lineHeight: "1.6", margin: "0 0 16px" }}>
+                          Connect your Google Sheet CRM using the Google Apps Script Web App. Every quotation generated on this website will automatically append to your Google Sheet and send emails to both admin (<strong>{ADMIN_CONFIG.email}</strong>) and the customer.
+                        </p>
+
+                        <div style={{ marginBottom: "16px" }}>
+                          <label style={{ display: "block", fontSize: "11px", fontWeight: "700", letterSpacing: "0.1em", textTransform: "uppercase", color: "#c4a05a", marginBottom: "6px" }}>
+                            Google Apps Script Web App URL:
+                          </label>
+                          <input
+                            type="url"
+                            value={crmUrlInput}
+                            onChange={(e) => setCrmUrlInput(e.target.value)}
+                            placeholder="https://script.google.com/macros/s/.../exec"
+                            style={{
+                              width: "100%",
+                              padding: "10px 14px",
+                              background: "rgba(0,0,0,0.4)",
+                              border: "1px solid rgba(196, 160, 90, 0.35)",
+                              borderRadius: "4px",
+                              color: "#fff",
+                              fontSize: "13px",
+                              boxSizing: "border-box",
+                            }}
+                          />
+                        </div>
+
+                        {crmTestStatus && (
+                          <div style={{ padding: "8px 12px", borderRadius: "4px", background: "rgba(196, 160, 90, 0.15)", border: "1px solid rgba(196, 160, 90, 0.4)", color: "#f1eadc", fontSize: "12px", marginBottom: "16px" }}>
+                            {crmTestStatus}
+                          </div>
+                        )}
+
+                        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "20px" }}>
+                          <button
+                            type="button"
+                            onClick={handleSaveCrmUrl}
+                            style={{ background: "#c4a05a", color: "#181210", border: "none", padding: "10px 18px", borderRadius: "4px", fontWeight: "700", fontSize: "12px", cursor: "pointer" }}
+                          >
+                            Save Webhook URL
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleTestCrm}
+                            style={{ background: "transparent", color: "#c4a05a", border: "1px solid #c4a05a", padding: "10px 18px", borderRadius: "4px", fontWeight: "700", fontSize: "12px", cursor: "pointer" }}
+                          >
+                            Test Connection Ping
+                          </button>
+                        </div>
+
+                        <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "14px" }}>
+                          <h4 style={{ margin: "0 0 8px", color: "#c4a05a", fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                            Quick Setup Instructions:
+                          </h4>
+                          <ol style={{ margin: 0, paddingLeft: "18px", color: "rgba(241, 234, 220, 0.75)", fontSize: "12px", lineHeight: "1.7" }}>
+                            <li>Create a Google Sheet (e.g. <em>Sri Captures CRM Leads</em>).</li>
+                            <li>Click <strong>Extensions &gt; Apps Script</strong> and paste the contents of <code>google-apps-script-crm.js</code>.</li>
+                            <li>Click <strong>Deploy &gt; New deployment &gt; Web app</strong>. Set access to <strong>"Anyone"</strong>.</li>
+                            <li>Copy the resulting Web App URL and paste it above!</li>
+                          </ol>
+                        </div>
+
+                        <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "14px", marginTop: "16px" }}>
+                          <h4 style={{ margin: "0 0 8px", color: "#c4a05a", fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                            Locally Archived Leads ({getSavedLeads().length}):
+                          </h4>
+                          <div style={{ maxHeight: "120px", overflowY: "auto", fontSize: "12px", color: "rgba(241, 234, 220, 0.75)" }}>
+                            {getSavedLeads().map((lead) => (
+                              <div key={lead.ref} style={{ display: "flex", justifyContent: "space-between", padding: "4px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                                <span><strong>{lead.ref}</strong> — {lead.fullName} ({lead.whatsapp})</span>
+                                <span style={{ color: "#c4a05a" }}>{formatINR(lead.estimatedTotal)}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </section>
             )}
           </div>

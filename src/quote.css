@@ -1485,3 +1485,314 @@
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+   GOOGLE CRM & MULTI-CHANNEL DISPATCH STYLES
+   ========================================================================== */
+
+/* CRM Status Banner */
+.quote-crm-status-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.quote-crm-status-box--idle,
+.quote-crm-status-box--submitting {
+  background: rgba(196, 160, 90, 0.12);
+  border: 1px solid rgba(196, 160, 90, 0.35);
+  color: #f1eadc;
+}
+
+.quote-crm-status-box--success {
+  background: rgba(46, 125, 50, 0.18);
+  border: 1px solid rgba(76, 175, 80, 0.45);
+  color: #c8e6c9;
+}
+
+.quote-crm-status-box--warning {
+  background: rgba(255, 152, 0, 0.15);
+  border: 1px solid rgba(255, 152, 0, 0.4);
+  color: #ffe0b2;
+}
+
+.quote-crm-status-box--error {
+  background: rgba(211, 47, 47, 0.15);
+  border: 1px solid rgba(211, 47, 47, 0.4);
+  color: #ffcdd2;
+}
+
+.quote-crm-status-box__icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.quote-crm-status-box__body {
+  flex: 1;
+}
+
+.quote-crm-status-box__body strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 2px;
+  letter-spacing: 0.04em;
+}
+
+.quote-crm-status-box__body p {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+.quote-crm-config-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f1eadc;
+  padding: 8px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.quote-crm-config-btn:hover {
+  background: rgba(196, 160, 90, 0.3);
+  border-color: #c4a05a;
+  color: #ffffff;
+}
+
+/* Dispatch Hub */
+.quote-dispatch-section {
+  background: rgba(24, 18, 16, 0.55);
+  border: 1px solid rgba(196, 160, 90, 0.3);
+  border-radius: 8px;
+  padding: 26px 24px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(12px);
+}
+
+.quote-dispatch-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.quote-dispatch-heading {
+  margin: 6px 0 4px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: #f1eadc;
+}
+
+.quote-dispatch-sub {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(241, 234, 220, 0.7);
+}
+
+.quote-dispatch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .quote-dispatch-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.quote-dispatch-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f1eadc;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s ease;
+  font-family: "Manrope", sans-serif;
+}
+
+.quote-dispatch-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.quote-dispatch-card--wa-admin {
+  border-color: rgba(37, 211, 102, 0.4);
+  background: rgba(37, 211, 102, 0.08);
+}
+.quote-dispatch-card--wa-admin:hover {
+  background: rgba(37, 211, 102, 0.16);
+  border-color: #25d366;
+}
+
+.quote-dispatch-card--wa-client {
+  border-color: rgba(76, 175, 80, 0.4);
+  background: rgba(76, 175, 80, 0.08);
+}
+.quote-dispatch-card--wa-client:hover {
+  background: rgba(76, 175, 80, 0.16);
+  border-color: #4caf50;
+}
+
+.quote-dispatch-card--email-client {
+  border-color: rgba(196, 160, 90, 0.4);
+  background: rgba(196, 160, 90, 0.08);
+}
+.quote-dispatch-card--email-client:hover {
+  background: rgba(196, 160, 90, 0.18);
+  border-color: #c4a05a;
+}
+
+.quote-dispatch-card--email-admin {
+  border-color: rgba(138, 43, 46, 0.4);
+  background: rgba(138, 43, 46, 0.08);
+}
+.quote-dispatch-card--email-admin:hover {
+  background: rgba(138, 43, 46, 0.18);
+  border-color: #8a2b2e;
+}
+
+.quote-dispatch-card__icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.quote-dispatch-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.quote-dispatch-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c4a05a;
+  margin-bottom: 2px;
+}
+
+.quote-dispatch-badge--client {
+  color: #81c784;
+}
+
+.quote-dispatch-card__info strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quote-dispatch-card__info small {
+  display: block;
+  font-size: 11px;
+  color: rgba(241, 234, 220, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quote-dispatch-card__arrow {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.quote-dispatch-card:hover .quote-dispatch-card__arrow {
+  transform: translateX(3px);
+  color: #ffffff;
+}
+
+/* CRM Modal */
+.quote-crm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.quote-crm-modal {
+  width: min(600px, 94vw);
+  background: #181210;
+  border: 1px solid rgba(196, 160, 90, 0.4);
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  animation: modalScaleIn 0.25s ease-out both;
+}
+
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.quote-crm-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.quote-crm-modal__close {
+  background: none;
+  border: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.quote-crm-modal__close:hover {
+  color: #ffffff;
+}
+
+.quote-crm-modal__body {
+  padding: 24px;
+}
+
+.quote-action-btn--crm {
+  background: rgba(196, 160, 90, 0.12);
+  border: 1px solid rgba(196, 160, 90, 0.4);
+  color: #c4a05a;
+}
+
+.quote-action-btn--crm:hover {
+  background: rgba(196, 160, 90, 0.25);
+  border-color: #c4a05a;
+  color: #ffffff;
+}
+
