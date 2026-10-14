@@ -226,7 +226,7 @@ body.is-services-page {
   transform: translateY(-1px);
 }
 
-/* "Get a Quote" nav item – subtle maroon highlight in desktop nav */
+/* "Build Your Quote" nav item – subtle maroon highlight in desktop nav */
 .universal-nav__item--quote {
   color: #5a1a1c !important;
   font-weight: 600;

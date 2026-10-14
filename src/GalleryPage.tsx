@@ -636,9 +636,9 @@ export default function GalleryPage({ onOpenInquiry }: GalleryPageProps) {
               <button
                 className="gal-cta-btn"
                 onClick={onOpenInquiry}
-                aria-label="Get a quote from SRI CAPTURES"
+                aria-label="Build your quote with SRI CAPTURES"
               >
-                <span>GET A QUOTE</span>
+                <span>BUILD YOUR QUOTE</span>
                 <span className="gal-cta-arrow" aria-hidden="true">→</span>
               </button>
             </div>

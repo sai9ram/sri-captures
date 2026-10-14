@@ -144,9 +144,9 @@ export default function SiteHeader({
                 setMobileMenuOpen(false);
                 onNavigateQuote();
               }}
-              aria-label="Get a wedding photography quote"
+              aria-label="Build your wedding photography quote"
             >
-              <span>Get a Quote</span>
+              <span>Build Your Quote</span>
               <span className="universal-inquire-btn__arrow" aria-hidden="true">
                 ↗
               </span>
@@ -224,7 +224,7 @@ export default function SiteHeader({
                   onNavigateQuote();
                 }}
               >
-                Get a Quote <span>↗</span>
+                Build Your Quote <span>↗</span>
               </button>
               <div className="universal-mobile-menu__direct" style={{ display: "flex", flexDirection: "column", gap: "6px", margin: "14px 0 8px", fontSize: "12px" }}>
                 <a href="tel:+918142490545" style={{ color: "inherit", textDecoration: "none", opacity: 0.85 }}>

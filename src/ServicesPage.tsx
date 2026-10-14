@@ -93,9 +93,9 @@ export default function ServicesPage({ onOpenInquiry }: ServicesPageProps) {
                 <button
                   className="srv-hero__btn-secondary"
                   onClick={onOpenInquiry}
-                  aria-label="Ask for a customized price quote"
+                  aria-label="Build your customized price quote"
                 >
-                  GET A DIRECT QUOTE &#8594;
+                  BUILD YOUR QUOTE &#8594;
                 </button>
               </div>
             </div>
@@ -812,9 +812,9 @@ export default function ServicesPage({ onOpenInquiry }: ServicesPageProps) {
           <button
             className="srv-cta__btn"
             onClick={onOpenInquiry}
-            aria-label="Get a custom quote from SRI CAPTURES"
+            aria-label="Build your custom quote with SRI CAPTURES"
           >
-            GET A FREE PRICE QUOTE
+            BUILD YOUR QUOTE
             <span className="srv-cta__btn-arrow" aria-hidden="true">&#8594;</span>
           </button>
         </div>

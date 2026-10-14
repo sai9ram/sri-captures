@@ -851,7 +851,7 @@ export default function StoryPage({ inquiryRequestKey = 0 }: StoryPageProps) {
                 className="story-cta-btn"
                 aria-label="Open wedding quote request form"
               >
-                GET A QUOTE <span>→</span>
+                BUILD YOUR QUOTE <span>→</span>
               </button>
             </div>
 

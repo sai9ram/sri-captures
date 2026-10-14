@@ -679,9 +679,9 @@ export default function ContactPage() {
           <button
             className="cnt-closing-cta-btn"
             onClick={scrollToForm}
-            aria-label="Get a quote by completing the enquiry form"
+            aria-label="Build your quote by completing the enquiry form"
           >
-            <span>GET A QUOTE</span>
+            <span>BUILD YOUR QUOTE</span>
             <span className="cnt-cta-arrow" aria-hidden="true">→</span>
           </button>
         </div>

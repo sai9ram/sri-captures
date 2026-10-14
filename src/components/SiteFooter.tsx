@@ -80,7 +80,7 @@ export default function SiteFooter({
         <button onClick={onNavigateServices} className={currentPage === "services" ? "is-active" : ""}>Services</button>
         <button onClick={onNavigateGallery} className={currentPage === "gallery" ? "is-active" : ""}>Gallery</button>
         <button onClick={onNavigateContact} className={currentPage === "contact" ? "is-active" : ""}>Contact</button>
-        <button onClick={onNavigateQuote} className={currentPage === "quote" ? "is-active" : ""}>Get a Quote</button>
+        <button onClick={onNavigateQuote} className={currentPage === "quote" ? "is-active" : ""}>Build Your Quote</button>
       </nav>
 
       <p className="album-footer__closing">Until the next story...</p>
