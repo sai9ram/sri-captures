@@ -6,6 +6,9 @@ interface SplashScreenProps {
 
 export default function SplashScreen({ onComplete }: SplashScreenProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const hasDismissedRef = useRef(false);
+
   const [isMobile, setIsMobile] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
       return (
@@ -18,10 +21,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
   });
 
   const [isExiting, setIsExiting] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const hasDismissedRef = useRef(false);
 
-  // Responsive device check
+  // Device check
   useEffect(() => {
     const handleResize = () => {
       const mobileCheck =
@@ -39,7 +40,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     };
   }, []);
 
-  // Smooth dismiss handler
+  // Dismiss handler
   const dismissSplash = () => {
     if (hasDismissedRef.current) return;
     hasDismissedRef.current = true;
@@ -48,18 +49,17 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     const video = videoRef.current;
     if (video) {
       try {
-        // Fade out audio before removing
         const startVol = video.volume;
         const fadeInterval = setInterval(() => {
           if (video.volume > 0.1) {
-            video.volume = Math.max(0, video.volume - 0.15);
+            video.volume = Math.max(0, video.volume - 0.2);
           } else {
             video.volume = 0;
             clearInterval(fadeInterval);
           }
         }, 50);
       } catch {
-        // Ignore audio fade errors
+        // Ignore
       }
     }
 
@@ -69,71 +69,66 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     }, 700);
   };
 
-  // Lock body scroll during splash
+  // Lock body scroll
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
     return () => {
       document.body.style.overflow = prevOverflow;
     };
   }, []);
 
-  // Video Autoplay & Audio Management
+  // Helper to unmute cleanly
+  const unmuteAudio = () => {
+    const video = videoRef.current;
+    if (video && !hasDismissedRef.current) {
+      try {
+        video.muted = false;
+        video.volume = 1.0;
+        if (video.paused) {
+          video.play().catch(() => {});
+        }
+      } catch {
+        // Ignore
+      }
+    }
+  };
+
+  // Autoplay & Sound logic
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Start with muted playback guaranteed to play on all mobile & desktop browsers
-    video.muted = true;
-    video.playsInline = true;
+    // 1. Try unmuted auto-play first
+    video.muted = false;
+    video.volume = 1.0;
 
     const playPromise = video.play();
-
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          // Video is successfully playing!
-          // Attempt to unmute sound automatically:
-          try {
-            video.muted = false;
-            video.volume = 1.0;
-            if (video.paused) {
-              // If unmuting caused a pause due to browser restriction, resume muted
-              video.muted = true;
-              video.play().catch(() => {});
-            }
-          } catch {
-            video.muted = true;
-            video.play().catch(() => {});
-          }
+          // Unmuted autoplay succeeded! Music is playing.
+          video.muted = false;
+          video.volume = 1.0;
         })
         .catch(() => {
-          // Autoplay fallback retry
+          // Browser autoplay policy required muted start:
+          // Immediately start video muted so visuals never hitch
           video.muted = true;
           video.play().catch(() => {});
         });
     }
 
-    // Immediate sound unlock on ANY user touch, click, or key anywhere on screen
-    const unlockSound = () => {
-      if (video && !hasDismissedRef.current) {
-        try {
-          video.muted = false;
-          video.volume = 1.0;
-          if (video.paused) {
-            video.play().catch(() => {});
-          }
-        } catch {
-          // Ignore
-        }
-      }
+    // 2. Unmute on ANY user gesture (tap, touch, click, scroll, key)
+    const handleGesture = () => {
+      unmuteAudio();
     };
 
-    window.addEventListener("pointerdown", unlockSound, { passive: true });
-    window.addEventListener("touchstart", unlockSound, { passive: true });
-    window.addEventListener("click", unlockSound, { passive: true });
-    window.addEventListener("keydown", unlockSound, { passive: true });
+    window.addEventListener("pointerdown", handleGesture, { passive: true, capture: true });
+    window.addEventListener("touchstart", handleGesture, { passive: true, capture: true });
+    window.addEventListener("click", handleGesture, { passive: true, capture: true });
+    window.addEventListener("keydown", handleGesture, { passive: true, capture: true });
+    window.addEventListener("wheel", handleGesture, { passive: true, capture: true });
 
     // Safety timeout: 7.5s for desktop, 5.5s for mobile
     const maxDuration = isMobile ? 5500 : 7500;
@@ -143,21 +138,25 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
     return () => {
       clearTimeout(safetyTimer);
-      window.removeEventListener("pointerdown", unlockSound);
-      window.removeEventListener("touchstart", unlockSound);
-      window.removeEventListener("click", unlockSound);
-      window.removeEventListener("keydown", unlockSound);
+      window.removeEventListener("pointerdown", handleGesture, { capture: true });
+      window.removeEventListener("touchstart", handleGesture, { capture: true });
+      window.removeEventListener("click", handleGesture, { capture: true });
+      window.removeEventListener("keydown", handleGesture, { capture: true });
+      window.removeEventListener("wheel", handleGesture, { capture: true });
     };
   }, [isMobile]);
 
+  // Update progress bar without causing React re-renders (prevents React from re-muting DOM)
   const handleTimeUpdate = () => {
     const video = videoRef.current;
     if (!video || !video.duration) return;
 
-    const pct = (video.currentTime / video.duration) * 100;
-    setProgress(pct);
+    if (progressBarRef.current) {
+      const pct = (video.currentTime / video.duration) * 100;
+      progressBarRef.current.style.width = `${pct}%`;
+    }
 
-    // Crossfade 0.5s before end to ensure smooth visual transition
+    // Crossfade 0.5s before end
     if (video.duration > 1 && video.currentTime >= video.duration - 0.5) {
       dismissSplash();
     }
@@ -172,17 +171,9 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
       className={`splash-screen ${isExiting ? "splash-screen--exiting" : ""}`}
       role="region"
       aria-label="Welcome cinematic splash screen"
-      onClick={() => {
-        // Unmute on direct screen tap if browser held sound
-        const video = videoRef.current;
-        if (video) {
-          video.muted = false;
-          video.volume = 1.0;
-          if (video.paused) {
-            video.play().catch(() => {});
-          }
-        }
-      }}
+      onClick={unmuteAudio}
+      onTouchStart={unmuteAudio}
+      onPointerDown={unmuteAudio}
     >
       <div className="splash-screen__video-wrapper">
         <video
@@ -191,7 +182,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           className="splash-screen__video"
           src={videoSrc}
           autoPlay
-          muted
+          defaultMuted={false}
           playsInline
           preload="auto"
           onTimeUpdate={handleTimeUpdate}
@@ -234,11 +225,12 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         </button>
       </div>
 
-      {/* Delicate Gold Hairline Progress Bar */}
+      {/* Delicate Gold Hairline Progress Bar (Direct DOM update - zero re-renders) */}
       <div className="splash-screen__progress-track" aria-hidden="true">
         <div
+          ref={progressBarRef}
           className="splash-screen__progress-bar"
-          style={{ width: `${progress}%` }}
+          style={{ width: "0%" }}
         />
       </div>
     </aside>
