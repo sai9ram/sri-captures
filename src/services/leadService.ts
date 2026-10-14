@@ -45,7 +45,7 @@ export const ADMIN_CONFIG = {
 };
 
 export const LIVE_GOOGLE_CRM_URL =
-  "https://script.google.com/macros/s/AKfycbzXUTVLaQ4gfvAZKFkb1_BKuh-JvmoUoCl2n4ufRC-7JkRHWSAuZ3xtQRq3U7xj3MUR/exec";
+  "https://script.google.com/macros/s/AKfycbzE6IrTHw1zmcJLyyUCqwMdi39xTUC0qQ85K5zaXmxnQly7UqePPQNSw-JjSjgFl-HaJg/exec";
 
 const STORAGE_CRM_KEY = "sricaptures_google_crm_url";
 const STORAGE_LEADS_KEY = "sricaptures_leads_archive";

@@ -47,7 +47,7 @@ This project includes a built-in integration to capture every wedding enquiry an
 ### Step 4: Active Deployed Google CRM URL
 The live Web App URL is now configured and active across the entire platform:
 ```text
-https://script.google.com/macros/s/AKfycbzXUTVLaQ4gfvAZKFkb1_BKuh-JvmoUoCl2n4ufRC-7JkRHWSAuZ3xtQRq3U7xj3MUR/exec
+https://script.google.com/macros/s/AKfycbzE6IrTHw1zmcJLyyUCqwMdi39xTUC0qQ85K5zaXmxnQly7UqePPQNSw-JjSjgFl-HaJg/exec
 ```
 It is hardwired into `leadService.ts`, `.env`, and `.env.production`. Every quotation request and contact enquiry automatically connects to this Google CRM without requiring any manual setup from visitors!
 
