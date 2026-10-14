@@ -432,6 +432,7 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
   };
 
   // Download printable PDF Quote
+  // Download luxury printable PDF Quote
   const handleDownloadPDF = () => {
     const printWindow = window.open("", "_blank");
     if (!printWindow) {
@@ -442,19 +443,21 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
     const itemsRows = Object.values(itemizedByEvent)
       .map(
         (group) => `
-        <tr style="background:#f7f2ea;">
-          <td colspan="2" style="padding:10px 14px;font-weight:700;color:#5a1a1c;font-size:14px;border-top:1px solid #d4b47c;">
-            ${group.eventName}
+        <tr style="background:#faf6ee;border-top:1.5px solid #c4a05a;">
+          <td colspan="2" style="padding:12px 18px;font-family:'Cormorant Garamond',serif;font-weight:700;color:#5a1a1c;font-size:16px;letter-spacing:0.04em;">
+            ✦ ${group.eventName.toUpperCase()} <span style="font-family:'Manrope',sans-serif;font-size:11px;font-weight:500;color:#8a6d3b;margin-left:8px;">(8-Hour Comprehensive Coverage)</span>
           </td>
         </tr>
         ${group.services
           .map(
             (srv) => `
-          <tr>
-            <td style="padding:8px 14px 8px 24px;border-bottom:1px solid #eee;color:#333;">${srv.name}</td>
-            <td style="padding:8px 14px;text-align:right;border-bottom:1px solid #eee;font-weight:600;color:#111;">${formatINR(
-              srv.price
-            )}</td>
+          <tr style="border-bottom:1px solid #eee6d8;">
+            <td style="padding:10px 18px 10px 32px;color:#2c2420;font-size:13.5px;">
+              <span style="color:#c4a05a;margin-right:8px;">•</span> ${srv.name}
+            </td>
+            <td style="padding:10px 18px;text-align:right;font-weight:700;color:#181210;font-size:14px;letter-spacing:0.02em;">
+              ${formatINR(srv.price)}
+            </td>
           </tr>`
           )
           .join("")}
@@ -465,19 +468,21 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
     const addonRows =
       selectedAddonsList.length > 0
         ? `
-        <tr style="background:#f7f2ea;">
-          <td colspan="2" style="padding:10px 14px;font-weight:700;color:#5a1a1c;font-size:14px;border-top:1px solid #d4b47c;">
-            Optional Add-ons
+        <tr style="background:#faf6ee;border-top:1.5px solid #c4a05a;">
+          <td colspan="2" style="padding:12px 18px;font-family:'Cormorant Garamond',serif;font-weight:700;color:#5a1a1c;font-size:16px;letter-spacing:0.04em;">
+            ✦ OPTIONAL ADD-ONS & CINEMATIC EXPERIENCES
           </td>
         </tr>
         ${selectedAddonsList
           .map(
             (addon) => `
-          <tr>
-            <td style="padding:8px 14px 8px 24px;border-bottom:1px solid #eee;color:#333;">${addon.name}</td>
-            <td style="padding:8px 14px;text-align:right;border-bottom:1px solid #eee;font-weight:600;color:#111;">${formatINR(
-              addon.price
-            )}</td>
+          <tr style="border-bottom:1px solid #eee6d8;">
+            <td style="padding:10px 18px 10px 32px;color:#2c2420;font-size:13.5px;">
+              <span style="color:#c4a05a;margin-right:8px;">•</span> ${addon.name}
+            </td>
+            <td style="padding:10px 18px;text-align:right;font-weight:700;color:#181210;font-size:14px;">
+              ${formatINR(addon.price)}
+            </td>
           </tr>`
           )
           .join("")}
@@ -488,85 +493,339 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>SRI CAPTURES Quotation — ${quoteReference}</title>
+          <title>SRI CAPTURES — Luxury Wedding Quotation (${quoteReference})</title>
+          <meta charset="utf-8" />
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
           <style>
-            body { font-family: 'Helvetica Neue', Arial, sans-serif; padding: 40px; color: #221915; line-height: 1.5; }
-            .header { border-bottom: 2px solid #5a1a1c; padding-bottom: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; }
-            .brand { font-size: 26px; font-weight: 700; letter-spacing: 0.1em; color: #5a1a1c; margin: 0; }
-            .brand-sub { font-size: 11px; letter-spacing: 0.2em; color: #c4a05a; text-transform: uppercase; }
-            .ref-box { text-align: right; font-size: 13px; color: #666; }
-            .client-card { background: #faf6f0; border: 1px solid #e5d7c3; border-radius: 4px; padding: 16px 20px; margin-bottom: 28px; }
-            .client-card table { width: 100%; font-size: 14px; }
-            .items-table { width: 100%; border-collapse: collapse; margin-bottom: 28px; font-size: 14px; }
-            .items-table th { background: #5a1a1c; color: #fff; padding: 10px 14px; text-align: left; font-size: 12px; letter-spacing: 0.1em; }
-            .total-box { text-align: right; font-size: 20px; font-weight: 700; color: #5a1a1c; padding: 16px 0; border-top: 2px solid #5a1a1c; }
-            .note { font-size: 12px; color: #777; margin-top: 32px; border-top: 1px solid #ddd; padding-top: 12px; }
+            @page {
+              size: A4;
+              margin: 12mm 15mm;
+            }
+            * { box-sizing: border-box; }
+            body {
+              font-family: 'Manrope', -apple-system, sans-serif;
+              padding: 24px;
+              color: #221915;
+              line-height: 1.5;
+              background: #f7f4ed;
+            }
+            .document-sheet {
+              background: #ffffff;
+              max-width: 860px;
+              margin: 0 auto;
+              padding: 44px 48px;
+              border: 2px solid #5a1a1c;
+              box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+              position: relative;
+            }
+            .document-sheet::before {
+              content: '';
+              position: absolute;
+              top: 6px; left: 6px; right: 6px; bottom: 6px;
+              border: 1px solid rgba(196, 160, 90, 0.45);
+              pointer-events: none;
+            }
+            .ornament-bar {
+              text-align: center;
+              font-size: 11px;
+              letter-spacing: 0.28em;
+              color: #c4a05a;
+              margin-bottom: 12px;
+              text-transform: uppercase;
+            }
+            .header-grid {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border-bottom: 2px solid #5a1a1c;
+              padding-bottom: 20px;
+              margin-bottom: 24px;
+            }
+            .brand-block {
+              display: flex;
+              align-items: center;
+              gap: 16px;
+            }
+            .brand-logo {
+              height: 52px;
+              max-width: 140px;
+              object-fit: contain;
+              display: block;
+            }
+            .brand-titles {
+              border-left: 1.5px solid rgba(196, 160, 90, 0.5);
+              padding-left: 14px;
+            }
+            .brand-name {
+              font-family: 'Cormorant Garamond', Georgia, serif;
+              font-size: 28px;
+              font-weight: 700;
+              letter-spacing: 0.08em;
+              color: #5a1a1c;
+              margin: 0;
+              line-height: 1;
+            }
+            .brand-sub {
+              font-size: 10px;
+              font-weight: 700;
+              letter-spacing: 0.22em;
+              color: #8c6d32;
+              text-transform: uppercase;
+              margin-top: 4px;
+              display: block;
+            }
+            .brand-tagline {
+              font-family: 'Cormorant Garamond', Georgia, serif;
+              font-size: 13px;
+              font-style: italic;
+              color: #a85432;
+              margin-top: 2px;
+            }
+            .meta-block {
+              text-align: right;
+            }
+            .ref-pill {
+              background: #faf4e8;
+              border: 1px solid #d4b47c;
+              color: #5a1a1c;
+              font-size: 11.5px;
+              font-weight: 800;
+              letter-spacing: 0.12em;
+              padding: 4px 12px;
+              border-radius: 20px;
+              display: inline-block;
+              margin-bottom: 6px;
+            }
+            .date-label {
+              font-size: 12px;
+              color: #665952;
+              display: block;
+            }
+            .dossier-card {
+              background: #faf7f2;
+              border: 1px solid #e7dcce;
+              border-radius: 4px;
+              padding: 18px 22px;
+              margin-bottom: 26px;
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 20px;
+            }
+            .dossier-col span {
+              font-size: 10px;
+              font-weight: 800;
+              letter-spacing: 0.16em;
+              color: #a85432;
+              text-transform: uppercase;
+              display: block;
+              margin-bottom: 4px;
+            }
+            .dossier-col strong {
+              font-family: 'Cormorant Garamond', Georgia, serif;
+              font-size: 20px;
+              font-weight: 700;
+              color: #1f1614;
+              display: block;
+              margin-bottom: 4px;
+              line-height: 1.2;
+            }
+            .dossier-col p {
+              font-size: 12.5px;
+              color: #574b45;
+              margin: 2px 0;
+            }
+            .items-table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 24px;
+              font-size: 13.5px;
+            }
+            .items-table th {
+              background: #5a1a1c;
+              color: #ffffff;
+              padding: 11px 18px;
+              text-align: left;
+              font-size: 11px;
+              font-weight: 800;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+            }
+            .total-panel {
+              background: #faf5ed;
+              border: 1.5px solid #c4a05a;
+              border-radius: 4px;
+              padding: 18px 22px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 24px;
+            }
+            .total-label {
+              font-size: 11.5px;
+              font-weight: 800;
+              letter-spacing: 0.16em;
+              color: #5a1a1c;
+              text-transform: uppercase;
+              display: block;
+              margin-bottom: 2px;
+            }
+            .total-sub {
+              font-size: 11.5px;
+              color: #7a6e67;
+              margin: 0;
+            }
+            .total-figure {
+              font-family: 'Cormorant Garamond', Georgia, serif;
+              font-size: 32px;
+              font-weight: 700;
+              color: #5a1a1c;
+              letter-spacing: 0.02em;
+            }
+            .atelier-guarantees {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 14px;
+              background: #fdfbf7;
+              border: 1px dashed #d8c7b0;
+              border-radius: 4px;
+              padding: 14px 18px;
+              margin-bottom: 24px;
+              text-align: center;
+            }
+            .guarantee-item span {
+              font-size: 11px;
+              font-weight: 700;
+              letter-spacing: 0.08em;
+              color: #5a1a1c;
+              text-transform: uppercase;
+              display: block;
+              margin-bottom: 2px;
+            }
+            .guarantee-item p {
+              font-size: 11px;
+              color: #7a6e67;
+              margin: 0;
+              line-height: 1.35;
+            }
+            .footer-strip {
+              border-top: 1px solid #e7dcce;
+              padding-top: 14px;
+              text-align: center;
+              font-size: 11px;
+              color: #8c7d74;
+            }
+            .footer-strip p {
+              margin: 3px 0;
+            }
+            .no-print {
+              text-align: center;
+              margin-top: 24px;
+            }
+            .print-btn {
+              background: #5a1a1c;
+              color: #ffffff;
+              border: none;
+              padding: 13px 32px;
+              font-size: 13px;
+              font-weight: 800;
+              letter-spacing: 0.14em;
+              border-radius: 9999px;
+              cursor: pointer;
+              box-shadow: 0 4px 14px rgba(90, 26, 28, 0.25);
+              transition: all 0.2s ease;
+            }
+            .print-btn:hover {
+              background: #3e1012;
+            }
             @media print {
-              body { padding: 15mm; }
-              .no-print { display: none; }
+              body { background: #fff; padding: 0; }
+              .document-sheet { border: none; box-shadow: none; padding: 0; }
+              .document-sheet::before { display: none; }
+              .no-print { display: none !important; }
             }
           </style>
         </head>
         <body>
-          <div class="header">
-            <div>
-              <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-                <img src="/images/Sricaptures Logo .jpg" style="height:36px;object-fit:contain;" alt="Sri Captures" />
-                <div>
-                  <h1 class="brand" style="margin:0;line-height:1;">SRI CAPTURES</h1>
-                  <span class="brand-sub">PREMIUM WEDDING PHOTOGRAPHY & FILMS</span>
+          <div class="document-sheet">
+            <div class="ornament-bar">✦ &nbsp; SRI CAPTURES ATELIER &bull; BESPOKE WEDDING CINEMA &nbsp; ✦</div>
+            
+            <div class="header-grid">
+              <div class="brand-block">
+                <img src="/images/Sricaptures Logo .jpg" class="brand-logo" alt="Sri Captures Emblem" />
+                <div class="brand-titles">
+                  <h1 class="brand-name">SRI CAPTURES</h1>
+                  <span class="brand-sub">LUXURY WEDDING PHOTOGRAPHY & FILMS</span>
+                  <div class="brand-tagline">"Let's Make Some జ్ఞాపకాలు"</div>
                 </div>
               </div>
-              <p style="margin:4px 0 0;font-size:12px;color:#666;">Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com</p>
+              <div class="meta-block">
+                <span class="ref-pill">REF: ${quoteReference}</span>
+                <span class="date-label">Issue Date: <strong>${new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</strong></span>
+                <span class="date-label" style="margin-top:2px;">Status: <strong>Confidential Estimate</strong></span>
+              </div>
             </div>
-            <div class="ref-box">
-              <strong style="color:#5a1a1c;font-size:15px;">ESTIMATED QUOTATION</strong><br />
-              Ref: <strong>${quoteReference}</strong><br />
-              Date: ${new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
-            </div>
-          </div>
 
-          <div class="client-card">
-            <table>
-              <tr>
-                <td style="width:50%;"><strong>Client:</strong> ${details.fullName}</td>
-                <td><strong>Wedding Date:</strong> ${details.weddingDate}</td>
-              </tr>
-              <tr>
-                <td><strong>WhatsApp:</strong> ${details.whatsapp}</td>
-                <td><strong>Venue / City:</strong> ${details.venue}</td>
-              </tr>
-              <tr>
-                <td><strong>Email:</strong> ${details.email}</td>
-                <td><strong>Style:</strong> ${selectedStyles.map(getStyleLabel).join(" & ")}</td>
-              </tr>
+            <div class="dossier-card">
+              <div class="dossier-col">
+                <span>CLIENT / BRIDE & GROOM</span>
+                <strong>${details.fullName}</strong>
+                <p>✉️ ${details.email}</p>
+                <p>📱 WhatsApp: ${details.whatsapp}</p>
+              </div>
+              <div class="dossier-col">
+                <span>CELEBRATION VENUE & VISION</span>
+                <strong>${details.venue}</strong>
+                <p>📅 Auspicious Date: <strong>${details.weddingDate}</strong></p>
+                <p>🎨 Cinematic Style: <strong>${selectedStyles.map(getStyleLabel).join(" & ")}</strong></p>
+              </div>
+            </div>
+
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>CEREMONY / SERVICE SCHEDULE</th>
+                  <th style="text-align:right;">INVESTMENT (INR)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${itemsRows}
+                ${addonRows}
+              </tbody>
             </table>
-          </div>
 
-          <table class="items-table">
-            <thead>
-              <tr>
-                <th>SERVICE / CEREMONY</th>
-                <th style="text-align:right;">INVESTMENT</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${itemsRows}
-              ${addonRows}
-            </tbody>
-          </table>
+            <div class="total-panel">
+              <div>
+                <span class="total-label">TOTAL ESTIMATED INVESTMENT</span>
+                <p class="total-sub">Includes full ritual documentation, master sound design & cinematic color grading.</p>
+              </div>
+              <div class="total-figure">${formatINR(estimatedTotal)}</div>
+            </div>
 
-          <div class="total-box">
-            ESTIMATED TOTAL: ${formatINR(estimatedTotal)}
-          </div>
+            <div class="atelier-guarantees">
+              <div class="guarantee-item">
+                <span>⏱️ 8-Hour Sessions</span>
+                <p>Comprehensive 8 hours coverage per ceremony to capture every authentic emotion without rushing.</p>
+              </div>
+              <div class="guarantee-item">
+                <span>🎬 4K Cinema Grading</span>
+                <p>Ultra-high definition preservation, professional audio capture, and bespoke color correction.</p>
+              </div>
+              <div class="guarantee-item">
+                <span>🔒 Dedicated Crew</span>
+                <p>Dates and crew reservation are secured upon formal contract and deposit confirmation.</p>
+              </div>
+            </div>
 
-          <div class="note">
-            <p><strong>Working Hours:</strong> 8 Hours (1 Session per event).</p>
-            <p><strong>Note:</strong> This document represents an estimated quotation based on your selected coverage. Final availability, travel arrangements, and dates are confirmed directly with SRI CAPTURES.</p>
-          </div>
+            <div class="footer-strip">
+              <p><strong>SRI CAPTURES ATELIER</strong> &bull; Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com &bull; Instagram: @sri_capture9</p>
+              <p style="font-size:10px;color:#a89b94;">Headquartered in Hyderabad &bull; Preserving weddings across India & destinations worldwide.</p>
+            </div>
 
-          <div class="no-print" style="text-align:center;margin-top:30px;">
-            <button onclick="window.print()" style="background:#5a1a1c;color:#fff;border:none;padding:12px 28px;font-size:14px;border-radius:4px;cursor:pointer;font-weight:700;">PRINT / SAVE AS PDF</button>
+            <div class="no-print">
+              <button onclick="window.print()" class="print-btn">🖨️ PRINT / DOWNLOAD PDF QUOTATION</button>
+            </div>
           </div>
         </body>
       </html>
@@ -1219,52 +1478,62 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                     </p>
                   </div>
 
-                  <div className="quote-invoice-sheet">
+                  <div className="quote-invoice-sheet quote-invoice-sheet--elevated">
+                    {/* Atelier Filigree Bar */}
+                    <div className="quote-invoice-filigree" aria-hidden="true">
+                      <span>✦ &nbsp; SRI CAPTURES ATELIER &bull; BESPOKE WEDDING CINEMA &nbsp; ✦</span>
+                    </div>
+
+                    {/* Brand Header */}
                     <div className="quote-invoice-header">
-                      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                      <div className="quote-invoice-brand-block">
                         <img
                           src="/images/Sricaptures Logo .jpg"
-                          alt="Sri Captures Logo"
-                          style={{
-                            height: "42px",
-                            objectFit: "contain",
-                            display: "block",
-                          }}
+                          alt="Sri Captures Emblem"
+                          className="quote-invoice-logo"
                         />
-                        <div>
-                          <h3 className="quote-invoice-brand" style={{ margin: 0 }}>SRI CAPTURES</h3>
-                          <p className="quote-invoice-meta" style={{ margin: "2px 0 0" }}>
-                            Phone: +91 81424 90545 &bull; sricapture929@gmail.com
-                          </p>
+                        <div className="quote-invoice-titles">
+                          <h3 className="quote-invoice-brand">SRI CAPTURES</h3>
+                          <span className="quote-invoice-subtitle">LUXURY WEDDING PHOTOGRAPHY & FILMS</span>
+                          <span className="quote-invoice-tagline">"Let's Make Some జ్ఞాపకాలు"</span>
                         </div>
                       </div>
+
                       <div className="quote-invoice-ref-box">
                         <span className="quote-ref-badge">REF: {quoteReference}</span>
                         <span className="quote-invoice-date">
-                          {new Date().toLocaleDateString("en-IN", {
+                          Issue Date: <strong>{new Date().toLocaleDateString("en-IN", {
                             day: "numeric",
                             month: "long",
                             year: "numeric",
-                          })}
+                          })}</strong>
+                        </span>
+                        <span className="quote-invoice-status">
+                          Status: <strong>Confidential Estimate</strong>
                         </span>
                       </div>
                     </div>
 
+                    {/* Client Celebration Dossier */}
                     <div className="quote-client-summary">
                       <div className="quote-client-col">
-                        <span>Prepared For:</span>
-                        <strong>{details.fullName}</strong>
-                        <p>{details.email}</p>
-                        <p>WhatsApp: {details.whatsapp}</p>
+                        <span className="quote-dossier-eyebrow">CLIENT / BRIDE & GROOM</span>
+                        <strong className="quote-dossier-name">{details.fullName}</strong>
+                        <p className="quote-dossier-info">✉️ {details.email}</p>
+                        <p className="quote-dossier-info">📱 WhatsApp: {details.whatsapp}</p>
                       </div>
+
                       <div className="quote-client-col">
-                        <span>Celebration Details:</span>
-                        <strong>{details.venue}</strong>
-                        <p>Date: {details.weddingDate}</p>
-                        <p>
-                          Style:{" "}
-                          {selectedStyles.map(getStyleLabel).join(" & ")}
-                        </p>
+                        <span className="quote-dossier-eyebrow">CELEBRATION VENUE & VISION</span>
+                        <strong className="quote-dossier-name">{details.venue}</strong>
+                        <p className="quote-dossier-info">📅 Auspicious Date: <strong>{details.weddingDate}</strong></p>
+                        <div className="quote-dossier-styles">
+                          {selectedStyles.map((s) => (
+                            <span key={s} className="quote-style-pill">
+                              {getStyleLabel(s)}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
@@ -1273,20 +1542,27 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                       <table className="quote-table">
                         <thead>
                           <tr>
-                            <th>Ceremony / Service</th>
-                            <th style={{ textAlign: "right" }}>Investment</th>
+                            <th>CEREMONY / SERVICE SCHEDULE</th>
+                            <th style={{ textAlign: "right" }}>INVESTMENT (INR)</th>
                           </tr>
                         </thead>
                         <tbody>
                           {Object.entries(itemizedByEvent).map(([evtId, group]) => (
                             <tbody key={evtId}>
                               <tr className="quote-table-event-row">
-                                <td colSpan={2}>{group.eventName}</td>
+                                <td colSpan={2}>
+                                  <span className="quote-event-row-title">✦ {group.eventName.toUpperCase()}</span>
+                                  <span className="quote-event-row-badge">8-Hour Comprehensive Coverage</span>
+                                </td>
                               </tr>
                               {group.services.map((srv) => (
                                 <tr key={srv.id} className="quote-table-item-row">
-                                  <td>&bull; {srv.name}</td>
-                                  <td style={{ textAlign: "right" }}>{formatINR(srv.price)}</td>
+                                  <td>
+                                    <span className="quote-item-dot">•</span> {srv.name}
+                                  </td>
+                                  <td style={{ textAlign: "right" }} className="quote-item-price">
+                                    {formatINR(srv.price)}
+                                  </td>
                                 </tr>
                               ))}
                             </tbody>
@@ -1295,12 +1571,18 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                           {selectedAddonsList.length > 0 && (
                             <tbody>
                               <tr className="quote-table-event-row">
-                                <td colSpan={2}>Optional Add-ons</td>
+                                <td colSpan={2}>
+                                  <span className="quote-event-row-title">✦ OPTIONAL ADD-ONS & CINEMATIC EXPERIENCES</span>
+                                </td>
                               </tr>
                               {selectedAddonsList.map((addon) => (
                                 <tr key={addon.id} className="quote-table-item-row">
-                                  <td>&bull; {addon.name}</td>
-                                  <td style={{ textAlign: "right" }}>{formatINR(addon.price)}</td>
+                                  <td>
+                                    <span className="quote-item-dot">•</span> {addon.name}
+                                  </td>
+                                  <td style={{ textAlign: "right" }} className="quote-item-price">
+                                    {formatINR(addon.price)}
+                                  </td>
                                 </tr>
                               ))}
                             </tbody>
@@ -1309,15 +1591,52 @@ export default function QuotePage({ onNavigateHome }: QuotePageProps) {
                       </table>
                     </div>
 
-                    <div className="quote-invoice-footer">
-                      <div className="quote-footer-terms">
-                        <p><strong>Working Hours:</strong> 8 Hours (1 Session per ceremony).</p>
-                        <p>Final arrangements and dates are confirmed with the SRI CAPTURES team.</p>
+                    {/* Total Panel */}
+                    <div className="quote-total-panel">
+                      <div className="quote-total-panel__meta">
+                        <span className="quote-total-panel__eyebrow">TOTAL ESTIMATED INVESTMENT</span>
+                        <p className="quote-total-panel__desc">
+                          Includes dual-camera coverage, full ritual preservation & cinematic color grading.
+                        </p>
                       </div>
-                      <div className="quote-footer-total">
-                        <span>ESTIMATED TOTAL</span>
-                        <strong>{formatINR(estimatedTotal)}</strong>
+                      <div className="quote-total-panel__figure">
+                        {formatINR(estimatedTotal)}
                       </div>
+                    </div>
+
+                    {/* Atelier Guarantees */}
+                    <div className="quote-atelier-guarantees">
+                      <div className="quote-guarantee-pillar">
+                        <div className="quote-pillar-icon">⏱️</div>
+                        <div className="quote-pillar-text">
+                          <strong>8-Hour Sessions</strong>
+                          <p>Full 8 hours coverage per ceremony to preserve rituals without rushing.</p>
+                        </div>
+                      </div>
+                      <div className="quote-guarantee-pillar">
+                        <div className="quote-pillar-icon">🎬</div>
+                        <div className="quote-pillar-text">
+                          <strong>4K Cinema Grading</strong>
+                          <p>Master tone correction, high dynamic range & audio preservation.</p>
+                        </div>
+                      </div>
+                      <div className="quote-guarantee-pillar">
+                        <div className="quote-pillar-icon">🔒</div>
+                        <div className="quote-pillar-text">
+                          <strong>Guaranteed Reservation</strong>
+                          <p>Exclusive date and dedicated senior crew assigned upon confirmation.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Studio Footer Sign-off */}
+                    <div className="quote-invoice-seal-footer">
+                      <p className="quote-seal-brand">
+                        <strong>SRI CAPTURES ATELIER</strong> &bull; Phone: +91 81424 90545 &bull; Email: sricapture929@gmail.com &bull; Instagram: @sri_capture9
+                      </p>
+                      <p className="quote-seal-tag">
+                        Headquartered in Hyderabad &bull; Documenting weddings across India & worldwide destinations.
+                      </p>
                     </div>
                   </div>
 

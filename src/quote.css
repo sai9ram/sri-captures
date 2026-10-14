@@ -921,55 +921,110 @@
   margin: 0;
 }
 
-/* Invoice sheet inside confirmation */
+/* ==========================================================================
+   ELEVATED ATELIER INVOICE SHEET (STEP 6)
+   ========================================================================== */
 .quote-invoice-sheet {
   background: #ffffff;
   color: var(--q-charcoal);
-  border-radius: 4px;
-  padding: 36px 36px 32px;
+  border-radius: 6px;
+  padding: 40px 42px 36px;
   margin-bottom: 36px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
+  position: relative;
+  border: 2px solid #5a1a1c;
+}
+
+.quote-invoice-sheet--elevated {
+  background: #ffffff linear-gradient(180deg, #fffdfa 0%, #ffffff 100%);
+  outline: 1px solid rgba(196, 160, 90, 0.45);
+  outline-offset: -8px;
+}
+
+.quote-invoice-filigree {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  color: var(--q-gold);
+  text-transform: uppercase;
 }
 
 .quote-invoice-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding-bottom: 20px;
+  align-items: center;
+  padding-bottom: 22px;
   border-bottom: 2px solid var(--q-maroon);
   margin-bottom: 24px;
+  gap: 20px;
+}
+
+.quote-invoice-brand-block {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.quote-invoice-logo {
+  height: 52px;
+  max-width: 135px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(90, 26, 28, 0.12));
+}
+
+.quote-invoice-titles {
+  border-left: 1.5px solid rgba(196, 160, 90, 0.45);
+  padding-left: 14px;
 }
 
 .quote-invoice-brand {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 26px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 28px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--q-maroon);
-  margin: 0 0 4px;
+  margin: 0;
+  line-height: 1;
 }
 
-.quote-invoice-meta {
-  font-size: 12px;
-  color: var(--q-muted);
-  margin: 0;
+.quote-invoice-subtitle {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #8c6d32;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 4px;
+}
+
+.quote-invoice-tagline {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--q-terracotta);
+  display: block;
+  margin-top: 2px;
 }
 
 .quote-invoice-ref-box {
   text-align: right;
+  flex-shrink: 0;
 }
 
 .quote-ref-badge {
   display: inline-block;
-  background: rgba(90, 26, 28, 0.08);
-  border: 1px solid rgba(90, 26, 28, 0.2);
+  background: #faf4e8;
+  border: 1px solid #d4b47c;
   color: var(--q-maroon);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.12em;
-  padding: 4px 10px;
-  border-radius: 2px;
-  margin-bottom: 4px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 6px;
 }
 
 .quote-invoice-date {
@@ -978,39 +1033,69 @@
   color: var(--q-muted);
 }
 
+.quote-invoice-status {
+  display: block;
+  font-size: 11px;
+  color: #8a6d3b;
+  margin-top: 2px;
+}
+
+/* Client Celebration Dossier */
 .quote-client-summary {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
-  background: var(--q-ivory);
-  border: 1px solid rgba(196, 160, 90, 0.25);
+  background: #faf7f2;
+  border: 1px solid rgba(196, 160, 90, 0.35);
   border-radius: 4px;
-  padding: 16px 20px;
+  padding: 20px 24px;
   margin-bottom: 28px;
 }
 
-.quote-client-col span {
-  font-size: 11px;
+.quote-dossier-eyebrow {
+  font-size: 9.5px;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.18em;
   color: var(--q-terracotta);
   text-transform: uppercase;
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
-.quote-client-col strong {
-  font-size: 15px;
+.quote-dossier-name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--q-charcoal);
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  line-height: 1.2;
 }
 
-.quote-client-col p {
+.quote-dossier-info {
   font-size: 13px;
-  color: var(--q-muted);
-  margin: 0;
-  line-height: 1.4;
+  color: var(--q-text);
+  margin: 2px 0;
+  line-height: 1.45;
+}
+
+.quote-dossier-styles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.quote-style-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #ffffff;
+  color: var(--q-maroon);
+  border: 1px solid rgba(196, 160, 90, 0.4);
+  padding: 3px 8px;
+  border-radius: 20px;
 }
 
 /* Itemized table */
@@ -1025,64 +1110,188 @@
 }
 
 .quote-table th {
-  background: var(--q-maroon);
+  background: linear-gradient(135deg, #5a1a1c 0%, #3e1012 100%);
   color: #ffffff;
-  padding: 10px 14px;
+  padding: 12px 18px;
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-align: left;
 }
 
 .quote-table-event-row td {
-  background: var(--q-ivory);
-  font-weight: 700;
+  background: #faf6ee;
   color: var(--q-maroon);
-  padding: 10px 14px;
-  border-top: 1px solid rgba(196, 160, 90, 0.3);
+  padding: 12px 18px;
+  border-top: 1.5px solid rgba(196, 160, 90, 0.6);
+}
+
+.quote-event-row-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  display: inline-block;
+}
+
+.quote-event-row-badge {
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8c6d32;
+  margin-left: 10px;
 }
 
 .quote-table-item-row td {
-  padding: 8px 14px 8px 24px;
-  border-bottom: 1px solid #f0f0f0;
-  color: var(--q-text);
+  padding: 10px 18px 10px 32px;
+  border-bottom: 1px solid #f0e9dd;
+  color: #2c2420;
 }
 
-.quote-invoice-footer {
+.quote-item-dot {
+  color: var(--q-gold);
+  margin-right: 6px;
+  font-weight: 800;
+}
+
+.quote-item-price {
+  font-weight: 700;
+  color: var(--q-charcoal);
+  letter-spacing: 0.02em;
+}
+
+/* Total Panel */
+.quote-total-panel {
+  background: #faf5ed;
+  border: 1.5px solid var(--q-gold);
+  border-radius: 4px;
+  padding: 20px 24px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  padding-top: 18px;
-  border-top: 2px solid var(--q-maroon);
+  align-items: center;
+  margin-bottom: 26px;
+  gap: 20px;
 }
 
-.quote-footer-terms {
+.quote-total-panel__eyebrow {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--q-maroon);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.quote-total-panel__desc {
   font-size: 12px;
   color: var(--q-muted);
-  max-width: 380px;
+  margin: 0;
+  line-height: 1.4;
 }
 
-.quote-footer-terms p {
-  margin: 0 0 4px;
+.quote-total-panel__figure {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(28px, 3.5vw, 36px);
+  font-weight: 700;
+  color: var(--q-maroon);
+  white-space: nowrap;
 }
 
-.quote-footer-total {
-  text-align: right;
+/* Atelier Guarantees */
+.quote-atelier-guarantees {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  background: #fdfbf7;
+  border: 1px dashed rgba(196, 160, 90, 0.45);
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
 }
 
-.quote-footer-total span {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  color: var(--q-charcoal);
-  display: block;
-  margin-bottom: 4px;
+.quote-guarantee-pillar {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.quote-footer-total strong {
-  font-size: 26px;
+.quote-pillar-icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.quote-pillar-text strong {
+  font-size: 12px;
   font-weight: 800;
   color: var(--q-maroon);
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.quote-pillar-text p {
+  font-size: 11.5px;
+  color: var(--q-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Studio Seal Footer */
+.quote-invoice-seal-footer {
+  border-top: 1px solid #ebd9c2;
+  padding-top: 16px;
+  text-align: center;
+}
+
+.quote-seal-brand {
+  font-size: 12px;
+  color: #4a3d36;
+  margin: 0 0 3px;
+}
+
+.quote-seal-tag {
+  font-size: 10.5px;
+  color: #94867e;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .quote-invoice-sheet {
+    padding: 24px 20px;
+  }
+
+  .quote-invoice-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .quote-invoice-ref-box {
+    text-align: left;
+  }
+
+  .quote-client-summary {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .quote-total-panel {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .quote-total-panel__figure {
+    font-size: 30px;
+  }
+
+  .quote-atelier-guarantees {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
 }
 
 .quote-email-alert {
