@@ -157,8 +157,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           <div className="splash-cover__content">
             <div className="splash-cover__emblem-wrap">
               <img
-                src="/images/Sricaptures Logo .jpg"
-                alt="Sri Captures Logo"
+                src="/favicon.jpg"
+                alt="Sri Captures Emblem"
                 className="splash-cover__emblem"
               />
             </div>

@@ -3553,19 +3553,20 @@ body.is-services-page {
 }
 
 .splash-cover__emblem-wrap {
-  width: 92px;
-  height: 92px;
+  width: 104px;
+  height: 104px;
   border-radius: 50%;
-  border: 1.5px solid rgba(212, 175, 55, 0.65);
-  padding: 4px;
-  box-shadow: 0 0 35px rgba(212, 175, 55, 0.35);
-  background: rgba(0, 0, 0, 0.4);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border: 2px solid rgba(212, 175, 55, 0.75);
+  padding: 3px;
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.4), 0 8px 24px rgba(0, 0, 0, 0.6);
+  background: rgba(8, 6, 5, 0.85);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
 }
 
 .splash-cover:hover .splash-cover__emblem-wrap {
-  transform: scale(1.04);
-  box-shadow: 0 0 45px rgba(212, 175, 55, 0.55);
+  transform: scale(1.05);
+  box-shadow: 0 0 45px rgba(212, 175, 55, 0.65), 0 12px 30px rgba(0, 0, 0, 0.8);
 }
 
 .splash-cover__emblem {
