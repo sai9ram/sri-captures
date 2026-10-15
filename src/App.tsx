@@ -729,6 +729,8 @@ export default function App() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
+  const isFirstPageLoad = useRef(true);
+
   useEffect(() => {
     const seo = PAGE_SEO[currentPage] || PAGE_SEO.home;
     document.title = seo.title;
@@ -762,6 +764,13 @@ export default function App() {
     document.body.classList.toggle("is-story-page", currentPage === "story");
     document.body.classList.toggle("is-services-page", currentPage === "services");
     document.body.classList.toggle("is-quote-page", currentPage === "quote");
+
+    // Track Meta Pixel PageView on client-side page navigation
+    if (isFirstPageLoad.current) {
+      isFirstPageLoad.current = false;
+    } else if (typeof window !== "undefined" && typeof (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq === "function") {
+      (window as unknown as { fbq: (...args: unknown[]) => void }).fbq("track", "PageView");
+    }
   }, [currentPage]);
 
   const navigateTo = (page: Page) => {
